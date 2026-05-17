@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap" rel="stylesheet"/>
+
+    <!-- css -->
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Shubham Portfolio</title>
+  </head>
+
+  <body>
+    <!-- background -->
+    <canvas id="stars"></canvas>
+
+    <div class="glow-top"></div>
+
+    <!-- navbar -->
+    <nav class="navbar">
+      <div id="nav_logo">
+        <span id="logo">SDX30</span>
+      </div>
+
+      <ul class="nav_navigation">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- hero -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1>Hello, I'm <span>Shubham</span></h1>
+
+        <p>
+          Frontend Developer & Creative Designer building modern animated
+          websites with clean UI and smooth user experiences.
+        </p>
+
+        <div class="hero-btns">
+          <a href="#" class="btn-primary">Download CV</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- about -->
+    <section class="about" id="about">
+      <div class="section-title">
+        <h2>About Me</h2>
+      </div>
+
+      <div class="about-container">
+        <div class="about-card">
+          <h3>Who Am I?</h3>
+
+          <p>
+            I'm Shubham, a passionate frontend developer and creative designer
+            who loves building modern, animated and user-friendly websites.
+          </p>
+
+          <p>
+            I enjoy creating futuristic UI designs, smooth animations and
+            responsive web experiences.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- skills -->
+    <section class="skills" id="skills">
+      <div class="section-title">
+        <h2>My Skills</h2>
+      </div>
+
+      <div class="skills-container">
+        <!-- html -->
+        <div class="skill-card">
+          <div class="skill-top">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+              alt="html"
+            />
+            <h3>HTML</h3>
+          </div>
+
+          <div class="skill-bar">
+            <div class="skill-progress html">
+              <span>95%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- css -->
+        <div class="skill-card">
+          <div class="skill-top">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+              alt="css"
+            />
+            <h3>CSS</h3>
+          </div>
+
+          <div class="skill-bar">
+            <div class="skill-progress css">
+              <span>90%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- js -->
+        <div class="skill-card">
+          <div class="skill-top">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+              alt="javascript"
+            />
+            <h3>JavaScript</h3>
+          </div>
+
+          <div class="skill-bar">
+            <div class="skill-progress js">
+              <span>75%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- react -->
+        <div class="skill-card">
+          <div class="skill-top">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+              alt="react"
+            />
+            <h3>React</h3>
+          </div>
+
+          <div class="skill-bar">
+            <div class="skill-progress react">
+              <span>65%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- projects -->
+    <section class="projects" id="projects">
+      <div class="section-title">
+        <h2>Projects</h2>
+      </div>
+
+      <div class="projects-container">
+        <div class="project-card">
+          <h3>Animated Portfolio</h3>
+
+          <p>
+            Modern cyberpunk portfolio website with glowing animations and
+            interactive effects.
+          </p>
+
+          <a href="#">View Project</a>
+        </div>
+
+        <div class="project-card">
+          <h3>Landing Page</h3>
+
+          <p>
+            Responsive landing page with premium UI and modern layout design.
+          </p>
+
+          <a href="#">View Project</a>
+        </div>
+
+        <div class="project-card">
+          <h3>UI Design</h3>
+
+          <p>
+            Futuristic interface concepts using glassmorphism and neon effects.
+          </p>
+
+          <a href="#">View Project</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section class="contact" id="contact">
+      <div class="section-title">
+        <h2>Contact Me</h2>
+      </div>
+
+      <div class="contact-container">
+        <form>
+          <input type="text" placeholder="Your Name" required />
+
+          <input type="email" placeholder="Your Email" required />
+
+          <textarea placeholder="Your Message"></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- footer -->
+    <footer class="footer">
+      <p>© 2026 Shubham Kumar • Thanks for visiting my portfolio website.</p>
+    </footer>
+
+    <!-- js -->
+    <script src="script.js"></script>
+  </body>
+</html>
