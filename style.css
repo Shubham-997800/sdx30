@@ -208,7 +208,7 @@ section{
     border-radius:12px;
     text-decoration:none;
     font-weight:600;
-    border:1px solid var(--primary-color);
+    border:1px solid var(--glass-border);
     box-shadow:0 0 10px var(--primary-color);
     transition:0.4s ease;
 }
