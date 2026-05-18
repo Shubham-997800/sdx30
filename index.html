@@ -1,224 +1,363 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- google fonts -->
+    <title>Shubham | Web Developer</title>
+
+    <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
 
-    <!-- css -->
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap"
+        rel="stylesheet" />
+
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
     <link rel="stylesheet" href="style.css" />
+</head>
 
-    <title>Shubham Portfolio</title>
-  </head>
-
-  <body>
-    <!-- background -->
-    <canvas id="stars"></canvas>
-
-    <div class="glow-top"></div>
-
+<body>
     <!-- navbar -->
     <nav class="navbar">
-      <div id="nav_logo">
-        <span id="logo">SDX30</span>
-      </div>
+        <span id="logo_name">SHUBHAM</span>
 
-      <ul class="nav_navigation">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+        <ul class="nav_list">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <button id="nav_btn">Hire Me</button>
+
+        <div class="menu_icon" id="menuIcon">
+            <i class="fa-solid fa-bars"></i>
+        </div>
     </nav>
 
     <!-- hero -->
-    <section class="hero" id="home">
-      <div class="hero-content">
-        <h1>Hello, I'm <span>Shubham</span></h1>
+    <section class="hero" id="hero">
+        <div class="hero_content">
+            <p class="hero_tag">• Frontend Developer</p>
 
-        <p>
-          Frontend Developer & Creative Designer building modern animated
-          websites with clean UI and smooth user experiences.
-        </p>
+            <h1>
+                Hi, I'm
+                <span>Shubham</span>
+                <br />
+                Building Modern Creative Websites.
+            </h1>
 
-        <div class="hero-btns">
-          <a href="#" class="btn-primary">Download CV</a>
+            <p class="hero_desc">
+                I design and develop responsive websites with modern UI and smooth
+                user experience.
+            </p>
+
+            <div class="hero_btns">
+                <button class="primary_btn">View Projects</button>
+
+                <button class="secondary_btn">Download CV</button>
+            </div>
         </div>
-      </div>
+
+        <div class="scroll_text">
+            <span>SCROLL</span>
+
+            <div class="scroll_arrow"></div>
+        </div>
     </section>
 
     <!-- about -->
     <section class="about" id="about">
-      <div class="section-title">
-        <h2>About Me</h2>
-      </div>
+        <div class="section_title">
+            <p>ABOUT ME</p>
 
-      <div class="about-container">
-        <div class="about-card">
-          <h3>Who Am I?</h3>
-
-          <p>
-            I'm Shubham, a passionate frontend developer and creative designer
-            who loves building modern, animated and user-friendly websites.
-          </p>
-
-          <p>
-            I enjoy creating futuristic UI designs, smooth animations and
-            responsive web experiences.
-          </p>
+            <h2>Passionate About Modern Web Development</h2>
         </div>
-      </div>
+
+        <div class="about_container">
+            <div class="about_image">
+                <div class="image_glow"></div>
+
+                <div class="developer_circle">
+                    <div class="code_icon">&lt;/&gt;</div>
+                </div>
+
+                <div class="floating_card card_one">Frontend</div>
+
+                <div class="floating_card card_two">UI Design</div>
+            </div>
+
+            <div class="about_content">
+                <p>
+                    Hi, I'm <span>Shubham</span> from Ahmedabad, Gujarat. I enjoy
+                    building responsive and modern websites with clean UI and smooth
+                    experience.
+                </p>
+
+                <p>
+                    Currently learning frontend development, JavaScript and modern web
+                    technologies through projects and practice.
+                </p>
+
+                <div class="about_info">
+                    <div class="info_box">
+                        <h4>Education</h4>
+
+                        <p>BCA • LJ College • Gujarat University</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- skills -->
     <section class="skills" id="skills">
-      <div class="section-title">
-        <h2>My Skills</h2>
-      </div>
+        <div class="section_title">
+            <p>SKILLS</p>
 
-      <div class="skills-container">
-        <!-- html -->
-        <div class="skill-card">
-          <div class="skill-top">
-            <img
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-              alt="html"
-            />
-            <h3>HTML</h3>
-          </div>
+            <h2>Tools & Technologies</h2>
 
-          <div class="skill-bar">
-            <div class="skill-progress html">
-              <span>95%</span>
-            </div>
-          </div>
+            <span>
+                I create responsive and interactive web experiences using modern
+                frontend technologies.
+            </span>
         </div>
 
-        <!-- css -->
-        <div class="skill-card">
-          <div class="skill-top">
-            <img
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-              alt="css"
-            />
-            <h3>CSS</h3>
-          </div>
+        <div class="skills_slider">
+            <div class="skills_track">
+                <div class="skill_card">
+                    <div class="skill_icon">
+                        <i class="fa-brands fa-html5"></i>
+                    </div>
 
-          <div class="skill-bar">
-            <div class="skill-progress css">
-              <span>90%</span>
+                    <div class="skill_head">
+                        <h3>HTML5</h3>
+
+                        <p>100%</p>
+                    </div>
+
+                    <div class="skill_bar">
+                        <div class="skill_progress html"></div>
+                    </div>
+                </div>
+
+                <div class="skill_card">
+                    <div class="skill_icon">
+                        <i class="fa-brands fa-css3-alt"></i>
+                    </div>
+
+                    <div class="skill_head">
+                        <h3>CSS3</h3>
+
+                        <p>100%</p>
+                    </div>
+
+                    <div class="skill_bar">
+                        <div class="skill_progress css"></div>
+                    </div>
+                </div>
+
+                <div class="skill_card">
+                    <div class="skill_icon">
+                        <i class="fa-brands fa-js"></i>
+                    </div>
+
+                    <div class="skill_head">
+                        <h3>JavaScript</h3>
+
+                        <p>75%</p>
+                    </div>
+
+                    <div class="skill_bar">
+                        <div class="skill_progress js"></div>
+                    </div>
+                </div>
+
+                <div class="skill_card">
+                    <div class="skill_icon">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+
+                    <div class="skill_head">
+                        <h3>Prompt Engineering</h3>
+
+                        <p>80%</p>
+                    </div>
+
+                    <div class="skill_bar">
+                        <div class="skill_progress prompt"></div>
+                    </div>
+                </div>
+
+                <div class="skill_card">
+                    <div class="skill_icon">
+                        <i class="fa-solid fa-pen-ruler"></i>
+                    </div>
+
+                    <div class="skill_head">
+                        <h3>UI/UX Design</h3>
+
+                        <p>50%</p>
+                    </div>
+
+                    <div class="skill_bar">
+                        <div class="skill_progress uiux"></div>
+                    </div>
+                </div>
+
+                <div class="skill_card">
+                    <div class="skill_icon">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+
+                    <div class="skill_head">
+                        <h3>Responsive Design</h3>
+
+                        <p>70%</p>
+                    </div>
+
+                    <div class="skill_bar">
+                        <div class="skill_progress responsive"></div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-
-        <!-- js -->
-        <div class="skill-card">
-          <div class="skill-top">
-            <img
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-              alt="javascript"
-            />
-            <h3>JavaScript</h3>
-          </div>
-
-          <div class="skill-bar">
-            <div class="skill-progress js">
-              <span>75%</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- react -->
-        <div class="skill-card">
-          <div class="skill-top">
-            <img
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
-              alt="react"
-            />
-            <h3>React</h3>
-          </div>
-
-          <div class="skill-bar">
-            <div class="skill-progress react">
-              <span>65%</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- projects -->
     <section class="projects" id="projects">
-      <div class="section-title">
-        <h2>Projects</h2>
-      </div>
+        <div class="section_title">
+            <p>PROJECTS</p>
 
-      <div class="projects-container">
-        <div class="project-card">
-          <h3>Animated Portfolio</h3>
-
-          <p>
-            Modern cyberpunk portfolio website with glowing animations and
-            interactive effects.
-          </p>
-
-          <a href="#">View Project</a>
+            <h2>Latest Projects</h2>
         </div>
 
-        <div class="project-card">
-          <h3>Landing Page</h3>
+        <div class="projects_container">
+            <div class="project_card">
+                <div class="project_image">
+                    <img src="images/project1.jpg" alt="project" />
+                </div>
 
-          <p>
-            Responsive landing page with premium UI and modern layout design.
-          </p>
+                <div class="project_content">
+                    <h3>Portfolio Website</h3>
 
-          <a href="#">View Project</a>
+                    <p>
+                        Modern responsive portfolio with glassmorphism UI and smooth
+                        animations.
+                    </p>
+
+                    <div class="project_buttons project_btn_combo">
+                        <a href="#" class="project_btn live">
+                            <i class="fa-solid fa-eye"></i>
+                            Live Preview
+                        </a>
+
+                        <a href="#" class="project_btn code">
+                            <i class="fa-brands fa-github"></i>
+                            Code Review
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project_card">
+                <div class="project_image">
+                    <img src="images/project2.jpg" alt="project" />
+                </div>
+
+                <div class="project_content">
+                    <h3>Landing Page</h3>
+
+                    <p>
+                        Creative modern landing page with responsive layout and clean
+                        design.
+                    </p>
+
+                    <div class="project_buttons project_btn_combo">
+                        <a href="#" class="project_btn live">
+                            <i class="fa-solid fa-eye"></i>
+                            Live Preview
+                        </a>
+
+                        <a href="#" class="project_btn code">
+                            <i class="fa-brands fa-github"></i>
+                            Code Review
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project_card">
+                <div class="project_image">
+                    <img src="images/project3.jpg" alt="project" />
+                </div>
+
+                <div class="project_content">
+                    <h3>Dashboard UI</h3>
+
+                    <p>
+                        Modern dashboard interface with cards, analytics and responsive
+                        sections.
+                    </p>
+
+                    <div class="project_buttons project_btn_combo">
+                        <a href="#" class="project_btn live">
+                            <i class="fa-solid fa-eye"></i>
+                            Live Preview
+                        </a>
+
+                        <a href="#" class="project_btn code">
+                            <i class="fa-brands fa-github"></i>
+                            Code Review
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="project-card">
-          <h3>UI Design</h3>
-
-          <p>
-            Futuristic interface concepts using glassmorphism and neon effects.
-          </p>
-
-          <a href="#">View Project</a>
-        </div>
-      </div>
     </section>
 
     <!-- contact -->
     <section class="contact" id="contact">
-      <div class="section-title">
-        <h2>Contact Me</h2>
-      </div>
+        <div class="section_title">
+            <p>CONTACT</p>
 
-      <div class="contact-container">
-        <form>
-          <input type="text" placeholder="Your Name" required />
+            <h2>Let's Work Together</h2>
+        </div>
 
-          <input type="email" placeholder="Your Email" required />
+        <div class="contact_container">
+            <div class="contact_content">
+                <p>
+                    Have a project idea or want to connect? Feel free to contact me
+                    anytime.
+                </p>
+            </div>
 
-          <textarea placeholder="Your Message"></textarea>
+            <form class="contact_form">
+                <input type="text" placeholder="Your Name" />
 
-          <button type="submit">Send Message</button>
-        </form>
-      </div>
+                <input type="email" placeholder="Your Email" />
+
+                <textarea placeholder="Your Message"></textarea>
+
+                <button class="primary_btn">Send Message</button>
+            </form>
+        </div>
     </section>
 
     <!-- footer -->
     <footer class="footer">
-      <p>© 2026 Shubham Kumar • Thanks for visiting my portfolio website.</p>
+        <p>© 2026 Shubham • Frontend Developer • Gujarat, India</p>
     </footer>
 
-    <!-- js -->
     <script src="script.js"></script>
-  </body>
+</body>
+
 </html>
