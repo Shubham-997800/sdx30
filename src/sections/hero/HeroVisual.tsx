@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useCallback, useEffect, useState } from 'react';
-import { motion, useMotionValue } from 'motion/react';
+import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
@@ -18,10 +18,10 @@ function FloatingOrb({ size, x, y, color, delay }: { size: number; x: string; y:
       className="absolute rounded-full blur-3xl"
       style={{ width: size, height: size, left: x, top: y, background: color }}
       animate={prefersReducedMotion ? { opacity: 0.3, scale: 1 } : {
-        opacity: [0.2, 0.35, 0.2],
-        scale: [1, 1.1, 1],
+        opacity: [0.15, 0.3, 0.15],
+        scale: [1, 1.15, 1],
       }}
-      transition={{ duration: 6, delay, repeat: Infinity, ease: 'easeInOut' }}
+      transition={{ duration: 7, delay, repeat: Infinity, ease: 'easeInOut' }}
     />
   );
 }
@@ -31,17 +31,31 @@ export function HeroVisual() {
   const prefersReducedMotion = useReducedMotion();
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const [blinkOpen, setBlinkOpen] = useState(true);
+  const [typing, setTyping] = useState(true);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+
+  const springConfig = { stiffness: 80, damping: 12, mass: 0.8 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+  const eyeX = useTransform(smoothX, [-0.5, 0.5], [-3, 3]);
+  const eyeY = useTransform(smoothY, [-0.5, 0.5], [-2, 2]);
 
   // Eye blink
   useEffect(() => {
     if (prefersReducedMotion) return;
     const blink = () => {
       setBlinkOpen(false);
-      setTimeout(() => setBlinkOpen(true), 150);
+      setTimeout(() => setBlinkOpen(true), 120);
     };
-    const interval = setInterval(blink, 3000 + Math.random() * 2000);
+    const interval = setInterval(blink, 2500 + Math.random() * 2000);
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion]);
+
+  // Typing indicator
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const interval = setInterval(() => setTyping(t => !t), 1200);
     return () => clearInterval(interval);
   }, [prefersReducedMotion]);
 
@@ -62,219 +76,390 @@ export function HeroVisual() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <FloatingOrb size={140} x="5%" y="10%" color="var(--color-accent)" delay={0} />
-      <FloatingOrb size={90} x="75%" y="65%" color="var(--color-accent)" delay={1.5} />
-      <FloatingOrb size={60} x="85%" y="10%" color="var(--color-accent)" delay={0.8} />
+      <FloatingOrb size={160} x="0%" y="5%" color="var(--color-accent)" delay={0} />
+      <FloatingOrb size={100} x="80%" y="70%" color="var(--color-accent)" delay={2} />
+      <FloatingOrb size={70} x="90%" y="5%" color="var(--color-accent)" delay={1} />
 
-      {/* ─── Character SVG ─── */}
+      {/* ─── Character ─── */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
-        initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.9 }}
+        initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.2, ease: EASE }}
+        transition={{ duration: 1.2, delay: 0.2, ease: EASE }}
       >
-        <svg viewBox="0 0 420 420" className="w-full h-full max-w-[380px] max-h-[380px]" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 500 500" className="w-full h-full max-w-[420px] max-h-[420px]" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="desk" x1="0%" y1="0%" x2="0%" y2="100%">
+            <linearGradient id="deskGrad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="var(--color-card)" />
-              <stop offset="100%" stopColor="var(--color-border)" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="var(--color-border)" stopOpacity="0.3" />
             </linearGradient>
-            <linearGradient id="shirt" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="var(--color-accent)" />
-              <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0.7" />
+            <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0.6" />
             </linearGradient>
-            <linearGradient id="screenGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.12" />
+            <linearGradient id="monitorGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.1" />
               <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0.02" />
             </linearGradient>
-            <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="var(--color-foreground)" floodOpacity="0.06" />
+            {/* ──3D Face Gradients ── */}
+            <radialGradient id="faceMain" cx="50%" cy="42%" r="55%" fx="45%" fy="35%">
+              <stop offset="0%" stopColor="var(--color-foreground)" stopOpacity="0.14" />
+              <stop offset="45%" stopColor="var(--color-foreground)" stopOpacity="0.09" />
+              <stop offset="100%" stopColor="var(--color-foreground)" stopOpacity="0.04" />
+            </radialGradient>
+            <radialGradient id="faceShadowR" cx="85%" cy="60%" r="40%">
+              <stop offset="0%" stopColor="var(--color-foreground)" stopOpacity="0.08" />
+              <stop offset="100%" stopColor="var(--color-foreground)" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="faceShadowL" cx="15%" cy="60%" r="40%">
+              <stop offset="0%" stopColor="var(--color-foreground)" stopOpacity="0.05" />
+              <stop offset="100%" stopColor="var(--color-foreground)" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="faceHighlight" cx="42%" cy="32%" r="35%">
+              <stop offset="0%" stopColor="var(--color-background)" stopOpacity="0.08" />
+              <stop offset="100%" stopColor="var(--color-background)" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="cheekBlushL" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.12" />
+              <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="cheekBlushR" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id="noseShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="var(--color-foreground)" stopOpacity="0.06" />
+              <stop offset="100%" stopColor="var(--color-foreground)" stopOpacity="0.12" />
+            </linearGradient>
+            <linearGradient id="neckGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="var(--color-foreground)" stopOpacity="0.1" />
+              <stop offset="100%" stopColor="var(--color-foreground)" stopOpacity="0.06" />
+            </linearGradient>
+            <linearGradient id="hairGrad" x1="30%" y1="0%" x2="70%" y2="100%">
+              <stop offset="0%" stopColor="var(--color-foreground)" stopOpacity="0.28" />
+              <stop offset="50%" stopColor="var(--color-foreground)" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="var(--color-foreground)" stopOpacity="0.16" />
+            </linearGradient>
+            <linearGradient id="hairHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="var(--color-foreground)" stopOpacity="0.08" />
+              <stop offset="100%" stopColor="var(--color-foreground)" stopOpacity="0" />
+            </linearGradient>
+            <radialGradient id="eyeWhite" cx="50%" cy="45%" r="50%">
+              <stop offset="0%" stopColor="var(--color-background)" stopOpacity="0.95" />
+              <stop offset="85%" stopColor="var(--color-background)" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="var(--color-foreground)" stopOpacity="0.08" />
+            </radialGradient>
+            <radialGradient id="irisGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="var(--color-foreground)" stopOpacity="0.3" />
+              <stop offset="40%" stopColor="var(--color-accent)" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="var(--color-foreground)" stopOpacity="0.7" />
+            </radialGradient>
+            <filter id="faceSoft" x="-10%" y="-10%" width="120%" height="120%">
+              <feGaussianBlur stdDeviation="1.2" />
             </filter>
+            <filter id="shadowBlur" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="4" />
+            </filter>
+            <clipPath id="faceClip">
+              <ellipse cx="250" cy="168" rx="52" ry="58" />
+            </clipPath>
           </defs>
 
-          {/* Desk */}
-          <g filter="url(#softShadow)">
-            <rect x="70" y="270" width="280" height="10" rx="5" fill="url(#desk)" />
-            <rect x="95" y="280" width="5" height="60" rx="2" fill="var(--color-border)" fillOpacity="0.5" />
-            <rect x="320" y="280" width="5" height="60" rx="2" fill="var(--color-border)" fillOpacity="0.5" />
-          </g>
+          {/* ── Desk ── */}
+          <rect x="60" y="310" width="380" height="12" rx="6" fill="url(#deskGrad)" />
+          <rect x="90" y="322" width="6" height="70" rx="3" fill="var(--color-border)" fillOpacity="0.4" />
+          <rect x="404" y="322" width="6" height="70" rx="3" fill="var(--color-border)" fillOpacity="0.4" />
 
-          {/* Chair */}
+          {/* ── Chair ── */}
           <motion.g
-            animate={prefersReducedMotion ? {} : { y: [0, -1, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            animate={prefersReducedMotion ? {} : { y: [0, -2, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <rect x="150" y="238" width="120" height="42" rx="16" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1.5" />
-            <rect x="158" y="280" width="104" height="6" rx="3" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1" />
-            <rect x="208" y="286" width="4" height="30" rx="1" fill="var(--color-border)" fillOpacity="0.4" />
+            <rect x="160" y="268" width="180" height="50" rx="20" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1.5" />
+            <rect x="170" y="318" width="160" height="8" rx="4" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1" />
+            <rect x="248" y="326" width="4" height="40" rx="2" fill="var(--color-border)" fillOpacity="0.3" />
           </motion.g>
 
-          {/* Body */}
+          {/* ── Body (Hoodie) ── */}
           <motion.g
-            animate={prefersReducedMotion ? {} : { y: [0, -1.5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            animate={prefersReducedMotion ? {} : { y: [0, -2, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <path d="M165 228 Q165 205 182 198 L238 198 Q255 205 255 228 L255 275 L165 275 Z" fill="url(#shirt)" />
-            <path d="M192 198 L210 212 L228 198" fill="none" stroke="var(--color-background)" strokeWidth="2.5" strokeLinecap="round" />
+            <path d="M180 255 Q180 225 205 215 L295 215 Q320 225 320 255 L320 315 L180 315 Z" fill="url(#hoodieGrad)" />
+            {/* Hoodie pocket */}
+            <rect x="215" y="275" width="70" height="25" rx="8" fill="var(--color-foreground)" fillOpacity="0.06" />
+            {/* Hoodie strings */}
+            <line x1="240" y1="220" x2="238" y2="250" stroke="var(--color-background)" strokeWidth="1.5" strokeOpacity="0.3" />
+            <line x1="260" y1="220" x2="262" y2="250" stroke="var(--color-background)" strokeWidth="1.5" strokeOpacity="0.3" />
+            <circle cx="238" cy="252" r="2" fill="var(--color-background)" fillOpacity="0.3" />
+            <circle cx="262" cy="252" r="2" fill="var(--color-background)" fillOpacity="0.3" />
+            {/* Collar */}
+            <path d="M225 215 L250 230 L275 215" fill="none" stroke="var(--color-background)" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.4" />
           </motion.g>
 
-          {/* Arms */}
+          {/* ── Arms ── */}
           <motion.g
-            animate={prefersReducedMotion ? {} : { y: [0, -1.5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            animate={prefersReducedMotion ? {} : { y: [0, -2, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <path d="M165 215 Q142 238 148 265" fill="none" stroke="url(#shirt)" strokeWidth="14" strokeLinecap="round" />
-            <path d="M255 215 Q278 238 272 265" fill="none" stroke="url(#shirt)" strokeWidth="14" strokeLinecap="round" />
-            <ellipse cx="150" cy="268" rx="9" ry="6" fill="var(--color-foreground)" fillOpacity="0.12" />
-            <ellipse cx="270" cy="268" rx="9" ry="6" fill="var(--color-foreground)" fillOpacity="0.12" />
+            <path d="M180 235 Q150 265 158 305" fill="none" stroke="url(#hoodieGrad)" strokeWidth="18" strokeLinecap="round" />
+            <path d="M320 235 Q350 265 342 305" fill="none" stroke="url(#hoodieGrad)" strokeWidth="18" strokeLinecap="round" />
+            {/* Hands */}
+            <ellipse cx="160" cy="308" rx="12" ry="8" fill="var(--color-foreground)" fillOpacity="0.1" />
+            <ellipse cx="340" cy="308" rx="12" ry="8" fill="var(--color-foreground)" fillOpacity="0.1" />
           </motion.g>
 
-          {/* Head */}
+          {/* ── Head ── */}
           <motion.g
-            animate={prefersReducedMotion ? {} : { y: [0, -2.5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            animate={prefersReducedMotion ? {} : { y: [0, -3, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <rect x="200" y="178" width="20" height="22" rx="6" fill="var(--color-foreground)" fillOpacity="0.1" />
-            <ellipse cx="210" cy="152" rx="42" ry="46" fill="var(--color-foreground)" fillOpacity="0.08" />
+            {/* Neck shadow */}
+            <ellipse cx="250" cy="218" rx="18" ry="8" fill="var(--color-foreground)" fillOpacity="0.06" filter="url(#shadowBlur)" />
+            {/* Neck */}
+            <rect x="238" y="200" width="24" height="22" rx="8" fill="url(#neckGrad)" />
+            <rect x="246" y="202" width="6" height="18" rx="3" fill="var(--color-background)" fillOpacity="0.04" />
 
-            {/* Hair */}
-            <path d="M168 142 Q168 100 210 100 Q252 100 252 142 Q248 125 210 125 Q172 125 168 142 Z" fill="var(--color-foreground)" fillOpacity="0.18" />
-            <path d="M168 142 Q166 135 172 130 Q180 126 190 128" fill="none" stroke="var(--color-foreground)" strokeWidth="2" strokeOpacity="0.08" />
+            {/* ── Face base ── */}
+            <ellipse cx="250" cy="168" rx="52" ry="58" fill="url(#faceMain)" />
+            <ellipse cx="250" cy="168" rx="52" ry="58" fill="url(#faceShadowR)" />
+            <ellipse cx="250" cy="168" rx="52" ry="58" fill="url(#faceShadowL)" />
+            <ellipse cx="250" cy="168" rx="52" ry="58" fill="url(#faceHighlight)" />
 
-            {/* Glasses */}
-            <rect x="185" y="145" width="20" height="14" rx="5" fill="none" stroke="var(--color-foreground)" strokeWidth="1.8" strokeOpacity="0.2" />
-            <rect x="215" y="145" width="20" height="14" rx="5" fill="none" stroke="var(--color-foreground)" strokeWidth="1.8" strokeOpacity="0.2" />
-            <line x1="205" y1="152" x2="215" y2="152" stroke="var(--color-foreground)" strokeWidth="1.5" strokeOpacity="0.2" />
-            <line x1="185" y1="150" x2="178" y2="147" stroke="var(--color-foreground)" strokeWidth="1.5" strokeOpacity="0.15" />
-            <line x1="235" y1="150" x2="242" y2="147" stroke="var(--color-foreground)" strokeWidth="1.5" strokeOpacity="0.15" />
+            {/* Jaw shadow — 3D depth */}
+            <path d="M200 190 Q210 228 250 230 Q290 228 300 190" fill="var(--color-foreground)" fillOpacity="0.04" />
 
-            {/* Eyes — blink */}
+            {/* Cheek blush */}
+            <ellipse cx="215" cy="186" rx="16" ry="10" fill="url(#cheekBlushL)" />
+            <ellipse cx="285" cy="186" rx="16" ry="10" fill="url(#cheekBlushR)" />
+
+            {/* ── Hair — volumetric 3D ── */}
+            <path d="M198 156 Q196 106 250 100 Q304 106 302 156 Q298 136 250 132 Q202 136 198 156 Z" fill="url(#hairGrad)" />
+            {/* Hair volume — layered strands */}
+            <path d="M205 130 Q215 98 230 112" fill="none" stroke="var(--color-foreground)" strokeWidth="3" strokeOpacity="0.12" strokeLinecap="round" />
+            <path d="M225 118 Q238 88 255 108" fill="none" stroke="var(--color-foreground)" strokeWidth="3.5" strokeOpacity="0.1" strokeLinecap="round" />
+            <path d="M250 112 Q262 82 275 105" fill="none" stroke="var(--color-foreground)" strokeWidth="3" strokeOpacity="0.11" strokeLinecap="round" />
+            <path d="M270 120 Q285 92 295 115" fill="none" stroke="var(--color-foreground)" strokeWidth="2.5" strokeOpacity="0.1" strokeLinecap="round" />
+            {/* Hair highlight sheen */}
+            <path d="M218 115 Q250 95 282 115" fill="none" stroke="var(--color-foreground)" strokeWidth="8" strokeOpacity="0.04" strokeLinecap="round" />
+            {/* Side hair */}
+            <path d="M198 156 Q192 170 190 185" fill="none" stroke="var(--color-foreground)" strokeWidth="8" strokeOpacity="0.1" strokeLinecap="round" />
+            <path d="M302 156 Q308 170 310 185" fill="none" stroke="var(--color-foreground)" strokeWidth="8" strokeOpacity="0.08" strokeLinecap="round" />
+
+            {/* ── Ears ── */}
+            <ellipse cx="198" cy="170" rx="7" ry="12" fill="var(--color-foreground)" fillOpacity="0.07" />
+            <ellipse cx="198" cy="170" rx="4" ry="8" fill="var(--color-foreground)" fillOpacity="0.04" />
+            <ellipse cx="302" cy="170" rx="7" ry="12" fill="var(--color-foreground)" fillOpacity="0.07" />
+            <ellipse cx="302" cy="170" rx="4" ry="8" fill="var(--color-foreground)" fillOpacity="0.04" />
+
+            {/* ── Headphones ── */}
+            <path d="M210 125 Q250 92 290 125" fill="none" stroke="var(--color-foreground)" strokeWidth="5" strokeOpacity="0.12" strokeLinecap="round" />
+            <rect x="188" y="150" width="14" height="22" rx="6" fill="var(--color-foreground)" fillOpacity="0.13" />
+            <rect x="298" y="150" width="14" height="22" rx="6" fill="var(--color-foreground)" fillOpacity="0.13" />
+            <rect x="191" y="155" width="8" height="12" rx="4" fill="var(--color-foreground)" fillOpacity="0.06" />
+            <rect x="301" y="155" width="8" height="12" rx="4" fill="var(--color-foreground)" fillOpacity="0.06" />
+
+            {/* ── Glasses — 3D frames ── */}
+            <g>
+              {/* Left lens */}
+              <rect x="216" y="156" width="28" height="20" rx="8" fill="var(--color-background)" fillOpacity="0.04" stroke="var(--color-foreground)" strokeWidth="2.2" strokeOpacity="0.24" />
+              {/* Right lens */}
+              <rect x="256" y="156" width="28" height="20" rx="8" fill="var(--color-background)" fillOpacity="0.04" stroke="var(--color-foreground)" strokeWidth="2.2" strokeOpacity="0.24" />
+              {/* Bridge */}
+              <path d="M244 166 Q250 170 256 166" fill="none" stroke="var(--color-foreground)" strokeWidth="2" strokeOpacity="0.2" strokeLinecap="round" />
+              {/* Arms */}
+              <line x1="216" y1="163" x2="205" y2="158" stroke="var(--color-foreground)" strokeWidth="2" strokeOpacity="0.16" strokeLinecap="round" />
+              <line x1="284" y1="163" x2="295" y2="158" stroke="var(--color-foreground)" strokeWidth="2" strokeOpacity="0.16" strokeLinecap="round" />
+              {/* Lens reflections */}
+              <rect x="222" y="160" width="6" height="3" rx="1.5" fill="var(--color-background)" fillOpacity="0.1" />
+              <rect x="262" y="160" width="6" height="3" rx="1.5" fill="var(--color-background)" fillOpacity="0.1" />
+            </g>
+
+            {/* ── Eyes — 3D realistic ── */}
             <g>
               {blinkOpen ? (
                 <>
-                  <ellipse cx="195" cy="153" rx="3.5" ry="4.5" fill="var(--color-foreground)" fillOpacity="0.55" />
-                  <ellipse cx="225" cy="153" rx="3.5" ry="4.5" fill="var(--color-foreground)" fillOpacity="0.55" />
-                  <circle cx="193.5" cy="151.5" r="1.2" fill="var(--color-background)" fillOpacity="0.9" />
-                  <circle cx="223.5" cy="151.5" r="1.2" fill="var(--color-background)" fillOpacity="0.9" />
+                  {/* Left eye */}
+                  <motion.g style={{ x: eyeX, y: eyeY }}>
+                    <ellipse cx="230" cy="168" rx="9" ry="7" fill="url(#eyeWhite)" />
+                    <ellipse cx="230" cy="168" rx="4.5" ry="5" fill="url(#irisGrad)" />
+                    <circle cx="230" cy="168" r="2.2" fill="var(--color-foreground)" fillOpacity="0.7" />
+                    <circle cx="228" cy="166" r="1.2" fill="var(--color-background)" fillOpacity="0.95" />
+                    <circle cx="232" cy="170" r="0.6" fill="var(--color-background)" fillOpacity="0.6" />
+                    {/* Eyelid */}
+                    <path d="M220 165 Q230 159 240 165" fill="none" stroke="var(--color-foreground)" strokeWidth="1.2" strokeOpacity="0.15" strokeLinecap="round" />
+                    <path d="M220 171 Q230 176 240 171" fill="none" stroke="var(--color-foreground)" strokeWidth="0.8" strokeOpacity="0.08" strokeLinecap="round" />
+                  </motion.g>
+                  {/* Right eye */}
+                  <motion.g style={{ x: eyeX, y: eyeY }}>
+                    <ellipse cx="270" cy="168" rx="9" ry="7" fill="url(#eyeWhite)" />
+                    <ellipse cx="270" cy="168" rx="4.5" ry="5" fill="url(#irisGrad)" />
+                    <circle cx="270" cy="168" r="2.2" fill="var(--color-foreground)" fillOpacity="0.7" />
+                    <circle cx="268" cy="166" r="1.2" fill="var(--color-background)" fillOpacity="0.95" />
+                    <circle cx="272" cy="170" r="0.6" fill="var(--color-background)" fillOpacity="0.6" />
+                    <path d="M260 165 Q270 159 280 165" fill="none" stroke="var(--color-foreground)" strokeWidth="1.2" strokeOpacity="0.15" strokeLinecap="round" />
+                    <path d="M260 171 Q270 176 280 171" fill="none" stroke="var(--color-foreground)" strokeWidth="0.8" strokeOpacity="0.08" strokeLinecap="round" />
+                  </motion.g>
                 </>
               ) : (
                 <>
-                  <line x1="191" y1="153" x2="199" y2="153" stroke="var(--color-foreground)" strokeWidth="1.8" strokeOpacity="0.4" strokeLinecap="round" />
-                  <line x1="221" y1="153" x2="229" y2="153" stroke="var(--color-foreground)" strokeWidth="1.8" strokeOpacity="0.4" strokeLinecap="round" />
+                  <line x1="222" y1="168" x2="238" y2="168" stroke="var(--color-foreground)" strokeWidth="1.8" strokeOpacity="0.4" strokeLinecap="round" />
+                  <line x1="262" y1="168" x2="278" y2="168" stroke="var(--color-foreground)" strokeWidth="1.8" strokeOpacity="0.4" strokeLinecap="round" />
                 </>
               )}
             </g>
 
-            {/* Eyebrows */}
-            <line x1="189" y1="141" x2="201" y2="142" stroke="var(--color-foreground)" strokeWidth="1.8" strokeOpacity="0.2" strokeLinecap="round" />
-            <line x1="219" y1="142" x2="231" y2="141" stroke="var(--color-foreground)" strokeWidth="1.8" strokeOpacity="0.2" strokeLinecap="round" />
+            {/* ── Eyebrows — 3D texture ── */}
+            <path d="M218 150 Q224 145 238 148 Q242 149 244 152" fill="none" stroke="var(--color-foreground)" strokeWidth="2.5" strokeOpacity="0.2" strokeLinecap="round" />
+            <path d="M256 152 Q258 149 262 148 Q276 145 282 150" fill="none" stroke="var(--color-foreground)" strokeWidth="2.5" strokeOpacity="0.2" strokeLinecap="round" />
 
-            {/* Nose */}
-            <path d="M208 158 Q210 163 212 158" fill="none" stroke="var(--color-foreground)" strokeOpacity="0.12" strokeWidth="1.2" strokeLinecap="round" />
+            {/* ── Nose —3D structure ── */}
+            <g>
+              {/* Nose bridge */}
+              <path d="M248 152 Q246 165 244 176" fill="none" stroke="var(--color-foreground)" strokeWidth="1.2" strokeOpacity="0.08" strokeLinecap="round" />
+              <path d="M252 152 Q254 165 256 176" fill="none" stroke="var(--color-foreground)" strokeWidth="1.2" strokeOpacity="0.06" strokeLinecap="round" />
+              {/* Nose tip —3D shading */}
+              <ellipse cx="250" cy="180" rx="6" ry="4" fill="var(--color-foreground)" fillOpacity="0.04" />
+              <ellipse cx="248" cy="179" rx="2" ry="1.5" fill="var(--color-foreground)" fillOpacity="0.08" />
+              <ellipse cx="252" cy="179" rx="2" ry="1.5" fill="var(--color-foreground)" fillOpacity="0.06" />
+              {/* Nostrils */}
+              <ellipse cx="245" cy="182" rx="2.5" ry="1.8" fill="var(--color-foreground)" fillOpacity="0.1" />
+              <ellipse cx="255" cy="182" rx="2.5" ry="1.8" fill="var(--color-foreground)" fillOpacity="0.08" />
+              {/* Nose highlight */}
+              <ellipse cx="250" cy="175" rx="2" ry="3" fill="var(--color-background)" fillOpacity="0.06" />
+            </g>
 
-            {/* Smile */}
-            <motion.path
-              d="M198 170 Q210 179 222 170"
-              fill="none"
-              stroke="var(--color-accent)"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeOpacity="0.6"
-              animate={prefersReducedMotion ? {} : {
-                d: ['M198 170 Q210 179 222 170', 'M198 171 Q210 180 222 171', 'M198 170 Q210 179 222 170'],
-              }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-            />
+            {/* ── Mouth — realistic3D lips ── */}
+            <g>
+              {/* Upper lip */}
+              <path d="M236 192 Q242 188 250 190 Q258 188 264 192" fill="var(--color-foreground)" fillOpacity="0.06" />
+              <path d="M236 192 Q242 188 250 190 Q258 188 264 192" fill="none" stroke="var(--color-foreground)" strokeWidth="1.8" strokeOpacity="0.18" strokeLinecap="round" />
+              {/* Lower lip */}
+              <motion.path
+                d="M236 192 Q250 204 264 192"
+                fill="var(--color-foreground)"
+                fillOpacity="0.03"
+                animate={prefersReducedMotion ? {} : {
+                  d: ['M236 192 Q250 204 264 192', 'M236 193 Q250 206 264 193', 'M236 192 Q250 204 264 192'],
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              <motion.path
+                d="M236 192 Q250 204 264 192"
+                fill="none"
+                stroke="var(--color-accent)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeOpacity="0.45"
+                animate={prefersReducedMotion ? {} : {
+                  d: ['M236 192 Q250 204 264 192', 'M236 193 Q250 206 264 193', 'M236 192 Q250 204 264 192'],
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              {/* Lip highlight */}
+              <ellipse cx="250" cy="196" rx="6" ry="2" fill="var(--color-background)" fillOpacity="0.04" />
+              {/* Chin shadow */}
+              <ellipse cx="250" cy="210" rx="10" ry="4" fill="var(--color-foreground)" fillOpacity="0.03" />
+            </g>
           </motion.g>
 
-          {/* Laptop */}
+          {/* ── Monitor ── */}
           <motion.g
-            animate={prefersReducedMotion ? {} : { y: [0, -1.5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            animate={prefersReducedMotion ? {} : { y: [0, -2, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <rect x="155" y="225" width="110" height="46" rx="5" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1.5" />
-            <rect x="159" y="229" width="102" height="38" rx="3" fill="url(#screenGlow)" />
+            {/* Monitor frame */}
+            <rect x="130" y="240" width="240" height="65" rx="6" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1.5" />
+            {/* Screen */}
+            <rect x="135" y="245" width="230" height="50" rx="3" fill="url(#monitorGlow)" />
 
             {/* Code lines */}
             <motion.g
-              animate={prefersReducedMotion ? {} : { opacity: [0.5, 0.9, 0.5] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+              animate={prefersReducedMotion ? {} : { opacity: [0.4, 0.85, 0.4] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             >
-              <rect x="166" y="235" width="38" height="3" rx="1" fill="var(--color-accent)" fillOpacity="0.45" />
-              <rect x="166" y="241" width="52" height="3" rx="1" fill="var(--color-foreground)" fillOpacity="0.1" />
-              <rect x="172" y="247" width="30" height="3" rx="1" fill="var(--color-accent)" fillOpacity="0.25" />
-              <rect x="172" y="253" width="44" height="3" rx="1" fill="var(--color-foreground)" fillOpacity="0.08" />
-              <rect x="166" y="259" width="24" height="3" rx="1" fill="var(--color-accent)" fillOpacity="0.35" />
+              <rect x="145" y="253" width="50" height="3.5" rx="1.5" fill="var(--color-accent)" fillOpacity="0.4" />
+              <rect x="145" y="260" width="70" height="3.5" rx="1.5" fill="var(--color-foreground)" fillOpacity="0.08" />
+              <rect x="155" y="267" width="40" height="3.5" rx="1.5" fill="var(--color-accent)" fillOpacity="0.25" />
+              <rect x="155" y="274" width="60" height="3.5" rx="1.5" fill="var(--color-foreground)" fillOpacity="0.06" />
+              <rect x="145" y="281" width="35" height="3.5" rx="1.5" fill="var(--color-accent)" fillOpacity="0.35" />
             </motion.g>
 
-            <rect x="159" y="229" width="102" height="12" rx="3" fill="var(--color-background)" fillOpacity="0.04" />
-            <rect x="142" y="271" width="136" height="6" rx="3" fill="var(--color-border)" fillOpacity="0.5" />
+            {/* Screen glare */}
+            <rect x="135" y="245" width="230" height="14" rx="3" fill="var(--color-background)" fillOpacity="0.03" />
+
+            {/* Monitor stand */}
+            <rect x="235" y="305" width="30" height="8" rx="2" fill="var(--color-border)" fillOpacity="0.4" />
+            <rect x="225" y="308" width="50" height="4" rx="2" fill="var(--color-border)" fillOpacity="0.3" />
 
             {/* Keyboard */}
+            <rect x="180" y="312" width="140" height="6" rx="3" fill="var(--color-border)" fillOpacity="0.3" />
+            {/* Key dots */}
             <motion.g
-              animate={prefersReducedMotion ? {} : { opacity: [1, 0.4, 1] }}
-              transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
+              animate={prefersReducedMotion ? {} : { opacity: typing ? [1, 0.3, 1] : 1 }}
+              transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut' }}
             >
-              {[0,1,2,3,4,5].map(i => (
-                <circle key={i} cx={162 + i * 14} cy={273} r="1.5" fill="var(--color-foreground)" fillOpacity="0.15" />
+              {[0,1,2,3,4,5,6,7,8].map(i => (
+                <circle key={i} cx={192 + i * 14} cy={315} r="1.5" fill="var(--color-foreground)" fillOpacity="0.12" />
               ))}
             </motion.g>
           </motion.g>
 
-          {/* Coffee */}
+          {/* ── Coffee ── */}
           <motion.g
-            animate={prefersReducedMotion ? {} : { y: [0, -1, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+            animate={prefersReducedMotion ? {} : { y: [0, -1.5, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
           >
-            <rect x="300" y="256" width="20" height="16" rx="4" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1" />
-            <path d="M320 260 Q328 260 328 266 Q328 270 320 270" fill="none" stroke="var(--color-border)" strokeWidth="1" />
-            <motion.path
-              d="M308 254 Q310 246 308 238"
-              fill="none" stroke="var(--color-foreground)" strokeWidth="1.2" strokeLinecap="round" strokeOpacity="0.12"
-              animate={prefersReducedMotion ? {} : { opacity: [0.12, 0.25, 0.12], y: [0, -3, 0] }}
+            <rect x="380" y="292" width="24" height="20" rx="5" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1" />
+            <path d="M404 298 Q414 298 414 304 Q414 310 404 310" fill="none" stroke="var(--color-border)" strokeWidth="1.2" />
+            <motion.g
+              animate={prefersReducedMotion ? {} : { opacity: [0.1, 0.25, 0.1], y: [0, -4, 0] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.path
-              d="M314 254 Q316 244 314 234"
-              fill="none" stroke="var(--color-foreground)" strokeWidth="1.2" strokeLinecap="round" strokeOpacity="0.08"
-              animate={prefersReducedMotion ? {} : { opacity: [0.08, 0.2, 0.08], y: [0, -4, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-            />
+            >
+              <path d="M390 290 Q392 280 390 270" fill="none" stroke="var(--color-foreground)" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.12" />
+            </motion.g>
+            <motion.g
+              animate={prefersReducedMotion ? {} : { opacity: [0.08, 0.2, 0.08], y: [0, -5, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+            >
+              <path d="M398 290 Q400 278 398 266" fill="none" stroke="var(--color-foreground)" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.08" />
+            </motion.g>
           </motion.g>
 
-          {/* Plant */}
+          {/* ── Plant ── */}
           <motion.g
-            animate={prefersReducedMotion ? {} : { rotate: [0, 1.5, 0, -1.5, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ transformOrigin: '95px 270px' }}
+            animate={prefersReducedMotion ? {} : { rotate: [0, 2, 0, -2, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ transformOrigin: '105px 310px' }}
           >
-            <rect x="84" y="254" width="22" height="18" rx="4" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1" />
-            <path d="M95 254 Q88 238 82 226" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.4" />
-            <path d="M95 254 Q102 236 108 224" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.35" />
-            <path d="M95 254 Q95 240 95 228" fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.3" />
-            <circle cx="82" cy="224" r="5" fill="var(--color-accent)" fillOpacity="0.15" />
-            <circle cx="108" cy="222" r="4.5" fill="var(--color-accent)" fillOpacity="0.12" />
-            <circle cx="95" cy="226" r="3.5" fill="var(--color-accent)" fillOpacity="0.1" />
+            <rect x="90" y="292" width="30" height="22" rx="5" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1" />
+            <path d="M105 292 Q96 272 88 258" fill="none" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" strokeOpacity="0.35" />
+            <path d="M105 292 Q114 270 122 255" fill="none" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" strokeOpacity="0.3" />
+            <path d="M105 292 Q105 274 105 260" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.25" />
+            <circle cx="88" cy="256" r="7" fill="var(--color-accent)" fillOpacity="0.12" />
+            <circle cx="122" cy="253" r="6" fill="var(--color-accent)" fillOpacity="0.1" />
+            <circle cx="105" cy="258" r="5" fill="var(--color-accent)" fillOpacity="0.08" />
           </motion.g>
         </svg>
       </motion.div>
 
       {/* Floating code tokens */}
       {[
-        { label: '</>', x: '5%', y: '8%', delay: 0 },
-        { label: '{ }', x: '88%', y: '82%', delay: 0.4 },
-        { label: 'TS', x: '92%', y: '20%', delay: 0.8 },
-        { label: '⚡', x: '3%', y: '90%', delay: 1.2 },
+        { label: '</>', x: '3%', y: '5%' },
+        { label: '{ }', x: '90%', y: '85%' },
+        { label: 'TS', x: '93%', y: '15%' },
+        { label: '⚡', x: '1%', y: '92%' },
+        { label: '⚛', x: '88%', y: '50%' },
       ].map((el, i) => (
         <motion.div
           key={i}
-          className="absolute text-[10px] font-mono text-muted-foreground/25"
+          className="absolute text-[10px] font-mono text-muted-foreground/20"
           style={{ left: el.x, top: el.y }}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: prefersReducedMotion ? 0 : [0, -5, 0] }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: prefersReducedMotion ? 0 : [0, -6, 0] }}
           transition={{
-            opacity: { duration: 0.5, delay: 1.5 + el.delay },
-            y: { duration: 3 + i * 0.5, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut', delay: i * 0.3 },
+            opacity: { duration: 0.6, delay: 1.5 + i * 0.2 },
+            y: { duration: 3 + i * 0.4, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut', delay: i * 0.25 },
           }}
         >
           {el.label}
