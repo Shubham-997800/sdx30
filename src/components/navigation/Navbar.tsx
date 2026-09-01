@@ -11,6 +11,8 @@ import { navigation } from '@/data/navigation';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useCommandMenu } from '@/hooks/useCommandMenu';
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -20,9 +22,10 @@ export function Navbar() {
 
   useEffect(() => {
     function handleScroll() {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 40);
     }
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -45,52 +48,61 @@ export function Navbar() {
     <>
       <motion.header
         ref={headerRef}
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
-          isScrolled
-            ? 'border-b border-border/60 bg-background/80 backdrop-blur-xl'
-            : 'bg-transparent',
-        )}
-        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+        className="fixed top-0 left-0 right-0 z-50"
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
       >
-        <div className="mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between px-5 md:h-[72px] md:px-8 lg:px-10">
+        {/* ── Background + Border ── */}
+        <div
+          className={cn(
+            'absolute inset-0 transition-all duration-500',
+            isScrolled
+              ? 'bg-background/80 backdrop-blur-xl shadow-[0_1px_0_0_rgba(0,0,0,0.04)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.04)]'
+              : 'bg-transparent',
+          )}
+        />
+
+        {/* ── Content ── */}
+        <div className="relative mx-auto flex h-14 w-full max-w-[1280px] items-center justify-between px-5 md:h-16 md:px-8 lg:px-10">
           {/* Logo */}
           <a
             href="#"
             onClick={handleLogoClick}
             className={cn(
-              'relative z-10 text-h4 text-foreground transition-colors duration-200 font-heading',
+              'relative z-10 text-h4 text-foreground transition-colors duration-200 font-heading font-semibold tracking-tight',
               'hover:text-accent',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg px-1 -ml-1',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-1 -ml-1',
             )}
             aria-label="Go to top"
           >
-            SHUBHAM
-            <span className="text-accent">.DEV</span>
+            SD<span className="text-accent">.</span>
           </a>
 
           {/* Desktop Navigation */}
           <NavLinks links={navigation} />
 
           {/* Actions */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
+            {/* Command Palette */}
             <button
               onClick={openCommand}
               className={cn(
-                'hidden lg:flex items-center gap-1.5 rounded-lg border border-border/60 px-3 py-1.5',
-                'text-label text-muted-foreground transition-all duration-300',
-                'hover:border-accent/40 hover:text-foreground',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50',
+                'hidden lg:flex items-center gap-1.5 rounded-[4px] border border-border/60 px-2.5 py-1.5',
+                'text-[0.65rem] font-mono text-muted-foreground transition-all duration-200',
+                'hover:border-foreground/20 hover:text-foreground hover:bg-foreground/[0.03]',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50',
               )}
               aria-label="Open command palette (Ctrl+K)"
             >
-              <span className="font-mono text-[0.625rem]">⌘K</span>
+              <span className="opacity-50">⌘</span>
+              <span>K</span>
             </button>
 
+            {/* Theme Toggle */}
             <ThemeToggle />
 
+            {/* Mobile Menu */}
             <MobileMenuTrigger
               isOpen={mobileMenuOpen}
               onToggle={() => setMobileMenuOpen(!mobileMenuOpen)}
