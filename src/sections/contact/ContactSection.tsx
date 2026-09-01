@@ -1,244 +1,199 @@
 'use client';
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'motion/react';
-import { useRef } from 'react';
-import { Send, Check, AlertCircle } from 'lucide-react';
+import { Send, Loader2, CheckCircle2 } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
-import { SectionLabel } from '@/components/shared/SectionLabel';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { contactSchema, type ContactFormValues } from '@/schemas/contact';
-import { contactContent } from '@/data/contact';
-import { socialLinks } from '@/data/site';
-import { submitContact } from '@/services/contact';
+import { Button } from '@/components/ui/button';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { cn } from '@/lib/utils';
+import { contactContent } from '@/data/contact';
+import { personalInfo } from '@/data/site';
+import { submitContact } from '@/services/contact';
+import { contactSchema } from '@/schemas/contact';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-type SubmitState = 'idle' | 'loading' | 'success' | 'error';
-
-function FormField({
-  label,
-  error,
-  children,
-}: {
-  label: string;
-  error?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="space-y-2">
-      <label className="text-label text-muted-foreground">
-        {label}
-      </label>
-      {children}
-      {error && (
-        <p className="text-caption text-red-500" role="alert">
-          {error}
-        </p>
-      )}
-    </div>
-  );
-}
-
 export function ContactSection() {
   const prefersReducedMotion = useReducedMotion();
-  const [submitState, setSubmitState] = useState<SubmitState>('idle');
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
-  const headerRef = useRef<HTMLDivElement>(null);
-  const isHeaderInView = useInView(headerRef, { once: true, margin: '-80px' });
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const formRef = useRef<HTMLDivElement>(null);
-  const isFormInView = useInView(formRef, { once: true, margin: '-60px' });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      message: formData.get('message') as string,
+    };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<ContactFormValues>({
-    resolver: zodResolver(contactSchema),
-    mode: 'onSubmit',
-  });
+    const result = contactSchema.safeParse(data);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0] as string;
+        fieldErrors[field] = issue.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
 
-  const onSubmit = async (data: ContactFormValues) => {
-    setSubmitState('loading');
+    setErrors({});
+    setFormState('submitting');
+
     try {
-      await submitContact(data);
-      setSubmitState('success');
-      reset();
+      await submitContact(result.data);
+      setFormState('success');
+      (e.target as HTMLFormElement).reset();
     } catch {
-      setSubmitState('error');
+      setFormState('error');
     }
   };
 
   return (
-    <Section id="contact" className="py-24 md:py-36">
+    <Section id="contact" className="py-24 md:py-40 editorial-border-top">
       <Container>
-        {/* ─── Header ─── */}
-        <div ref={headerRef} className="mb-16 md:mb-24">
+        <div ref={ref} className="max-w-3xl mx-auto text-center">
+          {/* Large editorial heading */}
           <motion.div
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-            animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
-          >
-            <SectionLabel>{contactContent.label}</SectionLabel>
-          </motion.div>
-          <motion.h2
-            className="text-section mt-6 text-foreground whitespace-pre-line"
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
-          >
-            {contactContent.heading}
-          </motion.h2>
-          <motion.div
-            className="mt-8 h-px w-full bg-border"
-            initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
-            animate={isHeaderInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
-            style={{ transformOrigin: 'left' }}
-          />
-        </div>
-
-        {/* ─── Content ─── */}
-        <div ref={formRef} className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-8 lg:gap-12">
-          {/* Left: Message + Socials */}
-          <motion.div
-            className="col-span-4 space-y-10"
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={isFormInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1, ease: EASE }}
-          >
-            <p className="text-body text-muted-foreground leading-relaxed max-w-sm">
-              {contactContent.message}
-            </p>
-
-            {/* Social Links */}
-            <div className="space-y-4">
-              <span className="text-label text-muted-foreground">
-                SOCIALS
-              </span>
-              <div className="space-y-2">
-                {socialLinks.map((link) => {
-                  const isConfigured = !link.href.includes('[TODO');
-                  return (
-                    <a
-                      key={link.label}
-                      href={isConfigured ? link.href : '#'}
-                      target={isConfigured ? '_blank' : undefined}
-                      rel={isConfigured ? 'noopener noreferrer' : undefined}
-                      className={cn(
-                        'group flex items-center gap-3 py-2 text-body-sm',
-                        isConfigured
-                          ? 'text-foreground/80 hover:text-foreground transition-all duration-300 hover:translate-x-1'
-                          : 'text-muted-foreground/50 cursor-default',
-                      )}
-                    >
-                      <span>{link.label}</span>
-                      {isConfigured && (
-                        <span className="text-label text-accent transition-transform duration-300 group-hover:translate-x-1">
-                          →
-                        </span>
-                      )}
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right: Form */}
-          <motion.div
-            className="col-span-4 lg:col-span-7"
             initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            animate={isFormInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: EASE }}
           >
-            {submitState === 'success' ? (
-              <div className="rounded-xl border border-accent/30 bg-accent/5 p-8 md:p-12 text-center">
-                <div className="inline-flex items-center justify-center size-12 rounded-full bg-accent/10 mb-4">
-                  <Check className="size-6 text-accent" />
-                </div>
-                <p className="text-subheading text-foreground mb-2">
-                  {contactContent.successTitle}
-                </p>
-                <p className="text-body text-muted-foreground">
-                  {contactContent.successMessage}
-                </p>
-                <button
-                  onClick={() => setSubmitState('idle')}
-                  className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl px-5 text-button text-muted-foreground transition-all duration-300 hover:text-foreground hover:bg-muted hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-                >
-                  Send another message
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
-                <FormField label={contactContent.nameLabel} error={errors.name?.message}>
-                  <Input
-                    {...register('name')}
-                    placeholder={contactContent.namePlaceholder}
-                    autoComplete="name"
-                    aria-invalid={!!errors.name}
-                    className="bg-transparent"
-                  />
-                </FormField>
+            <span className="text-label text-accent mb-6 block">{contactContent.label}</span>
+            <h2 className="text-section md:text-[clamp(2.5rem,6vw,5rem)] text-foreground leading-[1.05] tracking-tight font-heading font-bold">
+              {contactContent.heading}
+            </h2>
+          </motion.div>
 
-                <FormField label={contactContent.emailLabel} error={errors.email?.message}>
-                  <Input
-                    {...register('email')}
-                    type="email"
-                    placeholder={contactContent.emailPlaceholder}
-                    autoComplete="email"
-                    aria-invalid={!!errors.email}
-                    className="bg-transparent"
-                  />
-                </FormField>
+          {/* Message */}
+          <motion.p
+            className="mt-6 text-body-lg text-muted-foreground max-w-lg mx-auto"
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+          >
+            {contactContent.message}
+          </motion.p>
 
-                <FormField label={contactContent.messageLabel} error={errors.message?.message}>
-                  <Textarea
-                    {...register('message')}
-                    placeholder={contactContent.messagePlaceholder}
-                    rows={5}
-                    aria-invalid={!!errors.message}
-                    className="bg-transparent resize-none"
-                  />
-                </FormField>
+          {/* Form */}
+          <motion.form
+            className="mt-10 md:mt-12 space-y-5 text-left max-w-lg mx-auto"
+            onSubmit={handleSubmit}
+            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
+          >
+            {/* Name */}
+            <div className="space-y-2">
+              <label htmlFor="name" className="text-label text-muted-foreground block">
+                {contactContent.nameLabel}
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder={contactContent.namePlaceholder}
+                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-colors duration-200 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none"
+              />
+              {errors.name && <span className="text-caption text-destructive">{errors.name}</span>}
+            </div>
 
-                {submitState === 'error' && (
-                  <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 p-3">
-                    <AlertCircle className="size-4 text-destructive shrink-0" />
-                    <p className="text-caption text-destructive" role="alert">
-                      {contactContent.errorMessage}
-                    </p>
-                  </div>
+            {/* Email */}
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-label text-muted-foreground block">
+                {contactContent.emailLabel}
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder={contactContent.emailPlaceholder}
+                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-colors duration-200 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none"
+              />
+              {errors.email && <span className="text-caption text-destructive">{errors.email}</span>}
+            </div>
+
+            {/* Message */}
+            <div className="space-y-2">
+              <label htmlFor="message" className="text-label text-muted-foreground block">
+                {contactContent.messageLabel}
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows={5}
+                placeholder={contactContent.messagePlaceholder}
+                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-colors duration-200 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none resize-y"
+              />
+              {errors.message && <span className="text-caption text-destructive">{errors.message}</span>}
+            </div>
+
+            {/* Submit */}
+            <div className="pt-2">
+              <Button
+                type="submit"
+                variant="shimmer"
+                size="lg"
+                disabled={formState === 'submitting'}
+                className="group/btn w-full sm:w-auto"
+              >
+                {formState === 'submitting' ? (
+                  <>
+                    <Loader2 className="size-4 animate-spin" />
+                    {contactContent.submittingLabel}
+                  </>
+                ) : formState === 'success' ? (
+                  <>
+                    <CheckCircle2 className="size-4" />
+                    SENT
+                  </>
+                ) : (
+                  <>
+                    {contactContent.submitLabel}
+                    <Send className="size-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                  </>
                 )}
+              </Button>
+            </div>
+          </motion.form>
 
-                <button
-                  type="submit"
-                  disabled={submitState === 'loading'}
-                  className="group/btn relative inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-6 text-button text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:brightness-95 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:brightness-100"
-                >
-                  {submitState === 'loading' ? (
-                    <>
-                      <span className="size-4 rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground animate-spin" />
-                      {contactContent.submittingLabel}
-                    </>
-                  ) : (
-                    <>
-                      {contactContent.submitLabel}
-                      <Send className="size-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
+          {/* Social links */}
+          <motion.div
+            className="mt-12 flex items-center justify-center gap-6"
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
+          >
+            <span className="text-caption text-muted-foreground">OR</span>
+            <a
+              href={`mailto:${personalInfo.email}`}
+              className="text-label text-muted-foreground transition-colors duration-200 hover:text-accent"
+            >
+              EMAIL DIRECTLY
+            </a>
+            <span className="text-muted-foreground/30">·</span>
+            <a
+              href={`https://github.com/${personalInfo.github}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-label text-muted-foreground transition-colors duration-200 hover:text-accent"
+            >
+              GITHUB
+            </a>
+            <span className="text-muted-foreground/30">·</span>
+            <a
+              href={`https://linkedin.com/in/${personalInfo.linkedin}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-label text-muted-foreground transition-colors duration-200 hover:text-accent"
+            >
+              LINKEDIN
+            </a>
           </motion.div>
         </div>
       </Container>

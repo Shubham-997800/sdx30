@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Download, Sparkles } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Magnetic } from '@/components/interaction/Magnetic';
 import { Button } from '@/components/ui/button';
@@ -14,9 +14,9 @@ import { HeroVisual } from './HeroVisual';
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const fadeUp = (delay: number, reduced: boolean) => ({
-  initial: reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
+  initial: reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, delay, ease: EASE },
+  transition: { duration: 0.7, delay, ease: EASE },
 });
 
 const clipReveal = (delay: number, reduced: boolean) => ({
@@ -36,24 +36,32 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-[100vh] min-h-[100dvh] flex items-center pt-20 pb-16 md:pt-24 md:pb-20 overflow-hidden">
-      {/* Subtle grid background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]">
-          <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="hero-bg-grid" width="48" height="48" patternUnits="userSpaceOnUse">
-                <path d="M 48 0 L 0 0 0 48" fill="none" stroke="currentColor" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hero-bg-grid)" />
-          </svg>
-        </div>
+      {/* Editorial grid overlay */}
+      <div className="editorial-grid-overlay">
+        <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="hero-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+              <path d="M 48 0 L 0 0 0 48" fill="none" stroke="currentColor" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hero-grid)" />
+        </svg>
       </div>
+
+      {/* Large editorial number — background element */}
+      <motion.div
+        className="absolute -right-8 top-1/2 -translate-y-1/2 text-editorial-number pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]"
+        initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+        animate={{ opacity: prefersReducedMotion ? 0.03 : 0.03 }}
+        transition={{ duration: 1.5, delay: 0.5 }}
+      >
+        01
+      </motion.div>
 
       <Container className="w-full relative z-10">
         <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* ─── Content ─── */}
-          <div className="col-span-4 md:col-span-8 lg:col-span-6 space-y-6 md:space-y-8">
+          <div className="col-span-4 md:col-span-8 lg:col-span-7 space-y-5 md:space-y-6">
             {/* Availability Status */}
             <motion.div {...fadeUp(0.1, prefersReducedMotion)}>
               <span className="inline-flex items-center gap-2.5 text-label text-accent">
@@ -78,7 +86,7 @@ export function HeroSection() {
                 as="h1"
                 className="text-display text-foreground"
                 delay={0.2}
-                staggerDelay={0.035}
+                staggerDelay={0.04}
               />
             )}
 
@@ -93,13 +101,13 @@ export function HeroSection() {
                 as="p"
                 className="text-subheading text-accent"
                 delay={0.6}
-                staggerDelay={0.04}
+                staggerDelay={0.045}
               />
             )}
 
             {/* Main Statement */}
             <motion.div {...fadeUp(0.9, prefersReducedMotion)}>
-              <p className="text-body-lg text-foreground max-w-lg whitespace-pre-line">
+              <p className="text-body-lg text-foreground max-w-lg whitespace-pre-line leading-relaxed">
                 {heroContent.mainStatement}
               </p>
             </motion.div>
@@ -113,7 +121,7 @@ export function HeroSection() {
 
             {/* CTAs */}
             <motion.div
-              className="flex flex-wrap items-center gap-4 pt-2"
+              className="flex flex-wrap items-center gap-3 pt-2"
               {...fadeUp(1.1, prefersReducedMotion)}
             >
               <Magnetic strength={8}>
@@ -123,9 +131,8 @@ export function HeroSection() {
                   onClick={scrollToWork}
                   className="group/btn"
                 >
-                  <Sparkles className="size-4 transition-all duration-300 group-hover/btn:rotate-12 group-hover/btn:scale-110" />
                   {heroContent.cta.primary}
-                  <ArrowRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-1.5" />
+                  <ArrowRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
                 </Button>
               </Magnetic>
               <Magnetic strength={8}>
@@ -135,7 +142,7 @@ export function HeroSection() {
                   rel="noopener noreferrer"
                 >
                   <Button variant="glass" size="lg" className="group/btn">
-                    <Download className="size-4 transition-transform duration-300 group-hover/btn:-translate-y-1 group-hover/btn:scale-110" />
+                    <Download className="size-4 transition-transform duration-300 group-hover/btn:-translate-y-0.5" />
                     {heroContent.cta.secondary}
                   </Button>
                 </a>
@@ -144,7 +151,7 @@ export function HeroSection() {
 
             {/* Social Links */}
             <motion.div
-              className="flex flex-wrap items-center gap-4 pt-2"
+              className="flex flex-wrap items-center gap-5 pt-1"
               {...fadeUp(1.2, prefersReducedMotion)}
             >
               {socialLinks.map((link, i) => (
@@ -153,10 +160,10 @@ export function HeroSection() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-label text-muted-foreground transition-all duration-300 hover:text-foreground hover:translate-y-[-1px]"
-                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
+                  className="text-label text-muted-foreground transition-all duration-200 hover:text-foreground"
+                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1.3 + i * 0.08, ease: EASE }}
+                  transition={{ duration: 0.4, delay: 1.3 + i * 0.06, ease: EASE }}
                 >
                   {link.label}
                 </motion.a>
@@ -166,7 +173,7 @@ export function HeroSection() {
 
           {/* ─── Visual ─── */}
           <motion.div
-            className="col-span-4 lg:col-span-6 hidden lg:flex items-center justify-center"
+            className="col-span-4 lg:col-span-5 hidden lg:flex items-center justify-center"
             {...clipReveal(0.4, prefersReducedMotion)}
           >
             <HeroVisual />
@@ -181,7 +188,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 1.6 }}
         >
           <span className="text-label text-muted-foreground">
-            Scroll
+            SCROLL
           </span>
           <motion.div
             className="h-8 w-px bg-gradient-to-b from-muted-foreground/30 to-transparent"

@@ -64,7 +64,7 @@ export function NavLinks({ links }: NavLinksProps) {
   }, [links]);
 
   return (
-    <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
+    <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
       {links.map((link) => (
         <NavLink
           key={link.href}
