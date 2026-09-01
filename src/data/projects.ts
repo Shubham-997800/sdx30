@@ -137,7 +137,7 @@ export const projects: Project[] = [
     ],
     technologies: ['React', 'JavaScript', 'HTML', 'CSS', 'AI Integration'],
     layout: 'media-right',
-    liveUrl: 'https://startuplaunch30.vercel.app',
+    liveUrl: 'https://startuplaunch30.vercel.app/',
     githubUrl: 'https://github.com/Shubham-997800/startuplaunchai',
     imageUrl: '/projects/startuplaunch.jpg',
   },

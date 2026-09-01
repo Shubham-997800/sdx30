@@ -26,9 +26,9 @@ export function ThemeToggle() {
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className={cn(
-        "relative flex size-10 items-center justify-center rounded-xl transition-all duration-300",
-        "text-muted-foreground hover:text-foreground hover:bg-muted hover:-translate-y-0.5",
-        "focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        "relative flex size-8 items-center justify-center rounded-[4px] transition-all duration-200",
+        "text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
       )}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
@@ -41,10 +41,10 @@ export function ThemeToggle() {
             }
             animate={{ rotate: 0, opacity: 1, scale: 1 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { rotate: 90, opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="absolute"
           >
-            <Sun className="size-4" strokeWidth={1.5} />
+            <Sun className="size-3.5" strokeWidth={1.5} />
           </motion.span>
         ) : (
           <motion.span
@@ -52,10 +52,10 @@ export function ThemeToggle() {
             initial={prefersReducedMotion ? { opacity: 1 } : { rotate: 90, opacity: 0, scale: 0.5 }}
             animate={{ rotate: 0, opacity: 1, scale: 1 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { rotate: -90, opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="absolute"
           >
-            <Moon className="size-4" strokeWidth={1.5} />
+            <Moon className="size-3.5" strokeWidth={1.5} />
           </motion.span>
         )}
       </AnimatePresence>

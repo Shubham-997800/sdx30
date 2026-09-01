@@ -14,7 +14,7 @@ function NavLink({ href, label, isActive }: NavLinkProps) {
     <a
       href={href}
       className={cn(
-        'group relative py-1 text-nav tracking-wide transition-colors duration-200',
+        'relative py-1.5 text-[0.8rem] font-medium tracking-wide transition-colors duration-200',
         isActive
           ? 'text-foreground'
           : 'text-muted-foreground hover:text-foreground',
@@ -64,7 +64,7 @@ export function NavLinks({ links }: NavLinksProps) {
   }, [links]);
 
   return (
-    <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
+    <nav className="hidden items-center gap-6 lg:flex" aria-label="Main navigation">
       {links.map((link) => (
         <NavLink
           key={link.href}

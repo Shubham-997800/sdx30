@@ -1,9 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/space-grotesk";
-@import "@fontsource-variable/manrope";
-@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -12,9 +11,9 @@
    ═══════════════════════════════════════════════ */
 
 @theme inline {
-  --font-heading: "Space Grotesk Variable", "Space Grotesk", sans-serif;
-  --font-sans: "Manrope Variable", "Manrope", sans-serif;
-  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  --font-heading: "Geist Variable", "Geist", system-ui, sans-serif;
+  --font-sans: "Geist Variable", "Geist", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -156,13 +155,14 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-feature-settings: "cv01", "cv02", "cv03", "cv04", "cv05", "cv06", "cv07", "cv08", "cv09", "cv10", "cv11";
   }
 
   html {
     @apply font-sans scroll-smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
@@ -201,168 +201,194 @@
 }
 
 /* ═══════════════════════════════════════════════
-   TYPOGRAPHY — Editorial Scale
+   TYPOGRAPHY — Geist Editorial Scale
+
+   Geist: geometric, compact x-height, futuristic
+   Tight tracking at display sizes, open at body
    ═══════════════════════════════════════════════ */
 
+/* ── Display: Hero name, massive statement ── */
 .text-display {
   font-family: var(--font-heading);
-  font-size: clamp(3.5rem, 10vw, 9rem);
-  line-height: 0.88;
-  letter-spacing: -0.06em;
+  font-size: clamp(3.25rem, 9vw, 8.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
   font-weight: 700;
+  font-feature-settings: "cv01" 1, "cv02" 1;
 }
 
+/* ── Marquee: Infinite scroll text ── */
 .text-marquee {
   font-family: var(--font-heading);
-  font-size: clamp(3rem, 9vw, 8rem);
+  font-size: clamp(2.75rem, 8vw, 7.5rem);
   line-height: 1;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   font-weight: 700;
   text-transform: uppercase;
 }
 
+/* ── Section: Major section headings ── */
 .text-section {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(1.875rem, 4.5vw, 3.75rem);
   line-height: 1.05;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   font-weight: 700;
 }
 
+/* ── Feature: Project titles, large subheads ── */
 .text-feature {
   font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 3.5vw, 2.75rem);
+  font-size: clamp(1.375rem, 3vw, 2.5rem);
   line-height: 1.1;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.03em;
   font-weight: 700;
 }
 
+/* ── Subheading: Card headers, intro lines ── */
 .text-subheading {
   font-family: var(--font-heading);
-  font-size: clamp(1.125rem, 2.25vw, 1.625rem);
-  line-height: 1.2;
-  letter-spacing: -0.025em;
-  font-weight: 600;
-}
-
-.text-h3 {
-  font-family: var(--font-heading);
-  font-size: clamp(1rem, 1.75vw, 1.375rem);
+  font-size: clamp(1.0625rem, 2vw, 1.5rem);
   line-height: 1.25;
   letter-spacing: -0.02em;
   font-weight: 600;
 }
 
-.text-h4 {
+/* ── H2: Section subheadings ── */
+.text-h2 {
   font-family: var(--font-heading);
-  font-size: clamp(0.9375rem, 1.4vw, 1.0625rem);
+  font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+/* ── H3: Subsection headings ── */
+.text-h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(0.9375rem, 1.5vw, 1.25rem);
   line-height: 1.3;
   letter-spacing: -0.015em;
   font-weight: 600;
 }
 
+/* ── H4: Card titles, small headings ── */
+.text-h4 {
+  font-family: var(--font-heading);
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+/* ── Body Large: Lead paragraphs ── */
 .text-body-lg {
-  font-size: clamp(1rem, 1.15vw, 1.1875rem);
+  font-size: clamp(0.9375rem, 1.1vw, 1.125rem);
   line-height: 1.7;
   font-weight: 400;
   letter-spacing: -0.005em;
 }
 
+/* ── Body: Default text ── */
 .text-body {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   line-height: 1.65;
   font-weight: 400;
   letter-spacing: 0;
 }
 
+/* ── Body Small: Secondary info, metadata ── */
 .text-body-sm {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1.6;
   font-weight: 400;
-  letter-spacing: 0;
+  letter-spacing: 0.005em;
 }
 
+/* ── Caption: Fine print, timestamps ── */
 .text-caption {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   line-height: 1.5;
   font-weight: 400;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.015em;
 }
 
+/* ── Label: Uppercase tags, section markers (mono) ── */
 .text-label {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   line-height: 1.4;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
+/* ── Overline: Section category labels (mono) ── */
 .text-overline {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   line-height: 1.4;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted-foreground);
 }
 
+/* ── Metadata: Technical labels (mono) ── */
 .text-metadata {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   line-height: 1.4;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-weight: 400;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
+/* ── Code: Inline code, code blocks (mono) ── */
 .text-code {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
-  line-height: 1.6;
+  line-height: 1.65;
   font-weight: 400;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
 }
 
+/* ── Button: Button labels ── */
 .text-button {
-  font-size: 0.8125rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
   line-height: 1;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
+/* ── Nav: Navigation links ── */
 .text-nav {
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
   line-height: 1;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
-.text-h2 {
-  font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  font-weight: 700;
-}
-
+/* ── Editorial Number: Large background numbers ── */
 .text-editorial-number {
   font-family: var(--font-heading);
-  font-size: clamp(6rem, 15vw, 12rem);
+  font-size: clamp(5rem, 14vw, 11rem);
   line-height: 0.85;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.055em;
   font-weight: 700;
   color: var(--editorial-muted);
   user-select: none;
 }
 
+/* ── Stat: Large stat numbers ── */
 .text-stat {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.035em;
   font-weight: 700;
 }
 

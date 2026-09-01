@@ -4,67 +4,69 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  // ── Base ──
-  "group/btn relative inline-flex shrink-0 items-center justify-center gap-1.5 overflow-hidden whitespace-nowrap outline-none select-none transition-all duration-200 ease-[var(--ease-spring)] focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:not-aria-[haspopup]:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/btn relative inline-flex shrink-0 items-center justify-center gap-1.5 overflow-hidden whitespace-nowrap font-medium outline-none select-none transition-all duration-200 ease-[var(--ease-spring)] focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:not-aria-[haspopup]:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        // ── Solid: accent bg, dark text ──
+        // ── Primary: white bg, sharp, premium ──
         default:
-          "bg-accent text-accent-foreground border border-accent hover:brightness-110 hover:-translate-y-px hover:shadow-md active:translate-y-0 active:shadow-sm active:brightness-95",
+          "bg-primary text-primary-foreground border border-primary/20 rounded-[4px] hover:bg-primary/90 hover:border-primary/30 hover:shadow-[0_0_20px_oklch(from_var(--primary)_l_c_h_/_0.15)] active:bg-primary/85",
 
-        // ── Outline: border, transparent bg ──
+        // ── Outline: transparent, border only ──
         outline:
-          "border border-border bg-transparent text-foreground hover:bg-muted/50 hover:border-border-strong hover:-translate-y-px hover:shadow-sm active:translate-y-0 active:bg-muted/80",
+          "bg-transparent text-foreground border border-border rounded-[4px] hover:border-foreground/30 hover:bg-foreground/[0.03] active:bg-foreground/[0.06]",
 
         // ── Secondary: subtle surface ──
         secondary:
-          "bg-secondary text-secondary-foreground border border-transparent hover:bg-secondary/80 hover:-translate-y-px active:translate-y-0",
+          "bg-secondary text-secondary-foreground border border-transparent rounded-[4px] hover:bg-secondary/80 active:bg-secondary/70",
 
-        // ── Ghost: no bg, no border ──
+        // ── Ghost: no border ──
         ghost:
-          "border border-transparent text-foreground hover:bg-muted/50 hover:-translate-y-px active:translate-y-0",
+          "bg-transparent text-foreground border border-transparent rounded-[4px] hover:bg-foreground/[0.05] active:bg-foreground/[0.08]",
 
-        // ── Destructive: danger actions ──
+        // ── Destructive: danger ──
         destructive:
-          "bg-destructive text-white border border-destructive hover:brightness-110 hover:-translate-y-px hover:shadow-md active:translate-y-0 active:brightness-95",
+          "bg-destructive text-white border border-destructive rounded-[4px] hover:bg-destructive/90 hover:border-destructive/80 active:bg-destructive/80",
 
         // ── Link: inline text ──
         link:
-          "text-accent underline-offset-4 hover:underline border-none bg-transparent p-0 h-auto active:scale-[0.98]",
+          "text-accent underline-offset-4 hover:underline border-none bg-transparent p-0 h-auto rounded-none active:scale-[0.97]",
 
-        // ── Neo: sharp corners, offset shadow ──
-        neo:
-          "rounded-none border-2 border-foreground bg-accent text-accent-foreground font-semibold shadow-[3px_3px_0_oklch(0.12_0.005_260_/_0.2)] hover:shadow-[4px_4px_0_oklch(0.12_0.005_260_/_0.25)] hover:-translate-y-px hover:brightness-110 active:shadow-[1px_1px_0_oklch(0.12_0.005_260_/_0.2)] active:translate-y-[2px] active:brightness-95 dark:shadow-[3px_3px_0_oklch(1_0_0_/_0.12)] dark:hover:shadow-[4px_4px_0_oklch(1_0_0_/_0.18)] dark:active:shadow-[1px_1px_0_oklch(1_0_0_/_0.12)]",
+        // ── Accent: teal accent bg ──
+        accent:
+          "bg-accent text-accent-foreground border border-accent rounded-[4px] hover:bg-accent/90 hover:shadow-[0_0_20px_oklch(from_var(--accent)_l_c_h_/_0.2)] active:bg-accent/80",
 
-        // ── Glass: frosted, for overlay sections ──
+        // ── Glass: frosted for dark sections ──
         glass:
-          "border border-white/10 bg-white/5 backdrop-blur-md text-foreground shadow-lg shadow-black/10 hover:bg-white/10 hover:border-white/20 hover:shadow-xl hover:shadow-black/15 hover:-translate-y-px active:translate-y-0 active:bg-white/8",
+          "bg-white/5 text-foreground border border-white/10 rounded-[4px] backdrop-blur-md hover:bg-white/10 hover:border-white/20 active:bg-white/[0.08]",
 
-        // ── Glow: primary with ambient blur halo ──
+        // ── Glow: accent with ambient halo ──
         glow:
-          "relative bg-accent text-accent-foreground border border-accent shadow-xl shadow-accent/25 hover:shadow-2xl hover:shadow-accent/40 hover:-translate-y-px hover:brightness-110 active:translate-y-0 active:brightness-95 before:absolute before:inset-0 before:rounded-[inherit] before:bg-accent before:blur-xl before:opacity-30 before:transition-opacity before:duration-300 hover:before:opacity-50",
+          "relative bg-accent text-accent-foreground border border-accent rounded-[4px] shadow-[0_0_24px_oklch(from_var(--accent)_l_c_h_/_0.2)] hover:shadow-[0_0_32px_oklch(from_var(--accent)_l_c_h_/_0.35)] hover:bg-accent/90 active:bg-accent/80",
 
-        // ── Shimmer: light sweep on hover ──
+        // ── Shimmer: light sweep ──
         shimmer:
-          "relative bg-accent text-accent-foreground border border-accent shadow-lg shadow-accent/20 overflow-hidden hover:shadow-xl hover:shadow-accent/35 hover:-translate-y-px hover:brightness-110 active:translate-y-0 active:brightness-95 before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent hover:before:translate-x-full before:transition-transform before:duration-500",
+          "relative bg-primary text-primary-foreground border border-primary/20 rounded-[4px] shadow-[0_0_16px_oklch(from_var(--primary)_l_c_h_/_0.1)] hover:shadow-[0_0_24px_oklch(from_var(--primary)_l_c_h_/_0.2)] hover:border-primary/30 hover:bg-primary/90 active:bg-primary/85 overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent hover:before:translate-x-full before:transition-transform before:duration-500",
+
+        // ── Neo: sharp offset shadow ──
+        neo:
+          "rounded-none border-2 border-foreground bg-primary text-primary-foreground font-semibold shadow-[3px_3px_0_foreground] hover:shadow-[4px_4px_0_foreground] hover:-translate-y-px active:shadow-[1px_1px_0_foreground] active:translate-y-[2px]",
       },
 
       size: {
-        xs: "h-8 rounded-lg px-3 text-xs gap-1 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-9 rounded-lg px-4 text-[0.8rem] has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 [&_svg:not([class*='size-'])]:size-3.5",
-        default: "h-10 rounded-lg px-5 text-sm has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
-        lg: "h-12 rounded-xl px-7 text-base has-data-[icon=inline-end]:pr-6 has-data-[icon=inline-start]:pl-6",
-        xl: "h-14 rounded-xl px-9 text-base gap-2 has-data-[icon=inline-end]:pr-8 has-data-[icon=inline-start]:pl-8",
-        icon: "size-10 rounded-lg",
-        "icon-xs": "size-8 rounded-lg [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm": "size-9 rounded-lg",
-        "icon-lg": "size-12 rounded-xl",
+        xs: "h-7 rounded-[3px] px-2.5 text-[0.7rem] gap-1 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-8 rounded-[3px] px-3.5 text-[0.75rem] has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-3.5",
+        default: "h-9 px-5 text-[0.8rem] has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
+        lg: "h-11 px-6 text-[0.85rem] has-data-[icon=inline-end]:pr-5 has-data-[icon=inline-start]:pl-5",
+        xl: "h-12 px-8 text-sm gap-2 has-data-[icon=inline-end]:pr-7 has-data-[icon=inline-start]:pl-7",
+        icon: "size-9 rounded-[3px]",
+        "icon-xs": "size-7 rounded-[3px] [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm": "size-8 rounded-[3px]",
+        "icon-lg": "size-11 rounded-[4px]",
       },
     },
 
     compoundVariants: [
-      // Neo sizes use sharp corners
       { variant: "neo", size: "xs", className: "rounded-none" },
       { variant: "neo", size: "sm", className: "rounded-none" },
       { variant: "neo", size: "default", className: "rounded-none" },
@@ -75,7 +77,6 @@ const buttonVariants = cva(
       { variant: "neo", size: "icon-sm", className: "rounded-none" },
       { variant: "neo", size: "icon-lg", className: "rounded-none" },
 
-      // Link size overrides
       { variant: "link", size: "xs", className: "h-auto px-0" },
       { variant: "link", size: "sm", className: "h-auto px-0" },
       { variant: "link", size: "default", className: "h-auto px-0" },
