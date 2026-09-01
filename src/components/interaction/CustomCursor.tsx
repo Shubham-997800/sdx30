@@ -49,11 +49,11 @@ export function CustomCursor() {
   return (
     <>
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[9999] size-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/20 mix-blend-difference hidden md:block"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] size-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-accent/50 dark:border-foreground/20 dark:mix-blend-difference hidden md:block"
         style={{ x: ringX, y: ringY }}
       />
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[9999] size-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground mix-blend-difference hidden md:block"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent dark:bg-foreground dark:mix-blend-difference hidden md:block"
         style={{ x: smoothDotX, y: smoothDotY }}
       />
     </>
