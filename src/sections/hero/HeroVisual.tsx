@@ -66,7 +66,7 @@ export function HeroVisual() {
   return (
     <div
       ref={containerRef}
-      className="relative aspect-square w-full max-w-lg"
+      className="relative aspect-square w-full max-w-lg overflow-hidden"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >

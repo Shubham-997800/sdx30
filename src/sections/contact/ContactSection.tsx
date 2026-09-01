@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
+import { Send, Check, AlertCircle } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionLabel } from '@/components/shared/SectionLabel';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { contactSchema, type ContactFormValues } from '@/schemas/contact';
@@ -136,13 +136,13 @@ export function ContactSection() {
                       className={cn(
                         'group flex items-center gap-3 py-2 text-body-sm',
                         isConfigured
-                          ? 'text-foreground/70 hover:text-foreground transition-colors'
+                          ? 'text-foreground/70 hover:text-foreground transition-all duration-300 hover:translate-x-1'
                           : 'text-muted-foreground/40 cursor-default',
                       )}
                     >
                       <span>{link.label}</span>
                       {isConfigured && (
-                        <span className="text-[10px] text-accent transition-transform duration-200 group-hover:translate-x-0.5">
+                        <span className="text-[10px] text-accent transition-transform duration-300 group-hover:translate-x-1">
                           →
                         </span>
                       )}
@@ -162,19 +162,21 @@ export function ContactSection() {
           >
             {submitState === 'success' ? (
               <div className="rounded-xl border border-accent/30 bg-accent/5 p-8 md:p-12 text-center">
-                <p className="text-label text-accent mb-3">
+                <div className="inline-flex items-center justify-center size-12 rounded-full bg-accent/10 mb-4">
+                  <Check className="size-6 text-accent" />
+                </div>
+                <p className="text-subheading text-foreground mb-2">
                   {contactContent.successTitle}
                 </p>
                 <p className="text-body text-muted-foreground">
                   {contactContent.successMessage}
                 </p>
-                <Button
-                  variant="ghost"
-                  className="mt-6"
+                <button
                   onClick={() => setSubmitState('idle')}
+                  className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl px-5 text-sm font-semibold text-muted-foreground transition-all duration-300 hover:text-foreground hover:bg-muted hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
                   Send another message
-                </Button>
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
@@ -210,21 +212,31 @@ export function ContactSection() {
                 </FormField>
 
                 {submitState === 'error' && (
-                  <p className="text-caption text-red-500" role="alert">
-                    {contactContent.errorMessage}
-                  </p>
+                  <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 p-3">
+                    <AlertCircle className="size-4 text-destructive shrink-0" />
+                    <p className="text-caption text-destructive" role="alert">
+                      {contactContent.errorMessage}
+                    </p>
+                  </div>
                 )}
 
-                <Button
+                <button
                   type="submit"
-                  size="lg"
                   disabled={submitState === 'loading'}
-                  className="w-full"
+                  className="group/btn relative inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-6 text-[0.9rem] font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:brightness-95 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:brightness-100"
                 >
-                  {submitState === 'loading'
-                    ? contactContent.submittingLabel
-                    : contactContent.submitLabel}
-                </Button>
+                  {submitState === 'loading' ? (
+                    <>
+                      <span className="size-4 rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground animate-spin" />
+                      {contactContent.submittingLabel}
+                    </>
+                  ) : (
+                    <>
+                      {contactContent.submitLabel}
+                      <Send className="size-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                    </>
+                  )}
+                </button>
               </form>
             )}
           </motion.div>

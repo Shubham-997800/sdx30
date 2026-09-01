@@ -2,16 +2,15 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { ExternalLink, ArrowUpRight } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionLabel } from '@/components/shared/SectionLabel';
-import { Button } from '@/components/ui/button';
 import { githubProfile } from '@/data/github';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// Contribution cell component
 function ContributionCell({ level }: { level: number }) {
   const opacity = level === 0 ? 'opacity-[0.04] dark:opacity-[0.06]' : '';
   const bg =
@@ -34,13 +33,11 @@ function ContributionCell({ level }: { level: number }) {
   );
 }
 
-// Simulated contribution grid (static fallback)
 function ContributionGraph() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
-  // Generate a deterministic pattern for demo
   const weeks = 20;
   const days = 7;
   const pattern = Array.from({ length: weeks * days }, (_, i) => {
@@ -102,17 +99,16 @@ function ContributionGraph() {
   );
 }
 
-// Stats component (with fallback values)
 function GitHubStatsGrid() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   const stats = [
-    { label: 'REPOSITORIES', value: '—' },
-    { label: 'CONTRIBUTIONS', value: '—' },
-    { label: 'PULL REQUESTS', value: '—' },
-    { label: 'STARS', value: '—' },
+    { label: 'CONTRIBUTIONS', value: githubProfile.stats.contributions },
+    { label: 'REPOSITORIES', value: String(githubProfile.pinnedRepos.length) },
+    { label: 'PULL REQUESTS', value: githubProfile.stats.prs },
+    { label: 'STARS', value: githubProfile.stats.stars },
   ];
 
   return (
@@ -139,8 +135,7 @@ function GitHubStatsGrid() {
   );
 }
 
-// Repositories fallback
-function RepositoryList() {
+function PinnedRepositories() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
@@ -155,22 +150,67 @@ function RepositoryList() {
     >
       <div className="flex items-center justify-between mb-4">
         <span className="text-label text-muted-foreground">
-          REPOSITORIES
+          ALL REPOSITORIES
         </span>
         <span className="text-label text-muted-foreground/50">
-          Public
+          {githubProfile.pinnedRepos.length} repos
         </span>
       </div>
-      <div className="text-center py-10">
-        <p className="text-body-sm text-muted-foreground">
-          Connect your GitHub profile to display repositories and contribution data.
-        </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {githubProfile.pinnedRepos.map((repo) => (
+          <div
+            key={repo.name}
+            className="group rounded-lg border border-border p-4 transition-all duration-300 hover:border-accent/40 hover:bg-accent/5 hover:-translate-y-0.5"
+          >
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <h4 className="text-body-sm font-semibold text-foreground group-hover:text-accent transition-colors truncate">
+                    {repo.name}
+                  </h4>
+                  <span className="text-caption text-muted-foreground/40">
+                    ★ {repo.stars}
+                  </span>
+                </div>
+                <p className="text-caption text-muted-foreground mt-0.5 line-clamp-1">
+                  {repo.description}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between mt-3">
+              <span className="text-label text-muted-foreground/60">
+                {repo.language}
+              </span>
+              <div className="flex items-center gap-2">
+                {repo.liveUrl && (
+                  <a
+                    href={repo.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium text-accent bg-accent/10 transition-all duration-200 hover:bg-accent/20"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    LIVE <ExternalLink className="size-2.5" />
+                  </a>
+                )}
+                <a
+                  href={repo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium text-muted-foreground bg-muted transition-all duration-200 hover:text-foreground"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  CODE <ArrowUpRight className="size-2.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </motion.div>
   );
 }
 
-// Activity fallback
 function ActivityTimeline() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -187,10 +227,26 @@ function ActivityTimeline() {
       <span className="text-label text-muted-foreground">
         RECENT ACTIVITY
       </span>
-      <div className="text-center py-10">
-        <p className="text-body-sm text-muted-foreground">
-          GitHub activity will appear here once connected.
-        </p>
+      <div className="mt-4 space-y-4">
+        {githubProfile.recentActivity.map((activity, i) => (
+          <div key={i} className="group flex items-start gap-3">
+            <span className="text-label text-accent mt-0.5 shrink-0">→</span>
+            <div className="min-w-0 flex-1">
+              <p className="text-body-sm text-foreground/80 group-hover:text-foreground transition-colors">
+                {activity.message}
+              </p>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-label text-muted-foreground/40">
+                  {activity.repo}
+                </span>
+                <span className="text-muted-foreground/20">·</span>
+                <span className="text-label text-muted-foreground/40">
+                  {activity.date}
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </motion.div>
   );
@@ -206,7 +262,6 @@ export function GitHubSection() {
   return (
     <Section id="github" className="py-24 md:py-36">
       <Container>
-        {/* ─── Header ─── */}
         <div ref={headerRef} className="mb-16 md:mb-24">
           <motion.div
             initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
@@ -222,9 +277,7 @@ export function GitHubSection() {
             animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
           >
-            <h2
-              className="text-section text-foreground tracking-[-0.04em] leading-[1.05]"
-            >
+            <h2 className="text-section text-foreground">
               Code in<br className="hidden md:block" /> Public
             </h2>
 
@@ -234,16 +287,15 @@ export function GitHubSection() {
                   @{githubProfile.username}
                 </span>
               )}
-              <Button variant="outline" size="lg">
-                <a
-                  href={isConfigured ? githubProfile.url : '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
-                >
-                  VIEW PROFILE <span className="text-[10px]">→</span>
-                </a>
-              </Button>
+              <a
+                href={isConfigured ? githubProfile.url : '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/btn inline-flex h-11 items-center gap-2 rounded-xl border border-border bg-background px-5 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-muted hover:border-accent/50 hover:shadow-md hover:shadow-accent/5 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              >
+                VIEW PROFILE
+                <span className="text-accent transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">↗</span>
+              </a>
             </div>
           </motion.div>
 
@@ -256,12 +308,11 @@ export function GitHubSection() {
           />
         </div>
 
-        {/* ─── Content ─── */}
         <div className="space-y-5">
           <ContributionGraph />
           <GitHubStatsGrid />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <RepositoryList />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <PinnedRepositories />
             <ActivityTimeline />
           </div>
         </div>

@@ -62,8 +62,6 @@ export const projects: Project[] = [
       'Prisma',
     ],
     layout: 'media-left',
-    liveUrl: 'https://workos30.vercel.app/',
-    githubUrl: 'https://github.com/Shubham-997800/WorkOS',
     imageUrl: '/projects/workos.jpg',
     featured: true,
   },
@@ -120,28 +118,80 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/Shubham-997800/CAMPUS360',
     imageUrl: '/projects/campus360.jpg',
   },
-];
-
-export const moreProjects = [
   {
+    id: 'startuplaunchai',
+    number: '05',
+    slug: 'startuplaunchai',
+    name: 'StartupLaunch AI',
+    tagline: 'AI-Powered Startup Launch Platform',
+    description:
+      'Platform to help founders launch their startups with AI-driven insights, market analysis, and launch strategies. Combines modern UI with intelligent automation.',
+    year: '2025',
+    role: 'Sole Developer',
+    category: 'PRODUCT',
+    features: [
+      'AI-driven startup insights',
+      'Market analysis tools',
+      'Launch strategy automation',
+      'Modern responsive interface',
+    ],
+    technologies: ['React', 'JavaScript', 'HTML', 'CSS', 'AI Integration'],
+    layout: 'media-right',
+    githubUrl: 'https://github.com/Shubham-997800/startuplaunchai',
+    imageUrl: '/projects/startuplaunch.jpg',
+  },
+  {
+    id: 'sdx30',
+    number: '06',
+    slug: 'sdx30',
     name: 'SDX30',
-    description: 'Developer Portfolio',
+    tagline: 'Developer Portfolio',
+    description:
+      'Personal developer portfolio showcasing projects, skills, and experience. Clean design with smooth animations and responsive layout.',
+    year: '2025',
+    role: 'Sole Developer',
+    category: 'DESIGN',
+    features: [
+      'Clean editorial design',
+      'Smooth scroll animations',
+      'Responsive layout',
+      'Project showcase',
+    ],
     technologies: ['HTML', 'CSS', 'JavaScript'],
+    layout: 'asymmetric',
     liveUrl: 'https://sdx30.vercel.app/',
     githubUrl: 'https://github.com/Shubham-997800/sdx30',
+    imageUrl: '/projects/sdx30.jpg',
   },
   {
-    name: 'StartupLaunch',
-    description: 'Startup Application',
-    technologies: ['React', 'JavaScript', 'HTML', 'CSS'],
-    liveUrl: 'https://startuplaunch30.vercel.app/',
-    githubUrl: 'https://github.com/Shubham-997800/kaggle-startuplaunch',
-  },
-  {
+    id: 'sofawala',
+    number: '07',
+    slug: 'sofawala',
     name: 'SofaWala',
-    description: 'E-Commerce Showcase',
+    tagline: 'E-Commerce Showcase',
+    description:
+      'E-commerce showcase platform for furniture with product listings, category browsing, and clean product detail views. Focus on visual presentation and UX.',
+    year: '2025',
+    role: 'Sole Developer',
+    category: 'DESIGN',
+    features: [
+      'Product catalog with categories',
+      'Visual product showcase',
+      'Responsive e-commerce layout',
+      'Clean checkout flow',
+    ],
     technologies: ['HTML', 'CSS', 'JavaScript'],
+    layout: 'media-left',
     liveUrl: 'https://sofawala.vercel.app/',
     githubUrl: 'https://github.com/Shubham-997800/SofaWala',
+    imageUrl: '/projects/sofawala.jpg',
   },
 ];
+
+export const moreProjects: {
+  name: string;
+  description: string;
+  technologies: string[];
+  liveUrl?: string;
+  githubUrl?: string;
+}[] = [];

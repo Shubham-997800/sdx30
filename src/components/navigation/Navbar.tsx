@@ -63,7 +63,7 @@ export function Navbar() {
             href="#"
             onClick={handleLogoClick}
             className={cn(
-              'relative z-10 text-body font-bold tracking-tight text-foreground transition-colors duration-200',
+              'relative z-10 text-body font-bold tracking-tight text-foreground transition-colors duration-200 font-heading',
               'hover:text-accent',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg px-1 -ml-1',
             )}
@@ -82,10 +82,10 @@ export function Navbar() {
             <button
               onClick={openCommand}
               className={cn(
-                'hidden lg:flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5',
-                'text-caption text-muted-foreground transition-all duration-200',
-                'hover:border-accent hover:text-foreground',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+                'hidden lg:flex items-center gap-1.5 rounded-xl border border-border px-3 py-2',
+                'text-caption text-muted-foreground transition-all duration-300',
+                'hover:border-accent hover:text-foreground hover:bg-muted hover:-translate-y-0.5',
+                'focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50',
               )}
               aria-label="Open command palette (Ctrl+K)"
             >

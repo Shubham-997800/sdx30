@@ -4,7 +4,6 @@ import { BackToTop } from "@/components/shared/BackToTop";
 import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { HeroSection } from "@/sections/hero/HeroSection";
 import { MarqueeSection } from "@/sections/marquee/MarqueeSection";
-import { ProofSection } from "@/sections/proof/ProofSection";
 import { WorkSection } from "@/sections/work/WorkSection";
 import { EngineeringSection } from "@/sections/engineering/EngineeringSection";
 import { StackSection } from "@/sections/stack/StackSection";
@@ -21,7 +20,6 @@ export default function App() {
         <ScrollProgress />
         <HeroSection />
         <MarqueeSection />
-        <ProofSection />
         <WorkSection />
         <EngineeringSection />
         <StackSection />
