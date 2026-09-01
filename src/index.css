@@ -1,0 +1,480 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS — DIGITAL EDITORIAL
+   ───────────────────────────────────────────── */
+
+@theme inline {
+  /* Typography */
+  --font-heading: "Geist Variable", sans-serif;
+  --font-sans: "Geist Variable", sans-serif;
+  --font-mono: "Geist Mono", monospace;
+
+  /* Colors — shadcn mapping */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Semantic colors */
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-border-accent: var(--border-accent);
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-4xl: 2.5rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-accent: 0 0 0 1px var(--accent), 0 0 20px oklch(from var(--accent) l c h / 0.15);
+}
+
+/* ─────────────────────────────────────────────
+   LIGHT MODE — Editorial, clean, sophisticated
+   ───────────────────────────────────────────── */
+
+:root {
+  --background: oklch(0.985 0.002 100);
+  --foreground: oklch(0.15 0.01 270);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.01 270);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.01 270);
+
+  --primary: oklch(0.15 0.01 270);
+  --primary-foreground: oklch(0.985 0.002 100);
+
+  --secondary: oklch(0.94 0.005 100);
+  --secondary-foreground: oklch(0.15 0.01 270);
+
+  --muted: oklch(0.94 0.005 100);
+  --muted-foreground: oklch(0.5 0.02 270);
+
+  --accent: oklch(0.68 0.16 195);
+  --accent-foreground: oklch(1 0 0);
+
+  --destructive: oklch(0.55 0.22 25);
+
+  --border: oklch(0.88 0.005 100);
+  --border-subtle: oklch(0.92 0.005 100);
+  --border-strong: oklch(0.78 0.01 270);
+  --border-accent: oklch(0.68 0.16 195);
+
+  --input: oklch(0.92 0.005 100);
+  --ring: oklch(0.68 0.16 195);
+
+  --surface: oklch(1 0 0);
+  --surface-elevated: oklch(0.985 0.002 100);
+
+  color-scheme: light;
+}
+
+/* ─────────────────────────────────────────────
+   DARK MODE — Default (cinematic, deep, premium)
+   ───────────────────────────────────────────── */
+
+.dark {
+  --background: oklch(0.12 0.005 270);
+  --foreground: oklch(0.96 0.005 270);
+
+  --card: oklch(0.16 0.005 270);
+  --card-foreground: oklch(0.96 0.005 270);
+
+  --popover: oklch(0.16 0.005 270);
+  --popover-foreground: oklch(0.96 0.005 270);
+
+  --primary: oklch(0.96 0.005 270);
+  --primary-foreground: oklch(0.12 0.005 270);
+
+  --secondary: oklch(0.2 0.005 270);
+  --secondary-foreground: oklch(0.96 0.005 270);
+
+  --muted: oklch(0.2 0.005 270);
+  --muted-foreground: oklch(0.65 0.01 270);
+
+  --accent: oklch(0.78 0.15 195);
+  --accent-foreground: oklch(0.12 0.005 270);
+
+  --destructive: oklch(0.65 0.2 25);
+
+  --border: oklch(0.28 0.005 270);
+  --border-subtle: oklch(0.22 0.005 270);
+  --border-strong: oklch(0.38 0.01 270);
+  --border-accent: oklch(0.78 0.15 195);
+
+  --input: oklch(0.22 0.005 270);
+  --ring: oklch(0.78 0.15 195);
+
+  --surface: oklch(0.16 0.005 270);
+  --surface-elevated: oklch(0.2 0.005 270);
+
+  color-scheme: dark;
+}
+
+/* ─────────────────────────────────────────────
+   BASE STYLES
+   ───────────────────────────────────────────── */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  html {
+    @apply font-sans scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: oklch(from var(--accent) l c h / 0.25);
+    color: var(--foreground);
+  }
+
+  /* Scrollbar — minimal, editorial */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(from var(--foreground) l c h / 0.15);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(from var(--foreground) l c h / 0.3);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────
+   TYPOGRAPHY — Editorial Scale
+   ───────────────────────────────────────────── */
+
+/* Display — Hero name, massive impact */
+.text-display {
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+}
+
+/* Section headings — major section titles */
+.text-section {
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+/* Feature headings — project titles, statements */
+.text-feature {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+/* Sub headings — category titles, event titles */
+.text-subheading {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* Headings */
+.text-h3 {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+.text-h4 {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+/* Body */
+.text-body-lg {
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.text-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Micro */
+.text-caption {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.text-label {
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.text-metadata {
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.text-code {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.text-overline {
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* ─────────────────────────────────────────────
+   ANIMATION KEYFRAMES
+   ───────────────────────────────────────────── */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes clipReveal {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   ANIMATION UTILITIES
+   ───────────────────────────────────────────── */
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.animate-clip-reveal {
+  animation: clipReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-stagger-1 {
+  animation-delay: 0.1s;
+}
+.animate-stagger-2 {
+  animation-delay: 0.2s;
+}
+.animate-stagger-3 {
+  animation-delay: 0.3s;
+}
+.animate-stagger-4 {
+  animation-delay: 0.4s;
+}
+.animate-stagger-5 {
+  animation-delay: 0.5s;
+}
+.animate-stagger-6 {
+  animation-delay: 0.6s;
+}
+.animate-stagger-7 {
+  animation-delay: 0.7s;
+}
+.animate-stagger-8 {
+  animation-delay: 0.8s;
+}
+
+/* Marquee */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 30s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   CURSOR
+   ───────────────────────────────────────────── */
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  mix-blend-mode: difference;
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1px solid oklch(from var(--accent) l c h / 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999;
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    width 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s;
+}
+
+.cursor-ring[data-state="link"] {
+  width: 56px;
+  height: 56px;
+  border-color: var(--accent);
+}
+
+.cursor-ring[data-state="button"] {
+  width: 48px;
+  height: 48px;
+  border-color: var(--accent);
+}
+
+.cursor-ring[data-state="project"] {
+  width: 72px;
+  height: 72px;
+  border-color: var(--accent);
+}
+
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .cursor-ring {
+    transition: none;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   PAGE LOAD — DISABLE TRANSITIONS
+   ───────────────────────────────────────────── */
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+  transition-duration: 0s !important;
+  animation-duration: 0s !important;
+}
