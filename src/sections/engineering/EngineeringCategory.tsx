@@ -42,7 +42,6 @@ export function EngineeringCategory({
   isInView: boolean;
 }) {
   const prefersReducedMotion = useReducedMotion();
-  const isLarge = category.skills.length > 4;
 
   return (
     <motion.div
@@ -50,7 +49,6 @@ export function EngineeringCategory({
         'group relative overflow-hidden rounded-xl border border-border bg-card p-6 md:p-8',
         'transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
         'hover:border-accent/40',
-        isLarge ? 'md:col-span-2' : '',
       )}
       initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}

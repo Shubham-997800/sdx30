@@ -26,7 +26,7 @@ export function WorkSection() {
               prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }
             }
             animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
+            transition={{ duration: 0.6, delay: 0.05, ease: EASE }}
           >
             <SectionLabel>SELECTED WORK</SectionLabel>
           </motion.div>
@@ -34,18 +34,16 @@ export function WorkSection() {
           <motion.div
             className="mt-6 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
             initial={
-              prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+              prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }
             }
             animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
+            transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
           >
-            <h2
-              className="text-section text-foreground tracking-[-0.04em] leading-[1.05]"
-            >
+            <h2 className="text-section text-foreground">
               Projects built,<br className="hidden md:block" /> shipped, and iterated on.
             </h2>
 
-            <span className="text-label text-muted-foreground/50 shrink-0">
+            <span className="text-label text-muted-foreground/60 shrink-0">
               {String(projects.length).padStart(2, '0')} PROJECTS
             </span>
           </motion.div>
@@ -55,7 +53,7 @@ export function WorkSection() {
             className="mt-8 h-px w-full bg-border"
             initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
             animate={isHeaderInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
+            transition={{ duration: 1.0, delay: 0.3, ease: EASE }}
             style={{ transformOrigin: 'left' }}
           />
         </div>

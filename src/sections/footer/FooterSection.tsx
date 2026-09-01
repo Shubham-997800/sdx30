@@ -70,11 +70,11 @@ export function Footer() {
               }}
               className="inline-block"
             >
-              <span className="text-body font-bold tracking-tight text-foreground font-heading">
+              <span className="text-h4 text-foreground font-heading">
                 SHUBHAM<span className="text-accent">.DEV</span>
               </span>
             </a>
-            <p className="text-[13px] text-muted-foreground">
+            <p className="text-body-sm text-muted-foreground">
               Frontend Developer · Product Builder
             </p>
           </div>
@@ -94,7 +94,7 @@ export function Footer() {
                     'flex size-11 items-center justify-center rounded-xl transition-all duration-300',
                     isConfigured
                       ? 'text-muted-foreground hover:text-foreground hover:bg-accent/5 hover:-translate-y-0.5'
-                      : 'text-muted-foreground/30 cursor-default',
+                      : 'text-muted-foreground/40 cursor-default',
                   )}
                   aria-label={link.label}
                 >
@@ -111,18 +111,18 @@ export function Footer() {
         {/* ─── Bottom Row ─── */}
         <div className="mt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-            <p className="text-caption text-muted-foreground/60">
+            <p className="text-caption text-muted-foreground/70">
               © {currentYear} SHUBHAM.DEV
             </p>
-            <span className="text-muted-foreground/30 hidden md:inline">·</span>
-            <p className="text-caption text-muted-foreground/40">
+            <span className="text-muted-foreground/50 hidden md:inline">·</span>
+            <p className="text-caption text-muted-foreground/70">
               Built with React + TypeScript
             </p>
           </div>
 
           <button
             onClick={scrollToTop}
-            className="group/btn inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-caption font-medium text-muted-foreground/60 transition-all duration-300 hover:text-foreground hover:bg-muted hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            className="group/btn inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-label text-muted-foreground transition-all duration-300 hover:text-foreground hover:bg-muted hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             aria-label="Back to top"
           >
             <ArrowUp className="size-3.5 transition-transform duration-300 group-hover/btn:-translate-y-0.5" />

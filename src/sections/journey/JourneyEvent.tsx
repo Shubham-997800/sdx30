@@ -35,7 +35,7 @@ function Milestone({
       <span
         className={cn(
           'shrink-0',
-          isAchievement ? 'text-accent' : 'text-muted-foreground/40',
+          isAchievement ? 'text-accent' : 'text-muted-foreground/60',
         )}
       >
         {isAchievement ? '◆' : '→'}
@@ -44,12 +44,12 @@ function Milestone({
       {/* Label */}
       <span
         className={cn(
-          'text-[13px] tracking-[-0.01em]',
+          'text-body-sm',
           isAchievement
             ? isFeatured
               ? 'text-foreground font-semibold'
               : 'text-foreground font-medium'
-            : 'text-foreground/70',
+            : 'text-foreground/80',
         )}
       >
         {milestone.label}
@@ -82,7 +82,7 @@ export function JourneyEvent({
       {/* ─── Left: Number + Node ─── */}
       <div className="relative flex flex-col items-center">
         {/* Number */}
-        <span className="text-label font-semibold text-muted-foreground/50 mb-3">
+        <span className="text-label text-muted-foreground/70 mb-3">
           {event.number}
         </span>
 
@@ -133,7 +133,7 @@ export function JourneyEvent({
       >
         {/* Category label */}
         <motion.span
-          className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/50"
+          className="text-label text-muted-foreground/70"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.2 + index * 0.12 }}
@@ -144,7 +144,7 @@ export function JourneyEvent({
         {/* Title */}
         <h3
           className={cn(
-            'text-h3 mt-2 font-bold tracking-[-0.02em] text-foreground',
+            'text-h3 mt-2 text-foreground',
             isFeatured ? 'text-foreground' : 'text-foreground/90',
           )}
         >
@@ -178,7 +178,7 @@ export function JourneyEvent({
           <motion.a
             href="#work"
             className={cn(
-              'inline-flex items-center gap-1.5 mt-4 text-caption font-medium',
+              'inline-flex items-center gap-1.5 mt-4 text-caption',
               'text-accent transition-all duration-200',
               'hover:gap-2.5',
             )}
@@ -186,7 +186,7 @@ export function JourneyEvent({
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.3, delay: 0.5 + index * 0.12 }}
           >
-            VIEW PROJECT <span className="text-[10px]">→</span>
+            VIEW PROJECT <span className="text-label">→</span>
           </motion.a>
         )}
       </div>

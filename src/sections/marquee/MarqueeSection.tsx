@@ -12,13 +12,12 @@ function MarqueeWord({ word, index }: { word: string; index: number }) {
   return (
     <span className="flex items-center">
       {index > 0 && (
-        <span className="mx-6 text-accent/40 text-2xl" aria-hidden="true">
+        <span className="mx-6 text-accent/40 text-h4" aria-hidden="true">
           ·
         </span>
       )}
       <span
-        className="font-bold tracking-[-0.04em] text-foreground/10 dark:text-foreground/15 transition-colors duration-500 uppercase"
-        style={{ fontSize: 'clamp(2.5rem, 8vw, 7rem)' }}
+        className="text-marquee text-foreground/10 dark:text-foreground/15 transition-colors duration-500"
       >
         {word}
       </span>
@@ -64,7 +63,7 @@ export function MarqueeSection() {
               transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }}
             >
               <h2
-                className="text-feature text-foreground leading-[1.1] tracking-[-0.03em]"
+                className="text-feature text-foreground"
               >
                 {personalStatement.heading}
               </h2>

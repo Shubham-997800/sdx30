@@ -15,7 +15,7 @@ export const motionConfig = {
     springSlow: { stiffness: 150, damping: 20, mass: 0.8 },
   },
 
-  // Durations (ms)
+  // Durations (seconds)
   duration: {
     instant: 0.1,
     fast: 0.2,

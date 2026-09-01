@@ -1,31 +1,34 @@
-export interface GitHubStats {
-  totalCommits: number;
-  totalPRs: number;
-  totalIssues: number;
-  totalStars: number;
-  contributionDays: ContributionDay[];
+export interface GitHubProfile {
+  username: string;
+  url: string;
+  stats: {
+    contributions: string;
+    streak: string;
+    commits: string;
+    prs: string;
+    stars: string;
+  };
+  topLanguages: LanguageStat[];
   pinnedRepos: PinnedRepo[];
-  languages: LanguageStat[];
-}
-
-export interface ContributionDay {
-  date: string;
-  count: number;
-  level: 0 | 1 | 2 | 3 | 4;
+  recentActivity: ActivityItem[];
 }
 
 export interface PinnedRepo {
   name: string;
   description: string;
   language: string;
-  languageColor: string;
   stars: number;
-  forks: number;
   url: string;
+  liveUrl?: string;
 }
 
 export interface LanguageStat {
   name: string;
   percentage: number;
-  color: string;
+}
+
+export interface ActivityItem {
+  message: string;
+  repo: string;
+  date: string;
 }

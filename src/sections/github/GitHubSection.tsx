@@ -11,6 +11,17 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+const CONTRIBUTION_WEEKS = 20;
+const CONTRIBUTION_DAYS = 7;
+const contributionPattern = Array.from({ length: CONTRIBUTION_WEEKS * CONTRIBUTION_DAYS }, (_, i) => {
+  const seed = (i * 7 + 13) % 16;
+  if (seed < 8) return 0;
+  if (seed < 12) return 1;
+  if (seed < 14) return 2;
+  if (seed < 15) return 3;
+  return 4;
+});
+
 function ContributionCell({ level }: { level: number }) {
   const opacity = level === 0 ? 'opacity-[0.04] dark:opacity-[0.06]' : '';
   const bg =
@@ -38,16 +49,8 @@ function ContributionGraph() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
-  const weeks = 20;
-  const days = 7;
-  const pattern = Array.from({ length: weeks * days }, (_, i) => {
-    const seed = (i * 7 + 13) % 16;
-    if (seed < 8) return 0;
-    if (seed < 12) return 1;
-    if (seed < 14) return 2;
-    if (seed < 15) return 3;
-    return 4;
-  });
+  const weeks = CONTRIBUTION_WEEKS;
+  const days = CONTRIBUTION_DAYS;
 
   return (
     <motion.div
@@ -69,14 +72,14 @@ function ContributionGraph() {
         {Array.from({ length: weeks }, (_, week) => (
           <div key={week} className="flex flex-col gap-[3px]">
             {Array.from({ length: days }, (_, day) => {
-              const level = pattern[week * days + day];
+              const level = contributionPattern[week * days + day];
               return <ContributionCell key={day} level={level} />;
             })}
           </div>
         ))}
       </div>
       <div className="flex items-center justify-end gap-1.5 mt-3">
-        <span className="text-[10px] text-muted-foreground/40">Less</span>
+        <span className="text-caption text-muted-foreground/70">Less</span>
         {[0, 1, 2, 3, 4].map((level) => (
           <div
             key={level}
@@ -93,7 +96,7 @@ function ContributionGraph() {
             }`}
           />
         ))}
-        <span className="text-[10px] text-muted-foreground/40">More</span>
+        <span className="text-caption text-muted-foreground/70">More</span>
       </div>
     </motion.div>
   );
@@ -125,7 +128,7 @@ function GitHubStatsGrid() {
             {stat.label}
           </span>
           <p
-            className="text-feature mt-2 font-bold tracking-[-0.03em] text-foreground"
+            className="text-feature mt-2 text-foreground"
           >
             {stat.value}
           </p>
@@ -165,10 +168,10 @@ function PinnedRepositories() {
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <h4 className="text-body-sm font-semibold text-foreground group-hover:text-accent transition-colors truncate">
+                  <h4 className="text-h4 text-foreground group-hover:text-accent transition-colors truncate">
                     {repo.name}
                   </h4>
-                  <span className="text-caption text-muted-foreground/40">
+                  <span className="text-label text-muted-foreground/60">
                     ★ {repo.stars}
                   </span>
                 </div>
@@ -178,7 +181,7 @@ function PinnedRepositories() {
               </div>
             </div>
             <div className="flex items-center justify-between mt-3">
-              <span className="text-label text-muted-foreground/60">
+              <span className="text-label text-muted-foreground/70">
                 {repo.language}
               </span>
               <div className="flex items-center gap-2">
@@ -187,7 +190,7 @@ function PinnedRepositories() {
                     href={repo.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium text-accent bg-accent/10 transition-all duration-200 hover:bg-accent/20"
+                    className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-label text-accent bg-accent/10 transition-all duration-200 hover:bg-accent/20"
                     onClick={(e) => e.stopPropagation()}
                   >
                     LIVE <ExternalLink className="size-2.5" />
@@ -197,7 +200,7 @@ function PinnedRepositories() {
                   href={repo.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-medium text-muted-foreground bg-muted transition-all duration-200 hover:text-foreground"
+                  className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-label text-muted-foreground bg-muted transition-all duration-200 hover:text-foreground"
                   onClick={(e) => e.stopPropagation()}
                 >
                   CODE <ArrowUpRight className="size-2.5" />
@@ -232,15 +235,15 @@ function ActivityTimeline() {
           <div key={i} className="group flex items-start gap-3">
             <span className="text-label text-accent mt-0.5 shrink-0">→</span>
             <div className="min-w-0 flex-1">
-              <p className="text-body-sm text-foreground/80 group-hover:text-foreground transition-colors">
+              <p className="text-body-sm text-foreground/90 group-hover:text-foreground transition-colors">
                 {activity.message}
               </p>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-label text-muted-foreground/40">
+                <span className="text-label text-muted-foreground/60">
                   {activity.repo}
                 </span>
-                <span className="text-muted-foreground/20">·</span>
-                <span className="text-label text-muted-foreground/40">
+                <span className="text-muted-foreground/50">·</span>
+                <span className="text-label text-muted-foreground/60">
                   {activity.date}
                 </span>
               </div>
@@ -291,7 +294,7 @@ export function GitHubSection() {
                 href={isConfigured ? githubProfile.url : '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/btn inline-flex h-11 items-center gap-2 rounded-xl border border-border bg-background px-5 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-muted hover:border-accent/50 hover:shadow-md hover:shadow-accent/5 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                className="group/btn inline-flex h-11 items-center gap-2 rounded-xl border border-border bg-background px-5 text-button text-foreground transition-all duration-300 hover:bg-muted hover:border-accent/50 hover:shadow-md hover:shadow-accent/5 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 VIEW PROFILE
                 <span className="text-accent transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">↗</span>

@@ -2,9 +2,9 @@ export const SITE = {
   name: "SHUBHAM.DEV",
   tagline: "Frontend Developer",
   description:
-    "Frontend developer crafting premium digital experiences with clean code and intentional design.",
-  url: "https://shubham.dev",
-  email: "hello@shubham.dev",
+    "BCA student building frontend skills through real-world projects. Frontend developer crafting premium digital experiences with clean code and intentional design.",
+  url: "https://sdx30.vercel.app",
+  email: "shubhamkumar997800@gmail.com",
 } as const;
 
 export const BREAKPOINTS = {
@@ -33,6 +33,8 @@ export const MOTION = {
   normal: 0.35,
   emphasis: 0.6,
   cinematic: 0.85,
-  spring: { type: "spring" as const, stiffness: 300, damping: 30 },
-  springGentle: { type: "spring" as const, stiffness: 200, damping: 25 },
+  ease: [0.16, 1, 0.3, 1] as const,
+  easeInOut: [0.65, 0, 0.35, 1] as const,
+  spring: { stiffness: 300, damping: 30 },
+  springGentle: { stiffness: 200, damping: 25 },
 } as const;

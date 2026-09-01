@@ -17,6 +17,9 @@ export function PageLoader({ isLoading }: PageLoaderProps) {
       {isLoading && (
         <motion.div
           className="fixed inset-0 z-[10000] flex items-center justify-center bg-background"
+          role="status"
+          aria-live="polite"
+          aria-label="Loading"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}

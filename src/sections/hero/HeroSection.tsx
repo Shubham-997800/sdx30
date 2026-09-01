@@ -2,9 +2,11 @@
 
 import { useCallback } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Download } from 'lucide-react';
+import { ArrowRight, Download, Sparkles } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Magnetic } from '@/components/interaction/Magnetic';
+import { Button } from '@/components/ui/button';
+import { CharReveal } from '@/components/motion/CharReveal';
 import { heroContent, personalInfo, socialLinks } from '@/data/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { HeroVisual } from './HeroVisual';
@@ -12,9 +14,9 @@ import { HeroVisual } from './HeroVisual';
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const fadeUp = (delay: number, reduced: boolean) => ({
-  initial: reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+  initial: reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: EASE },
+  transition: { duration: 0.8, delay, ease: EASE },
 });
 
 const clipReveal = (delay: number, reduced: boolean) => ({
@@ -22,7 +24,7 @@ const clipReveal = (delay: number, reduced: boolean) => ({
     ? { opacity: 1, clipPath: 'inset(0% 0 0 0)' }
     : { clipPath: 'inset(100% 0 0 0)' },
   animate: { clipPath: 'inset(0% 0 0 0)' },
-  transition: { duration: 0.8, delay, ease: EASE },
+  transition: { duration: 0.9, delay, ease: EASE },
 });
 
 export function HeroSection() {
@@ -33,7 +35,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[100vh] min-h-[100dvh] flex items-center pt-20 pb-16 md:pt-24 md:pb-20">
+    <section className="relative min-h-[100vh] min-h-[100dvh] flex items-center pt-20 pb-16 md:pt-24 md:pb-20 overflow-hidden">
       {/* Subtle grid background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]">
@@ -53,7 +55,7 @@ export function HeroSection() {
           {/* ─── Content ─── */}
           <div className="col-span-4 md:col-span-8 lg:col-span-6 space-y-6 md:space-y-8">
             {/* Availability Status */}
-            <motion.div {...fadeUp(0.15, prefersReducedMotion)}>
+            <motion.div {...fadeUp(0.1, prefersReducedMotion)}>
               <span className="inline-flex items-center gap-2.5 text-label text-accent">
                 <span className="relative flex size-2">
                   {!prefersReducedMotion && (
@@ -65,35 +67,45 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Name */}
-            <div {...clipReveal(0.25, prefersReducedMotion)}>
-              <h1
-                className="text-display font-bold leading-[0.9] tracking-[-0.05em] text-foreground"
-              >
+            {/* Name — Character Reveal */}
+            {prefersReducedMotion ? (
+              <h1 className="text-display text-foreground">
                 {heroContent.name}
               </h1>
-            </div>
+            ) : (
+              <CharReveal
+                text={heroContent.name}
+                as="h1"
+                className="text-display text-foreground"
+                delay={0.2}
+                staggerDelay={0.035}
+              />
+            )}
 
-            {/* Role */}
-            <motion.div {...fadeUp(0.45, prefersReducedMotion)}>
-              <p
-                className="text-subheading font-semibold tracking-[-0.03em] text-accent leading-[1.1]"
-              >
+            {/* Role — Character Reveal */}
+            {prefersReducedMotion ? (
+              <p className="text-subheading text-accent">
                 {heroContent.role}
               </p>
-            </motion.div>
+            ) : (
+              <CharReveal
+                text={heroContent.role}
+                as="p"
+                className="text-subheading text-accent"
+                delay={0.6}
+                staggerDelay={0.04}
+              />
+            )}
 
             {/* Main Statement */}
-            <motion.div {...fadeUp(0.55, prefersReducedMotion)}>
-              <p
-                className="text-body-lg text-foreground/80 max-w-lg whitespace-pre-line leading-[1.6]"
-              >
+            <motion.div {...fadeUp(0.9, prefersReducedMotion)}>
+              <p className="text-body-lg text-foreground max-w-lg whitespace-pre-line">
                 {heroContent.mainStatement}
               </p>
             </motion.div>
 
             {/* Introduction */}
-            <motion.div {...fadeUp(0.65, prefersReducedMotion)}>
+            <motion.div {...fadeUp(1.0, prefersReducedMotion)}>
               <p className="text-body text-muted-foreground max-w-md">
                 {heroContent.introduction}
               </p>
@@ -102,26 +114,30 @@ export function HeroSection() {
             {/* CTAs */}
             <motion.div
               className="flex flex-wrap items-center gap-4 pt-2"
-              {...fadeUp(0.75, prefersReducedMotion)}
+              {...fadeUp(1.1, prefersReducedMotion)}
             >
-              <Magnetic strength={6}>
-                <button
+              <Magnetic strength={8}>
+                <Button
+                  variant="shimmer"
+                  size="lg"
                   onClick={scrollToWork}
-                  className="group/btn inline-flex h-12 items-center gap-2.5 rounded-xl bg-primary px-6 text-[0.9rem] font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:brightness-95 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className="group/btn"
                 >
+                  <Sparkles className="size-4 transition-all duration-300 group-hover/btn:rotate-12 group-hover/btn:scale-110" />
                   {heroContent.cta.primary}
-                  <ArrowRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
-                </button>
+                  <ArrowRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-1.5" />
+                </Button>
               </Magnetic>
-              <Magnetic strength={6}>
+              <Magnetic strength={8}>
                 <a
                   href={personalInfo.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/btn inline-flex h-12 items-center gap-2.5 rounded-xl border border-border bg-background px-6 text-[0.9rem] font-semibold text-foreground transition-all duration-300 hover:bg-muted hover:border-accent/50 hover:shadow-md hover:shadow-accent/5 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
-                  <Download className="size-4 transition-transform duration-300 group-hover/btn:-translate-y-0.5" />
-                  {heroContent.cta.secondary}
+                  <Button variant="glass" size="lg" className="group/btn">
+                    <Download className="size-4 transition-transform duration-300 group-hover/btn:-translate-y-1 group-hover/btn:scale-110" />
+                    {heroContent.cta.secondary}
+                  </Button>
                 </a>
               </Magnetic>
             </motion.div>
@@ -129,18 +145,21 @@ export function HeroSection() {
             {/* Social Links */}
             <motion.div
               className="flex flex-wrap items-center gap-4 pt-2"
-              {...fadeUp(0.85, prefersReducedMotion)}
+              {...fadeUp(1.2, prefersReducedMotion)}
             >
-              {socialLinks.map((link) => (
-                <a
+              {socialLinks.map((link, i) => (
+                <motion.a
                   key={link.label}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-caption font-medium uppercase tracking-[0.06em] text-muted-foreground transition-all duration-300 hover:text-foreground hover:translate-y-[-1px]"
+                  className="text-label text-muted-foreground transition-all duration-300 hover:text-foreground hover:translate-y-[-1px]"
+                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1.3 + i * 0.08, ease: EASE }}
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
             </motion.div>
           </div>
@@ -159,15 +178,15 @@ export function HeroSection() {
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.2 }}
+          transition={{ duration: 0.8, delay: 1.6 }}
         >
-          <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/50">
+          <span className="text-label text-muted-foreground">
             Scroll
           </span>
           <motion.div
             className="h-8 w-px bg-gradient-to-b from-muted-foreground/30 to-transparent"
-            animate={prefersReducedMotion ? {} : { scaleY: [1, 0.5, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            animate={prefersReducedMotion ? {} : { scaleY: [1, 0.4, 1] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
       </Container>

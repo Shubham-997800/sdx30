@@ -43,14 +43,14 @@ function TechItem({
       <div className="flex-1 min-w-0">
         <span
           className={cn(
-            'font-medium tracking-[-0.01em]',
-            isUsing ? 'text-body-lg text-foreground' : 'text-body-sm text-foreground/80',
+            'text-body-lg',
+            isUsing ? 'text-foreground' : 'text-foreground/80',
           )}
         >
           {item.name}
         </span>
         {item.detail && (
-          <span className="ml-2 text-label text-muted-foreground/50 hidden sm:inline">
+          <span className="ml-2 text-label text-muted-foreground/60 hidden sm:inline">
             {item.detail}
           </span>
         )}
@@ -91,7 +91,7 @@ export function TechCategory({
       <div className="flex items-center justify-between mb-5">
         <h3
           className={cn(
-            'text-body-sm font-bold tracking-[-0.02em]',
+            'text-h4',
             isUsing ? 'text-foreground' : 'text-foreground/80',
           )}
         >
@@ -99,7 +99,7 @@ export function TechCategory({
         </h3>
         <span
           className={cn(
-            'text-[10px] font-semibold uppercase tracking-[0.1em] px-2 py-0.5 rounded-full',
+            'text-label px-2 py-0.5 rounded-full',
             isUsing
               ? 'text-accent bg-accent/10'
               : 'text-muted-foreground bg-muted',

@@ -14,7 +14,7 @@ function NavLink({ href, label, isActive }: NavLinkProps) {
     <a
       href={href}
       className={cn(
-        'group relative py-1 text-[13px] font-medium tracking-wide transition-colors duration-200',
+        'group relative py-1 text-nav tracking-wide transition-colors duration-200',
         isActive
           ? 'text-foreground'
           : 'text-muted-foreground hover:text-foreground',
@@ -37,36 +37,29 @@ interface NavLinksProps {
 
 export function NavLinks({ links }: NavLinksProps) {
   const [activeSection, setActiveSection] = useState('');
-  const observersRef = useRef<IntersectionObserver[]>([]);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
+    if (observerRef.current) observerRef.current.disconnect();
 
-    links.forEach((link) => {
-      const id = link.href.replace('#', '');
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
-            setActiveSection(link.href);
+            setActiveSection(`#${entry.target.id}`);
           }
-        },
-        {
-          threshold: 0,
-          rootMargin: '-80px 0px -60% 0px',
-        },
-      );
+        }
+      },
+      { threshold: 0, rootMargin: '-80px 0px -60% 0px' },
+    );
 
-      observer.observe(el);
-      observers.push(observer);
-    });
-
-    observersRef.current = observers;
+    for (const link of links) {
+      const el = document.getElementById(link.href.replace('#', ''));
+      if (el) observerRef.current.observe(el);
+    }
 
     return () => {
-      observers.forEach((o) => o.disconnect());
+      observerRef.current?.disconnect();
     };
   }, [links]);
 
