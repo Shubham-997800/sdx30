@@ -4,7 +4,6 @@ import { useCallback } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Download } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
-import { Button } from '@/components/ui/button';
 import { Magnetic } from '@/components/interaction/Magnetic';
 import { heroContent, personalInfo, socialLinks } from '@/data/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
@@ -102,29 +101,28 @@ export function HeroSection() {
 
             {/* CTAs */}
             <motion.div
-              className="flex flex-wrap items-center gap-3 pt-2"
+              className="flex flex-wrap items-center gap-4 pt-2"
               {...fadeUp(0.75, prefersReducedMotion)}
             >
               <Magnetic strength={6}>
-                <Button size="lg" onClick={scrollToWork}>
-                  <span className="flex items-center gap-2">
-                    {heroContent.cta.primary}
-                    <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-                  </span>
-                </Button>
+                <button
+                  onClick={scrollToWork}
+                  className="group/btn inline-flex h-12 items-center gap-2.5 rounded-xl bg-primary px-6 text-[0.9rem] font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:brightness-95 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                >
+                  {heroContent.cta.primary}
+                  <ArrowRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                </button>
               </Magnetic>
               <Magnetic strength={6}>
-                <Button variant="outline" size="lg">
-                  <a
-                    href={personalInfo.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
-                  >
-                    <Download className="size-4" />
-                    {heroContent.cta.secondary}
-                  </a>
-                </Button>
+                <a
+                  href={personalInfo.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/btn inline-flex h-12 items-center gap-2.5 rounded-xl border border-border bg-background px-6 text-[0.9rem] font-semibold text-foreground transition-all duration-300 hover:bg-muted hover:border-accent/50 hover:shadow-md hover:shadow-accent/5 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                >
+                  <Download className="size-4 transition-transform duration-300 group-hover/btn:-translate-y-0.5" />
+                  {heroContent.cta.secondary}
+                </a>
               </Magnetic>
             </motion.div>
 
@@ -139,7 +137,7 @@ export function HeroSection() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-caption font-medium uppercase tracking-[0.06em] text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                  className="text-caption font-medium uppercase tracking-[0.06em] text-muted-foreground transition-all duration-300 hover:text-foreground hover:translate-y-[-1px]"
                 >
                   {link.label}
                 </a>

@@ -27,7 +27,7 @@ export function PageLoader({ isLoading }: PageLoaderProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <span className="text-body font-bold tracking-tight text-foreground">
+            <span className="text-body font-bold tracking-tight text-foreground font-heading">
               SHUBHAM<span className="text-accent">.DEV</span>
             </span>
             <div className="h-px w-12 bg-accent/40">

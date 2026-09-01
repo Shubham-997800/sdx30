@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
+import { ArrowUp } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { socialLinks } from '@/data/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
@@ -69,7 +70,7 @@ export function Footer() {
               }}
               className="inline-block"
             >
-              <span className="text-body font-bold tracking-tight text-foreground">
+              <span className="text-body font-bold tracking-tight text-foreground font-heading">
                 SHUBHAM<span className="text-accent">.DEV</span>
               </span>
             </a>
@@ -90,9 +91,9 @@ export function Footer() {
                   target={isConfigured ? '_blank' : undefined}
                   rel={isConfigured ? 'noopener noreferrer' : undefined}
                   className={cn(
-                    'flex size-11 items-center justify-center rounded-lg transition-colors',
+                    'flex size-11 items-center justify-center rounded-xl transition-all duration-300',
                     isConfigured
-                      ? 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                      ? 'text-muted-foreground hover:text-foreground hover:bg-accent/5 hover:-translate-y-0.5'
                       : 'text-muted-foreground/30 cursor-default',
                   )}
                   aria-label={link.label}
@@ -121,10 +122,10 @@ export function Footer() {
 
           <button
             onClick={scrollToTop}
-            className="group inline-flex items-center gap-2 text-caption font-medium text-muted-foreground/60 transition-colors hover:text-foreground"
+            className="group/btn inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-caption font-medium text-muted-foreground/60 transition-all duration-300 hover:text-foreground hover:bg-muted hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             aria-label="Back to top"
           >
-            <span className="transition-transform duration-200 group-hover:-translate-y-0.5">↑</span>
+            <ArrowUp className="size-3.5 transition-transform duration-300 group-hover/btn:-translate-y-0.5" />
             BACK TO TOP
           </button>
         </div>

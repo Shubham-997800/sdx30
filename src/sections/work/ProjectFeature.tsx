@@ -2,8 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
-import { ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ExternalLink, ArrowUpRight } from 'lucide-react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { cn } from '@/lib/utils';
 import type { Project } from '@/types';
@@ -72,40 +71,35 @@ function ProjectActions({ project }: { project: Project }) {
   return (
     <div className="flex flex-wrap items-center gap-3">
       {hasDemo && (
-        <Button size="lg">
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2"
-          >
-            LIVE DEMO
-            <ExternalLink className="size-4" />
-          </a>
-        </Button>
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/btn inline-flex h-11 items-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:brightness-95 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          LIVE DEMO
+          <ExternalLink className="size-4 transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
+        </a>
       )}
       {hasGithub && (
-        <Button variant="outline" size="lg">
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2"
-          >
-            GITHUB
-          </a>
-        </Button>
+        <a
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/btn inline-flex h-11 items-center gap-2 rounded-xl border border-border bg-background px-5 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-muted hover:border-accent/50 hover:shadow-md hover:shadow-accent/5 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          GITHUB
+          <ArrowUpRight className="size-4 transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
+        </a>
       )}
       {hasCaseStudy && (
-        <Button variant="ghost" size="lg">
-          <a
-            href={project.caseStudyUrl}
-            className="flex items-center gap-2"
-          >
-            CASE STUDY
-            <span className="text-accent">→</span>
-          </a>
-        </Button>
+        <a
+          href={project.caseStudyUrl}
+          className="group/btn inline-flex h-11 items-center gap-2 rounded-xl px-5 text-sm font-semibold text-muted-foreground transition-all duration-300 hover:text-foreground hover:bg-muted hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          CASE STUDY
+          <span className="text-accent transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+        </a>
       )}
     </div>
   );
