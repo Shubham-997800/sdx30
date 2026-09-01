@@ -1,5 +1,4 @@
 import { Navbar } from "@/components/navigation/Navbar";
-import { Footer } from "@/sections/footer/FooterSection";
 import type { ReactNode } from "react";
 
 interface PageLayoutProps {
@@ -17,7 +16,6 @@ export function PageLayout({ children }: PageLayoutProps) {
       </a>
       <Navbar />
       <main id="main-content">{children}</main>
-      <Footer />
     </div>
   );
 }

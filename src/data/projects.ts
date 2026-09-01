@@ -113,7 +113,7 @@ export const projects: Project[] = [
       'Responsive mobile-first design',
     ],
     technologies: ['React', 'JavaScript', 'HTML', 'CSS', 'Vite'],
-    layout: 'asymmetric',
+    layout: 'media-left',
     liveUrl: 'https://campus30.vercel.app/',
     githubUrl: 'https://github.com/Shubham-997800/CAMPUS360',
     imageUrl: '/projects/campus360.jpg',

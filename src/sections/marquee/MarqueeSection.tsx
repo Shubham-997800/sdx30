@@ -3,77 +3,62 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import { Container } from '@/components/layout/Container';
-import { Section } from '@/components/layout/Section';
-import { Marquee } from '@/components/motion/Marquee';
-import { marqueeWords, personalStatement } from '@/data/content';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { marqueeWords, marqueeStatement } from '@/data/content';
 
-function MarqueeWord({ word, index }: { word: string; index: number }) {
-  return (
-    <span className="flex items-center">
-      {index > 0 && (
-        <span className="mx-6 text-accent/40 text-h4" aria-hidden="true">
-          ·
-        </span>
-      )}
-      <span
-        className="text-marquee text-foreground/10 dark:text-foreground/15 transition-colors duration-500"
-      >
-        {word}
-      </span>
-    </span>
-  );
-}
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function MarqueeSection() {
   const prefersReducedMotion = useReducedMotion();
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+
+  const words = [...marqueeWords, ...marqueeWords, ...marqueeWords];
 
   return (
-    <Section className="py-16 md:py-24">
-      {/* ─── Marquee Band ─── */}
-      <Marquee speed={40} className="w-full py-4 -mx-5 md:-mx-8 lg:-mx-10 px-5 md:px-8 lg:px-10">
-        {marqueeWords.map((word, i) => (
-          <MarqueeWord key={word} word={word} index={i} />
-        ))}
-      </Marquee>
-
-      {/* ─── Personal Statement ─── */}
-      <div ref={sectionRef}>
-        <Container className="mt-20 md:mt-28">
-          <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-8 lg:gap-12">
-            {/* Label */}
-            <motion.div
-              className="col-span-4 md:col-span-2"
-              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const }}
-            >
-              <span className="text-label text-muted-foreground">
-                {personalStatement.label}
+    <section className="relative py-16 md:py-24 overflow-hidden editorial-border-top editorial-border-bottom" ref={ref}>
+      {/* Marquee */}
+      <div className="relative overflow-hidden">
+        {prefersReducedMotion ? (
+          <div className="flex items-center justify-center gap-6 md:gap-10 px-4">
+            {marqueeWords.map((word, i) => (
+              <span key={i} className="text-marquee text-foreground/10 dark:text-foreground/15 whitespace-nowrap">
+                {word}
+                <span className="text-accent/30 mx-4 md:mx-8">·</span>
               </span>
-            </motion.div>
-
-            {/* Statement */}
-            <motion.div
-              className="col-span-4 md:col-span-6 lg:col-span-7"
-              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }}
-            >
-              <h2
-                className="text-feature text-foreground"
-              >
-                {personalStatement.heading}
-              </h2>
-              <p className="mt-6 text-body-lg text-muted-foreground max-w-2xl leading-relaxed">
-                {personalStatement.body}
-              </p>
-            </motion.div>
+            ))}
           </div>
-        </Container>
+        ) : (
+          <motion.div
+            className="marquee"
+            style={{ '--marquee-duration': '35s' } as React.CSSProperties}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 1 }}
+          >
+            {words.map((word, i) => (
+              <span key={i} className="text-marquee text-foreground/10 dark:text-foreground/15 whitespace-nowrap flex items-center">
+                {word}
+                <span className="text-accent/30 mx-6 md:mx-12 text-4xl md:text-6xl">·</span>
+              </span>
+            ))}
+          </motion.div>
+        )}
       </div>
-    </Section>
+
+      {/* Statement */}
+      <Container>
+        <motion.div
+          className="mt-12 md:mt-16 text-center"
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+        >
+          <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed italic">
+            "{marqueeStatement}"
+          </p>
+        </motion.div>
+      </Container>
+    </section>
   );
 }

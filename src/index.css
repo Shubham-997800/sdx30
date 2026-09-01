@@ -7,17 +7,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ─────────────────────────────────────────────
-   DESIGN TOKENS — DIGITAL EDITORIAL
-   ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   DIGITAL EDITORIAL — DESIGN TOKENS
+   ═══════════════════════════════════════════════ */
 
 @theme inline {
-  /* Typography — Premium triplet */
   --font-heading: "Space Grotesk Variable", "Space Grotesk", sans-serif;
   --font-sans: "Manrope Variable", "Manrope", sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
 
-  /* Colors — shadcn mapping */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -37,14 +35,14 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Semantic colors */
   --color-surface: var(--surface);
   --color-surface-elevated: var(--surface-elevated);
   --color-border-subtle: var(--border-subtle);
   --color-border-strong: var(--border-strong);
   --color-border-accent: var(--border-accent);
+  --color-editorial: var(--editorial);
+  --color-editorial-muted: var(--editorial-muted);
 
-  /* Radius */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.625rem;
@@ -53,16 +51,15 @@
   --radius-3xl: 2rem;
   --radius-4xl: 2.5rem;
 
-  /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-accent: 0 0 0 1px var(--accent), 0 0 20px oklch(from var(--accent) l c h / 0.15);
 }
 
-/* ─────────────────────────────────────────────
-   LIGHT MODE — Editorial, clean, sophisticated
-   ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   LIGHT MODE — Editorial, clean, high-end
+   ═══════════════════════════════════════════════ */
 
 :root {
   --background: oklch(0.99 0.002 100);
@@ -77,11 +74,11 @@
   --primary: oklch(0.1 0.015 270);
   --primary-foreground: oklch(0.99 0.002 100);
 
-  --secondary: oklch(0.94 0.005 100);
+  --secondary: oklch(0.95 0.005 100);
   --secondary-foreground: oklch(0.1 0.015 270);
 
-  --muted: oklch(0.94 0.005 100);
-  --muted-foreground: oklch(0.45 0.02 270);
+  --muted: oklch(0.95 0.005 100);
+  --muted-foreground: oklch(0.42 0.02 270);
 
   --accent: oklch(0.55 0.2 195);
   --accent-foreground: oklch(1 0 0);
@@ -89,8 +86,8 @@
   --destructive: oklch(0.5 0.24 25);
 
   --border: oklch(0.88 0.005 100);
-  --border-subtle: oklch(0.92 0.005 100);
-  --border-strong: oklch(0.75 0.01 270);
+  --border-subtle: oklch(0.93 0.005 100);
+  --border-strong: oklch(0.72 0.01 270);
   --border-accent: oklch(0.55 0.2 195);
 
   --input: oklch(0.92 0.005 100);
@@ -98,55 +95,59 @@
 
   --surface: oklch(1 0 0);
   --surface-elevated: oklch(0.99 0.002 100);
+  --editorial: oklch(0.1 0.015 270);
+  --editorial-muted: oklch(0.78 0.01 270);
 
   color-scheme: light;
 }
 
-/* ─────────────────────────────────────────────
-   DARK MODE — Default (cinematic, deep, premium)
-   ───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   DARK MODE — Cinematic, deep, premium
+   ═══════════════════════════════════════════════ */
 
 .dark {
-  --background: oklch(0.1 0.008 270);
+  --background: oklch(0.08 0.008 270);
   --foreground: oklch(0.97 0.005 270);
 
-  --card: oklch(0.14 0.008 270);
+  --card: oklch(0.12 0.008 270);
   --card-foreground: oklch(0.97 0.005 270);
 
-  --popover: oklch(0.14 0.008 270);
+  --popover: oklch(0.12 0.008 270);
   --popover-foreground: oklch(0.97 0.005 270);
 
   --primary: oklch(0.97 0.005 270);
-  --primary-foreground: oklch(0.1 0.008 270);
+  --primary-foreground: oklch(0.08 0.008 270);
 
-  --secondary: oklch(0.2 0.008 270);
+  --secondary: oklch(0.18 0.008 270);
   --secondary-foreground: oklch(0.97 0.005 270);
 
-  --muted: oklch(0.2 0.008 270);
-  --muted-foreground: oklch(0.72 0.015 270);
+  --muted: oklch(0.18 0.008 270);
+  --muted-foreground: oklch(0.62 0.015 270);
 
-  --accent: oklch(0.75 0.18 195);
-  --accent-foreground: oklch(0.1 0.008 270);
+  --accent: oklch(0.78 0.16 195);
+  --accent-foreground: oklch(0.08 0.008 270);
 
   --destructive: oklch(0.65 0.22 25);
 
-  --border: oklch(0.26 0.008 270);
-  --border-subtle: oklch(0.2 0.008 270);
-  --border-strong: oklch(0.35 0.015 270);
-  --border-accent: oklch(0.75 0.18 195);
+  --border: oklch(0.22 0.008 270);
+  --border-subtle: oklch(0.16 0.008 270);
+  --border-strong: oklch(0.32 0.015 270);
+  --border-accent: oklch(0.78 0.16 195);
 
-  --input: oklch(0.2 0.008 270);
-  --ring: oklch(0.75 0.18 195);
+  --input: oklch(0.18 0.008 270);
+  --ring: oklch(0.78 0.16 195);
 
-  --surface: oklch(0.14 0.008 270);
-  --surface-elevated: oklch(0.18 0.008 270);
+  --surface: oklch(0.12 0.008 270);
+  --surface-elevated: oklch(0.16 0.008 270);
+  --editorial: oklch(0.97 0.005 270);
+  --editorial-muted: oklch(0.35 0.015 270);
 
   color-scheme: dark;
 }
 
-/* ─────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    BASE STYLES
-   ───────────────────────────────────────────── */
+   ═══════════════════════════════════════════════ */
 
 @layer base {
   * {
@@ -169,10 +170,9 @@
     color: var(--foreground);
   }
 
-  /* Scrollbar — minimal, editorial */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
 
   ::-webkit-scrollbar-track {
@@ -180,15 +180,14 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: oklch(from var(--foreground) l c h / 0.15);
+    background: oklch(from var(--foreground) l c h / 0.12);
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: oklch(from var(--foreground) l c h / 0.3);
+    background: oklch(from var(--foreground) l c h / 0.25);
   }
 
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -201,59 +200,35 @@
   }
 }
 
-/* ─────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    TYPOGRAPHY — Editorial Scale
-   ───────────────────────────────────────────── */
+   ═══════════════════════════════════════════════ */
 
-/*
-  Roles:
-    Display     → Hero name, massive personal masthead
-    Section     → Major section headings
-    Feature     → Project titles, key statements
-    Subheading  → Category titles, event titles, secondary headings
-    H3          → Card headings, sub-sections
-    H4          → Small card headings, list item titles
-    BodyLg      → Lead/introductory text
-    Body        → Standard reading text
-    BodySm      → Secondary content, descriptions
-    Caption     → Micro text, timestamps, fine print
-    Label       → Technical metadata, uppercase labels (monospace)
-    Overline    → Section labels, editorial metadata (monospace)
-    Metadata    → Floating code labels, preview names (monospace)
-    Code        → Code blocks, terminal text (monospace)
-    Button      → CTA and action button text
-    Nav         → Navigation link text
-*/
-
-/* ── Display — Hero name, personal masthead ── */
 .text-display {
   font-family: var(--font-heading);
-  font-size: clamp(3rem, 9vw, 8rem);
-  line-height: 0.92;
-  letter-spacing: -0.055em;
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  line-height: 0.88;
+  letter-spacing: -0.06em;
   font-weight: 700;
 }
 
-/* ── Marquee — Ambient scrolling text ── */
 .text-marquee {
   font-family: var(--font-heading);
-  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-size: clamp(3rem, 9vw, 8rem);
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.045em;
   font-weight: 700;
   text-transform: uppercase;
 }
 
-/* ── Section — Major section headings ── */
 .text-section {
   font-family: var(--font-heading);
-  font-size: clamp(1.875rem, 4.5vw, 3.5rem);
-  line-height: 1.08;
-  letter-spacing: -0.04em;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
   font-weight: 700;
 }
 
-/* ── Feature — Project titles, key statements ── */
 .text-feature {
   font-family: var(--font-heading);
   font-size: clamp(1.5rem, 3.5vw, 2.75rem);
@@ -262,7 +237,6 @@
   font-weight: 700;
 }
 
-/* ── Subheading — Category/event titles ── */
 .text-subheading {
   font-family: var(--font-heading);
   font-size: clamp(1.125rem, 2.25vw, 1.625rem);
@@ -271,7 +245,6 @@
   font-weight: 600;
 }
 
-/* ── H3 — Card headings, sub-sections ── */
 .text-h3 {
   font-family: var(--font-heading);
   font-size: clamp(1rem, 1.75vw, 1.375rem);
@@ -280,7 +253,6 @@
   font-weight: 600;
 }
 
-/* ── H4 — Small card headings, list items ── */
 .text-h4 {
   font-family: var(--font-heading);
   font-size: clamp(0.9375rem, 1.4vw, 1.0625rem);
@@ -289,7 +261,6 @@
   font-weight: 600;
 }
 
-/* ── BodyLg — Lead/introductory text ── */
 .text-body-lg {
   font-size: clamp(1rem, 1.15vw, 1.1875rem);
   line-height: 1.7;
@@ -297,7 +268,6 @@
   letter-spacing: -0.005em;
 }
 
-/* ── Body — Standard reading text ── */
 .text-body {
   font-size: 1rem;
   line-height: 1.65;
@@ -305,7 +275,6 @@
   letter-spacing: 0;
 }
 
-/* ── BodySm — Secondary content ── */
 .text-body-sm {
   font-size: 0.875rem;
   line-height: 1.6;
@@ -313,7 +282,6 @@
   letter-spacing: 0;
 }
 
-/* ── Caption — Micro text, timestamps ── */
 .text-caption {
   font-size: 0.75rem;
   line-height: 1.5;
@@ -321,7 +289,6 @@
   letter-spacing: 0.01em;
 }
 
-/* ── Label — Technical metadata (monospace) ── */
 .text-label {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
@@ -331,7 +298,6 @@
   text-transform: uppercase;
 }
 
-/* ── Overline — Section labels (monospace) ── */
 .text-overline {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
@@ -342,7 +308,6 @@
   color: var(--muted-foreground);
 }
 
-/* ── Metadata — Floating code labels (monospace) ── */
 .text-metadata {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
@@ -352,7 +317,6 @@
   text-transform: uppercase;
 }
 
-/* ── Code — Code blocks, terminal (monospace) ── */
 .text-code {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
@@ -361,15 +325,14 @@
   letter-spacing: 0;
 }
 
-/* ── Button — CTA and action buttons ── */
 .text-button {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-/* ── Nav — Navigation link text ── */
 .text-nav {
   font-size: 0.8125rem;
   line-height: 1;
@@ -377,7 +340,6 @@
   letter-spacing: 0.02em;
 }
 
-/* ── H2 — Missing class for mobile menu ── */
 .text-h2 {
   font-family: var(--font-heading);
   font-size: clamp(1.5rem, 3vw, 2rem);
@@ -386,51 +348,228 @@
   font-weight: 700;
 }
 
-/* ─────────────────────────────────────────────
+.text-editorial-number {
+  font-family: var(--font-heading);
+  font-size: clamp(6rem, 15vw, 12rem);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  font-weight: 700;
+  color: var(--editorial-muted);
+  user-select: none;
+}
+
+.text-stat {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION — Editorial Divider
+   ═══════════════════════════════════════════════ */
+
+.section-divider {
+  position: relative;
+  height: 1px;
+  width: 100%;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-divider.is-visible::after {
+  transform: scaleX(1);
+}
+
+/* ═══════════════════════════════════════════════
+   EDITORIAL — Grid overlay for Hero
+   ═══════════════════════════════════════════════ */
+
+.editorial-grid-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+}
+
+.dark .editorial-grid-overlay {
+  opacity: 0.04;
+}
+
+/* ═══════════════════════════════════════════════
+   PROJECT — Hover overlay
+   ═══════════════════════════════════════════════ */
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    oklch(from var(--background) l c h / 0.9) 0%,
+    oklch(from var(--background) l c h / 0) 60%
+  );
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .project-overlay {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════
+   CARD — Neo-Brutalist accent
+   ═══════════════════════════════════════════════ */
+
+.card-neo {
+  position: relative;
+  border: 2px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-neo:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 oklch(from var(--accent) l c h / 0.15);
+}
+
+/* ═══════════════════════════════════════════════
+   JOURNEY — Timeline
+   ═══════════════════════════════════════════════ */
+
+.timeline-line {
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.timeline-line-fill {
+  position: absolute;
+  left: 15px;
+  top: 0;
+  width: 1px;
+  background: var(--accent);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-line-fill.is-visible {
+  transform: scaleY(1);
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 11px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--background);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-dot.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px oklch(from var(--accent) l c h / 0.15);
+}
+
+/* ═══════════════════════════════════════════════
+   CODE CARD — Terminal style
+   ═══════════════════════════════════════════════ */
+
+.code-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+
+.code-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.code-card-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.code-card-dot:nth-child(1) { background: #ff5f57; }
+.code-card-dot:nth-child(2) { background: #febc2e; }
+.code-card-dot:nth-child(3) { background: #28c840; }
+
+.code-card-body {
+  padding: 20px;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.code-keyword { color: var(--accent); }
+.code-string { color: var(--muted-foreground); }
+.code-property { color: var(--foreground); }
+.code-punctuation { color: var(--muted-foreground); }
+.code-comment { color: var(--muted-foreground); opacity: 0.5; }
+
+/* ═══════════════════════════════════════════════
    ANIMATION KEYFRAMES
-   ───────────────────────────────────────────── */
+   ═══════════════════════════════════════════════ */
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes clipReveal {
-  from {
-    clip-path: inset(100% 0 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
 }
 
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-/* ─────────────────────────────────────────────
-   ANIMATION UTILITIES
-   ───────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
 
 .animate-fade-in-up {
   animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -446,32 +585,15 @@
   animation: clipReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-stagger-1 {
-  animation-delay: 0.1s;
-}
-.animate-stagger-2 {
-  animation-delay: 0.2s;
-}
-.animate-stagger-3 {
-  animation-delay: 0.3s;
-}
-.animate-stagger-4 {
-  animation-delay: 0.4s;
-}
-.animate-stagger-5 {
-  animation-delay: 0.5s;
-}
-.animate-stagger-6 {
-  animation-delay: 0.6s;
-}
-.animate-stagger-7 {
-  animation-delay: 0.7s;
-}
-.animate-stagger-8 {
-  animation-delay: 0.8s;
-}
+.animate-stagger-1 { animation-delay: 0.1s; }
+.animate-stagger-2 { animation-delay: 0.2s; }
+.animate-stagger-3 { animation-delay: 0.3s; }
+.animate-stagger-4 { animation-delay: 0.4s; }
+.animate-stagger-5 { animation-delay: 0.5s; }
+.animate-stagger-6 { animation-delay: 0.6s; }
+.animate-stagger-7 { animation-delay: 0.7s; }
+.animate-stagger-8 { animation-delay: 0.8s; }
 
-/* Marquee */
 .marquee {
   display: flex;
   width: max-content;
@@ -484,9 +606,9 @@
   }
 }
 
-/* ─────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    CURSOR
-   ───────────────────────────────────────────── */
+   ═══════════════════════════════════════════════ */
 
 .cursor-dot {
   width: 8px;
@@ -547,12 +669,32 @@
   }
 }
 
-/* ─────────────────────────────────────────────
+/* ═══════════════════════════════════════════════
    PAGE LOAD — DISABLE TRANSITIONS
-   ───────────────────────────────────────────── */
+   ═══════════════════════════════════════════════ */
+
 .no-transition *,
 .no-transition *::before,
 .no-transition *::after {
   transition-duration: 0s !important;
   animation-duration: 0s !important;
+}
+
+/* ═══════════════════════════════════════════════
+   UTILITY — Visual depth helpers
+   ═══════════════════════════════════════════════ */
+
+.editorial-border-top {
+  border-top: 1px solid var(--border);
+}
+
+.editorial-border-bottom {
+  border-bottom: 1px solid var(--border);
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, var(--accent), oklch(from var(--accent) l c h / 0.6));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

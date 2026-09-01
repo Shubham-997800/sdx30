@@ -12,6 +12,7 @@ import { AboutSection } from "@/sections/about/AboutSection";
 import { LearningSection } from "@/sections/learning/LearningSection";
 import { GitHubSection } from "@/sections/github/GitHubSection";
 import { ContactSection } from "@/sections/contact/ContactSection";
+import { FooterSection } from "@/sections/footer/FooterSection";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <LearningSection />
         <GitHubSection />
         <ContactSection />
+        <FooterSection />
         <BackToTop />
       </PageLayout>
     </ErrorBoundary>
