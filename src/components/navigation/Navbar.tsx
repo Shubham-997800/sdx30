@@ -63,7 +63,7 @@ export function Navbar() {
             href="#"
             onClick={handleLogoClick}
             className={cn(
-              'relative z-10 text-body font-bold tracking-tight text-foreground transition-colors duration-200 font-heading',
+              'relative z-10 text-h4 text-foreground transition-colors duration-200 font-heading',
               'hover:text-accent',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg px-1 -ml-1',
             )}

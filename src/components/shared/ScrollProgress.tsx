@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion } from "motion/react";
+import { useRef, useEffect, useCallback } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
   const prefersReducedMotion = useReducedMotion();
+  const barRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = useCallback(() => {
+    if (!barRef.current) return;
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    setProgress(docHeight > 0 ? scrollTop / docHeight : 0);
+    const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+    barRef.current.style.transform = `scaleX(${progress})`;
   }, []);
 
   useEffect(() => {
@@ -22,9 +23,9 @@ export function ScrollProgress() {
   if (prefersReducedMotion) return null;
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 right-0 z-[550] h-0.5 bg-accent origin-left"
-      style={{ scaleX: progress }}
+    <div
+      ref={barRef}
+      className="fixed top-0 left-0 right-0 z-[550] h-0.5 bg-accent origin-left will-change-transform"
     />
   );
 }

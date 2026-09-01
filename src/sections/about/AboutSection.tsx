@@ -35,12 +35,12 @@ function PhilosophyItem({
       transition={{ duration: 0.5, delay: 0.1 + index * 0.08, ease: EASE }}
     >
       <div className="grid grid-cols-[2rem_1fr] gap-4 items-start">
-        <span className="text-label font-semibold text-muted-foreground/40 mt-1">
+        <span className="text-label text-muted-foreground/70 mt-1">
           {item.number}
         </span>
         <div className="space-y-2">
           <h4
-            className="text-h4 font-bold tracking-[-0.02em] text-foreground"
+            className="text-h4 text-foreground"
           >
             {item.title}
           </h4>
@@ -66,12 +66,12 @@ function ProductThinkingFlow({ isInView }: { isInView: boolean }) {
       {productThinking.map((step, i) => (
         <div key={step} className="flex items-center gap-3">
           <span
-            className="text-caption font-semibold uppercase tracking-[0.08em] text-foreground/70"
+            className="text-label text-foreground/80"
           >
             {step}
           </span>
           {i < productThinking.length - 1 && (
-            <span className="text-muted-foreground/30 text-[10px]">→</span>
+            <span className="text-muted-foreground/50 text-label">→</span>
           )}
         </div>
       ))}
@@ -95,12 +95,12 @@ function BuildShipIterate({ isInView }: { isInView: boolean }) {
         >
           <div className="flex items-center gap-3">
             <span
-              className="text-subheading font-bold tracking-[-0.03em] text-foreground"
+              className="text-subheading text-foreground"
             >
               {item.title}
             </span>
             {i < items.length - 1 && (
-              <span className="text-accent/40 text-lg hidden md:block">→</span>
+              <span className="text-accent/40 text-label hidden md:block">→</span>
             )}
           </div>
           <p className="text-body-sm text-muted-foreground leading-relaxed">
@@ -130,7 +130,7 @@ function CodeCard({ isInView }: { isInView: boolean }) {
       </div>
 
       {/* Code */}
-      <pre className="text-[13px] leading-relaxed text-muted-foreground overflow-x-auto">
+      <pre className="text-code leading-relaxed text-muted-foreground overflow-x-auto">
         <code>{developerCodeCard}</code>
       </pre>
     </motion.div>
@@ -170,7 +170,7 @@ export function AboutSection() {
             <SectionLabel>ABOUT</SectionLabel>
           </motion.div>
           <motion.h2
-            className="text-section mt-6 text-foreground tracking-[-0.04em] leading-[1.05]"
+            className="text-section mt-6 text-foreground"
             initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
@@ -200,7 +200,7 @@ export function AboutSection() {
           </div>
           <div className="col-span-4 md:col-span-5 space-y-5">
             <motion.h3
-              className="text-subheading text-foreground tracking-[-0.02em] leading-snug"
+              className="text-subheading text-foreground"
               initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
               animate={isIntroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.15, ease: EASE }}

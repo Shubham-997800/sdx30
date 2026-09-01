@@ -90,7 +90,7 @@ export function ContactSection() {
             <SectionLabel>{contactContent.label}</SectionLabel>
           </motion.div>
           <motion.h2
-            className="text-section mt-6 text-foreground tracking-[-0.04em] leading-[1.05] whitespace-pre-line"
+            className="text-section mt-6 text-foreground whitespace-pre-line"
             initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
@@ -136,13 +136,13 @@ export function ContactSection() {
                       className={cn(
                         'group flex items-center gap-3 py-2 text-body-sm',
                         isConfigured
-                          ? 'text-foreground/70 hover:text-foreground transition-all duration-300 hover:translate-x-1'
-                          : 'text-muted-foreground/40 cursor-default',
+                          ? 'text-foreground/80 hover:text-foreground transition-all duration-300 hover:translate-x-1'
+                          : 'text-muted-foreground/50 cursor-default',
                       )}
                     >
                       <span>{link.label}</span>
                       {isConfigured && (
-                        <span className="text-[10px] text-accent transition-transform duration-300 group-hover:translate-x-1">
+                        <span className="text-label text-accent transition-transform duration-300 group-hover:translate-x-1">
                           →
                         </span>
                       )}
@@ -173,7 +173,7 @@ export function ContactSection() {
                 </p>
                 <button
                   onClick={() => setSubmitState('idle')}
-                  className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl px-5 text-sm font-semibold text-muted-foreground transition-all duration-300 hover:text-foreground hover:bg-muted hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl px-5 text-button text-muted-foreground transition-all duration-300 hover:text-foreground hover:bg-muted hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                 >
                   Send another message
                 </button>
@@ -223,7 +223,7 @@ export function ContactSection() {
                 <button
                   type="submit"
                   disabled={submitState === 'loading'}
-                  className="group/btn relative inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-6 text-[0.9rem] font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:brightness-95 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:brightness-100"
+                  className="group/btn relative inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-6 text-button text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:brightness-95 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:brightness-100"
                 >
                   {submitState === 'loading' ? (
                     <>

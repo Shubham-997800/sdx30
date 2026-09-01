@@ -38,7 +38,7 @@ export function LearningSection() {
             transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
           >
             <h2
-              className="text-section text-foreground tracking-[-0.04em] leading-[1.05]"
+              className="text-section text-foreground"
             >
               Currently<br className="hidden md:block" /> Learning
             </h2>
@@ -71,19 +71,19 @@ export function LearningSection() {
               transition={{ duration: 0.45, delay: 0.08 + i * 0.06, ease: EASE }}
             >
               {/* Number */}
-              <span className="text-label font-semibold text-muted-foreground/40">
+              <span className="text-label text-muted-foreground/70">
                 {item.number}
               </span>
 
               {/* Title */}
               <h3
-                className="text-h4 mt-3 font-bold tracking-[-0.02em] text-foreground"
+                className="text-h3 mt-3 text-foreground"
               >
                 {item.title}
               </h3>
 
               {/* Description */}
-              <p className="mt-2 text-[13px] text-muted-foreground leading-relaxed">
+              <p className="mt-2 text-body-sm text-muted-foreground leading-relaxed">
                 {item.description}
               </p>
 

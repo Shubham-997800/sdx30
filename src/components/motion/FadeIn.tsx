@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { type ReactNode, useRef } from "react";
-import { motion, useInView } from "motion/react";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { type ReactNode, useRef } from 'react';
+import { motion, useInView } from 'motion/react';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface FadeInProps {
   children: ReactNode;
@@ -16,12 +16,12 @@ export function FadeIn({
   children,
   className,
   delay = 0,
-  duration = 0.5,
+  duration = 0.6,
   once = true,
 }: FadeInProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const isInView = useInView(ref, { once, margin: "-50px 0px" });
+  const isInView = useInView(ref, { once, margin: '-50px 0px' });
 
   if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;

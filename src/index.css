@@ -65,39 +65,39 @@
    ───────────────────────────────────────────── */
 
 :root {
-  --background: oklch(0.985 0.002 100);
-  --foreground: oklch(0.15 0.01 270);
+  --background: oklch(0.99 0.002 100);
+  --foreground: oklch(0.1 0.015 270);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.01 270);
+  --card-foreground: oklch(0.1 0.015 270);
 
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.01 270);
+  --popover-foreground: oklch(0.1 0.015 270);
 
-  --primary: oklch(0.15 0.01 270);
-  --primary-foreground: oklch(0.985 0.002 100);
+  --primary: oklch(0.1 0.015 270);
+  --primary-foreground: oklch(0.99 0.002 100);
 
   --secondary: oklch(0.94 0.005 100);
-  --secondary-foreground: oklch(0.15 0.01 270);
+  --secondary-foreground: oklch(0.1 0.015 270);
 
   --muted: oklch(0.94 0.005 100);
-  --muted-foreground: oklch(0.5 0.02 270);
+  --muted-foreground: oklch(0.45 0.02 270);
 
-  --accent: oklch(0.68 0.16 195);
+  --accent: oklch(0.55 0.2 195);
   --accent-foreground: oklch(1 0 0);
 
-  --destructive: oklch(0.55 0.22 25);
+  --destructive: oklch(0.5 0.24 25);
 
   --border: oklch(0.88 0.005 100);
   --border-subtle: oklch(0.92 0.005 100);
-  --border-strong: oklch(0.78 0.01 270);
-  --border-accent: oklch(0.68 0.16 195);
+  --border-strong: oklch(0.75 0.01 270);
+  --border-accent: oklch(0.55 0.2 195);
 
   --input: oklch(0.92 0.005 100);
-  --ring: oklch(0.68 0.16 195);
+  --ring: oklch(0.55 0.2 195);
 
   --surface: oklch(1 0 0);
-  --surface-elevated: oklch(0.985 0.002 100);
+  --surface-elevated: oklch(0.99 0.002 100);
 
   color-scheme: light;
 }
@@ -107,39 +107,39 @@
    ───────────────────────────────────────────── */
 
 .dark {
-  --background: oklch(0.12 0.005 270);
-  --foreground: oklch(0.96 0.005 270);
+  --background: oklch(0.1 0.008 270);
+  --foreground: oklch(0.97 0.005 270);
 
-  --card: oklch(0.16 0.005 270);
-  --card-foreground: oklch(0.96 0.005 270);
+  --card: oklch(0.14 0.008 270);
+  --card-foreground: oklch(0.97 0.005 270);
 
-  --popover: oklch(0.16 0.005 270);
-  --popover-foreground: oklch(0.96 0.005 270);
+  --popover: oklch(0.14 0.008 270);
+  --popover-foreground: oklch(0.97 0.005 270);
 
-  --primary: oklch(0.96 0.005 270);
-  --primary-foreground: oklch(0.12 0.005 270);
+  --primary: oklch(0.97 0.005 270);
+  --primary-foreground: oklch(0.1 0.008 270);
 
-  --secondary: oklch(0.2 0.005 270);
-  --secondary-foreground: oklch(0.96 0.005 270);
+  --secondary: oklch(0.2 0.008 270);
+  --secondary-foreground: oklch(0.97 0.005 270);
 
-  --muted: oklch(0.2 0.005 270);
-  --muted-foreground: oklch(0.65 0.01 270);
+  --muted: oklch(0.2 0.008 270);
+  --muted-foreground: oklch(0.72 0.015 270);
 
-  --accent: oklch(0.78 0.15 195);
-  --accent-foreground: oklch(0.12 0.005 270);
+  --accent: oklch(0.75 0.18 195);
+  --accent-foreground: oklch(0.1 0.008 270);
 
-  --destructive: oklch(0.65 0.2 25);
+  --destructive: oklch(0.65 0.22 25);
 
-  --border: oklch(0.28 0.005 270);
-  --border-subtle: oklch(0.22 0.005 270);
-  --border-strong: oklch(0.38 0.01 270);
-  --border-accent: oklch(0.78 0.15 195);
+  --border: oklch(0.26 0.008 270);
+  --border-subtle: oklch(0.2 0.008 270);
+  --border-strong: oklch(0.35 0.015 270);
+  --border-accent: oklch(0.75 0.18 195);
 
-  --input: oklch(0.22 0.005 270);
-  --ring: oklch(0.78 0.15 195);
+  --input: oklch(0.2 0.008 270);
+  --ring: oklch(0.75 0.18 195);
 
-  --surface: oklch(0.16 0.005 270);
-  --surface-elevated: oklch(0.2 0.005 270);
+  --surface: oklch(0.14 0.008 270);
+  --surface-elevated: oklch(0.18 0.008 270);
 
   color-scheme: dark;
 }
@@ -205,98 +205,146 @@
    TYPOGRAPHY — Editorial Scale
    ───────────────────────────────────────────── */
 
-/* Display — Hero name, massive impact (Space Grotesk) */
+/*
+  Roles:
+    Display     → Hero name, massive personal masthead
+    Section     → Major section headings
+    Feature     → Project titles, key statements
+    Subheading  → Category titles, event titles, secondary headings
+    H3          → Card headings, sub-sections
+    H4          → Small card headings, list item titles
+    BodyLg      → Lead/introductory text
+    Body        → Standard reading text
+    BodySm      → Secondary content, descriptions
+    Caption     → Micro text, timestamps, fine print
+    Label       → Technical metadata, uppercase labels (monospace)
+    Overline    → Section labels, editorial metadata (monospace)
+    Metadata    → Floating code labels, preview names (monospace)
+    Code        → Code blocks, terminal text (monospace)
+    Button      → CTA and action button text
+    Nav         → Navigation link text
+*/
+
+/* ── Display — Hero name, personal masthead ── */
 .text-display {
-  font-family: "Space Grotesk Variable", "Space Grotesk", sans-serif;
-  font-size: clamp(3.5rem, 10vw, 9rem);
-  line-height: 0.9;
-  letter-spacing: -0.05em;
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 9vw, 8rem);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
   font-weight: 700;
 }
 
-/* Section headings — major section titles (Space Grotesk) */
+/* ── Marquee — Ambient scrolling text ── */
+.text-marquee {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ── Section — Major section headings ── */
 .text-section {
-  font-family: "Space Grotesk Variable", "Space Grotesk", sans-serif;
-  font-size: clamp(2rem, 5vw, 3.75rem);
-  line-height: 1.05;
+  font-family: var(--font-heading);
+  font-size: clamp(1.875rem, 4.5vw, 3.5rem);
+  line-height: 1.08;
   letter-spacing: -0.04em;
   font-weight: 700;
 }
 
-/* Feature headings — project titles, statements (Space Grotesk) */
+/* ── Feature — Project titles, key statements ── */
 .text-feature {
-  font-family: "Space Grotesk Variable", "Space Grotesk", sans-serif;
-  font-size: clamp(1.75rem, 4vw, 3rem);
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3.5vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
   font-weight: 700;
 }
 
-/* Sub headings — category titles, event titles (Space Grotesk) */
+/* ── Subheading — Category/event titles ── */
 .text-subheading {
-  font-family: "Space Grotesk Variable", "Space Grotesk", sans-serif;
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 2.25vw, 1.625rem);
   line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+/* ── H3 — Card headings, sub-sections ── */
+.text-h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 1.75vw, 1.375rem);
+  line-height: 1.25;
   letter-spacing: -0.02em;
   font-weight: 600;
 }
 
-/* Headings (Space Grotesk) */
-.text-h3 {
-  font-family: "Space Grotesk Variable", "Space Grotesk", sans-serif;
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
-  line-height: 1.2;
+/* ── H4 — Small card headings, list items ── */
+.text-h4 {
+  font-family: var(--font-heading);
+  font-size: clamp(0.9375rem, 1.4vw, 1.0625rem);
+  line-height: 1.3;
   letter-spacing: -0.015em;
   font-weight: 600;
 }
 
-.text-h4 {
-  font-family: "Space Grotesk Variable", "Space Grotesk", sans-serif;
-  font-size: clamp(1rem, 1.5vw, 1.125rem);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  font-weight: 600;
-}
-
-/* Body (Manrope) */
+/* ── BodyLg — Lead/introductory text ── */
 .text-body-lg {
-  font-size: clamp(1rem, 1.2vw, 1.25rem);
-  line-height: 1.65;
+  font-size: clamp(1rem, 1.15vw, 1.1875rem);
+  line-height: 1.7;
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
+/* ── Body — Standard reading text ── */
 .text-body {
   font-size: 1rem;
   line-height: 1.65;
   font-weight: 400;
+  letter-spacing: 0;
 }
 
+/* ── BodySm — Secondary content ── */
 .text-body-sm {
   font-size: 0.875rem;
   line-height: 1.6;
   font-weight: 400;
+  letter-spacing: 0;
 }
 
-/* Micro */
+/* ── Caption — Micro text, timestamps ── */
 .text-caption {
   font-size: 0.75rem;
   line-height: 1.5;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
-/* Labels — JetBrains Mono for technical metadata */
+/* ── Label — Technical metadata (monospace) ── */
 .text-label {
-  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
   line-height: 1.4;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
+/* ── Overline — Section labels (monospace) ── */
+.text-overline {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* ── Metadata — Floating code labels (monospace) ── */
 .text-metadata {
-  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
   line-height: 1.4;
   font-weight: 500;
@@ -304,20 +352,38 @@
   text-transform: uppercase;
 }
 
+/* ── Code — Code blocks, terminal (monospace) ── */
 .text-code {
-  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
-  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
   line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
-.text-overline {
-  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
-  font-size: 0.6875rem;
-  line-height: 1.4;
+/* ── Button — CTA and action buttons ── */
+.text-button {
+  font-size: 0.875rem;
+  line-height: 1;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
+  letter-spacing: 0.01em;
+}
+
+/* ── Nav — Navigation link text ── */
+.text-nav {
+  font-size: 0.8125rem;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ── H2 — Missing class for mobile menu ── */
+.text-h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-weight: 700;
 }
 
 /* ─────────────────────────────────────────────

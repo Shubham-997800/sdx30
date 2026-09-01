@@ -43,7 +43,7 @@ export function StackSection() {
             transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
           >
             <h2
-              className="text-section text-foreground tracking-[-0.04em] leading-[1.05]"
+              className="text-section text-foreground"
             >
               Tech Stack
             </h2>

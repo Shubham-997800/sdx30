@@ -92,7 +92,7 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
                   placeholder="Search commands..."
                   className="flex-1 bg-transparent px-3 py-3.5 text-body outline-none placeholder:text-muted-foreground"
                 />
-                <kbd className="hidden rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground sm:inline">
+                <kbd className="hidden rounded bg-muted px-1.5 py-0.5 text-label text-muted-foreground sm:inline">
                   ESC
                 </kbd>
               </div>
@@ -165,11 +165,11 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
               {/* Footer */}
               <div className="border-t border-border px-4 py-2.5">
                 <p className="text-caption text-muted-foreground">
-                  <kbd className="mr-1 rounded bg-muted px-1 py-0.5 font-mono text-[10px]">↵</kbd>
+                  <kbd className="mr-1 rounded bg-muted px-1 py-0.5 text-label">↵</kbd>
                   to select{" "}
-                  <kbd className="mx-1 rounded bg-muted px-1 py-0.5 font-mono text-[10px]">↑↓</kbd>
+                  <kbd className="mx-1 rounded bg-muted px-1 py-0.5 text-label">↑↓</kbd>
                   to navigate{" "}
-                  <kbd className="mx-1 rounded bg-muted px-1 py-0.5 font-mono text-[10px]">esc</kbd>
+                  <kbd className="mx-1 rounded bg-muted px-1 py-0.5 text-label">esc</kbd>
                   to close
                 </p>
               </div>

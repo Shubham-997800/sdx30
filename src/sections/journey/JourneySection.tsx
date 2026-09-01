@@ -43,7 +43,7 @@ export function JourneySection() {
             transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
           >
             <h2
-              className="text-section text-foreground tracking-[-0.04em] leading-[1.05]"
+              className="text-section text-foreground"
             >
               Hackathon<br className="hidden md:block" /> Journey
             </h2>

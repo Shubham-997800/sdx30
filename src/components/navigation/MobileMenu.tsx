@@ -4,6 +4,7 @@ import { useEffect, useCallback, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface MobileMenuTriggerProps {
@@ -188,8 +189,4 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
       )}
     </AnimatePresence>
   );
-}
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
 }
