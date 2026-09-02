@@ -2,13 +2,14 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { learningItems } from '@/data/learning';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function LearningSection() {
   const prefersReducedMotion = useReducedMotion();

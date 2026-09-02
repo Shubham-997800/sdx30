@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionHeading } from '@/components/shared/SectionHeading';
@@ -9,7 +10,7 @@ import { techCategories } from '@/data/stack';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { TechCategory } from './TechCategory';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function StackSection() {
   const prefersReducedMotion = useReducedMotion();

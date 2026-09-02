@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionLabel } from '@/components/shared/SectionLabel';
@@ -9,7 +10,7 @@ import { journeyEvents } from '@/data/journey';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { JourneyEvent } from './JourneyEvent';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function JourneySection() {
   const prefersReducedMotion = useReducedMotion();

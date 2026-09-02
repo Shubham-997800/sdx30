@@ -1,10 +1,11 @@
 'use client';
 
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function AnimatedDeveloperCharacter() {
   const prefersReducedMotion = useReducedMotion();

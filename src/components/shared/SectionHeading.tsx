@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 import { SectionLabel } from './SectionLabel';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
@@ -16,7 +17,7 @@ interface SectionHeadingProps {
   align?: 'left' | 'center';
 }
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function SectionHeading({
   title,

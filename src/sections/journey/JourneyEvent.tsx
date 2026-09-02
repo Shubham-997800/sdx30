@@ -1,11 +1,12 @@
 'use client';
 
 import { motion } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { cn } from '@/lib/utils';
 import type { JourneyEvent as JourneyEventType } from '@/types';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 function Milestone({
   milestone,

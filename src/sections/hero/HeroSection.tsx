@@ -2,6 +2,7 @@
 
 import { useCallback, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { ArrowRight, Download } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Magnetic } from '@/components/interaction/Magnetic';
@@ -14,7 +15,7 @@ import { heroContent, personalInfo, socialLinks } from '@/data/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { HeroVisual } from './HeroVisual';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 const fadeUp = (delay: number, reduced: boolean) => ({
   initial: reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
