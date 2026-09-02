@@ -14,7 +14,7 @@ export function BackToTop() {
   const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(false);
-  const progress = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const strokeDashoffset = useTransform(scrollYProgress, [0, 1], [CIRCUMFERENCE, 0]);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (v) => {
@@ -68,7 +68,7 @@ export function BackToTop() {
               strokeWidth={STROKE}
               strokeLinecap="round"
               strokeDasharray={CIRCUMFERENCE}
-              style={{ strokeDashoffset: CIRCUMFERENCE }}
+              style={{ strokeDashoffset }}
             />
           </svg>
           <ArrowUp className="size-4 relative z-10" />

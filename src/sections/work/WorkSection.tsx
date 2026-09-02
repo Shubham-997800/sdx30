@@ -15,7 +15,7 @@ import { ProjectFeature } from './ProjectFeature';
 export function WorkSection() {
   const prefersReducedMotion = useReducedMotion();
   const headerRef = useRef<HTMLDivElement>(null);
-  const isHeaderInView = useInView(headerRef, { once: false, margin: '-80px' });
+  const isHeaderInView = useInView(headerRef, { once: true, margin: '-80px' });
 
   return (
     <Section id="work" className="py-24 md:py-36">

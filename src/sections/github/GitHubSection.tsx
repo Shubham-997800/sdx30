@@ -23,7 +23,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
 export function GitHubSection() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const profile = githubProfile;
 

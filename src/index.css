@@ -726,6 +726,37 @@
 }
 
 /* ═══════════════════════════════════════════════
+   FORCED COLORS — Windows High Contrast
+   ═══════════════════════════════════════════════ */
+
+@media (forced-colors: active) {
+  .cursor-dot,
+  .cursor-ring,
+  .cursor-dot + .cursor-ring {
+    display: none !important;
+  }
+
+  button,
+  a,
+  [role="button"] {
+    border: 1px solid ButtonText;
+  }
+
+  .code-card-dot {
+    forced-color-adjust: none;
+  }
+
+  .timeline-line-fill {
+    background: Highlight;
+  }
+
+  .timeline-dot.is-active {
+    border-color: Highlight;
+    background: Highlight;
+  }
+}
+
+/* ═══════════════════════════════════════════════
    RIPPLE — Button click effect
    ═══════════════════════════════════════════════ */
 

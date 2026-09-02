@@ -89,7 +89,7 @@ function ProjectActions({ project }: { project: Project }) {
 export function ProjectFeature({ project, index }: { project: Project; index: number }) {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const isMediaLeft = project.layout === 'media-left';
   const isAsymmetric = project.layout === 'asymmetric';

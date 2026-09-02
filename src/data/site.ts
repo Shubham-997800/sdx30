@@ -29,7 +29,7 @@ export const heroContent = {
     'BCA student building frontend skills through real-world projects. Not following tutorials — shipping products that solve actual problems. Currently exploring React, modern tooling, and the engineering behind scalable web applications.',
   cta: {
     primary: 'EXPLORE WORK',
-    secondary: 'RESUME',
+    secondary: 'GITHUB',
   },
 } as const;
 

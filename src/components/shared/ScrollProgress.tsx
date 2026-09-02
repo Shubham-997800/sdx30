@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'motion/react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -9,8 +8,6 @@ export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  // Color shifts from accent to a brighter shade at 100%
-  const hue = useTransform(scrollYProgress, [0, 1], [0, 30]);
   const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.3, 0.8]);
   const barHeight = useTransform(scrollYProgress, [0, 0.99, 1], [2, 2, 3]);
 
