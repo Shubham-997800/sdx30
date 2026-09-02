@@ -8,6 +8,8 @@ import { Magnetic } from '@/components/interaction/Magnetic';
 import { Button } from '@/components/ui/button';
 import { TypeText } from '@/components/motion/TypeText';
 import { Typewriter } from '@/components/motion/Typewriter';
+import { ScrambleText } from '@/components/motion/ScrambleText';
+import { BackgroundGlitch } from '@/components/motion/BackgroundGlitch';
 import { heroContent, personalInfo, socialLinks } from '@/data/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { HeroVisual } from './HeroVisual';
@@ -39,6 +41,7 @@ export function HeroSection() {
 
   return (
     <section
+      id="hero"
       ref={sectionRef}
       className="relative min-h-[100vh] min-h-[100dvh] flex flex-col justify-center overflow-hidden"
     >
@@ -47,9 +50,10 @@ export function HeroSection() {
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         style={{ y: nameY, opacity: nameOpacity }}
       >
-        <span className="text-[clamp(6rem,20vw,16rem)] font-heading font-bold tracking-[-0.06em] text-foreground whitespace-nowrap">
-          SHUBHAM
-        </span>
+        <BackgroundGlitch
+          text="SHUBHAM"
+          className="relative text-[clamp(6rem,20vw,16rem)] font-heading font-bold tracking-[-0.06em] text-foreground whitespace-nowrap"
+        />
       </motion.div>
 
       {/* ─── Grid Overlay ─── */}
@@ -98,37 +102,55 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Name */}
+            {/* Name — Scramble Reveal */}
             <div className="mt-6 md:mt-8">
-              <TypeText
+              <ScrambleText
                 text={heroContent.name}
                 as="h1"
                 className="text-display text-foreground whitespace-nowrap"
-                delay={200}
-                speed={80}
+                delay={300}
+                speed={40}
+                pauseDuration={3000}
               />
             </div>
 
-            {/* Role */}
+            {/* Role — Typewriter */}
             <div className="mt-3 md:mt-4">
               <TypeText
                 text={heroContent.role}
                 as="p"
                 className="text-feature text-accent font-semibold"
-                delay={900}
+                delay={1500}
                 speed={50}
+                deleteSpeed={30}
+                pauseDuration={2000}
               />
             </div>
 
-            {/* Statement */}
+            {/* Statement — Word by word */}
             <motion.div className="mt-6 md:mt-8" {...fadeUp(0.9, prefersReducedMotion)}>
               <p className="text-body-lg text-foreground/80 max-w-[520px] leading-relaxed">
-                {heroContent.mainStatement}
+                {heroContent.mainStatement.split(' ').map((word, i) => (
+                  <motion.span
+                    key={i}
+                    className="inline-block mr-[0.3em]"
+                    initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10, filter: 'blur(4px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    transition={{ duration: 0.5, delay: 0.9 + i * 0.04, ease: EASE }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
               </p>
             </motion.div>
 
-            {/* Description */}
-            <motion.div className="mt-3" {...fadeUp(1.0, prefersReducedMotion)}>
+            {/* Description — Slide up + fade */}
+            <motion.div
+              className="mt-3"
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.8, delay: 1.4, ease: EASE }}
+            >
               <p className="text-body text-muted-foreground max-w-[460px]">
                 {heroContent.introduction}
               </p>
@@ -164,10 +186,9 @@ export function HeroSection() {
               </Magnetic>
             </motion.div>
 
-            {/* Social Links */}
+            {/* Social Links — Wave stagger */}
             <motion.div
               className="flex flex-wrap items-center gap-6 mt-8 md:mt-10"
-              {...fadeUp(1.2, prefersReducedMotion)}
             >
               {socialLinks.map((link, i) => (
                 <motion.a
@@ -175,12 +196,14 @@ export function HeroSection() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-label text-muted-foreground transition-colors duration-200 hover:text-foreground"
-                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
+                  className="text-label text-muted-foreground transition-colors duration-200 hover:text-foreground relative group"
+                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 1.3 + i * 0.06, ease: EASE }}
+                  transition={{ duration: 0.5, delay: 1.5 + i * 0.08, ease: EASE }}
+                  whileHover={{ y: -2 }}
                 >
                   {link.label}
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
                 </motion.a>
               ))}
             </motion.div>
