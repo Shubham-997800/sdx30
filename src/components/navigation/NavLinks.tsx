@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
 interface NavLinkProps {
@@ -14,19 +15,20 @@ function NavLink({ href, label, isActive }: NavLinkProps) {
     <a
       href={href}
       className={cn(
-        'relative py-1.5 text-[0.8rem] font-medium tracking-wide transition-colors duration-200',
+        'relative px-3 py-1.5 text-[0.78rem] font-medium tracking-wide rounded-full transition-colors duration-300',
         isActive
           ? 'text-foreground'
           : 'text-muted-foreground hover:text-foreground',
       )}
     >
-      {label}
-      <span
-        className={cn(
-          'absolute -bottom-0.5 left-0 h-px bg-accent transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
-          isActive ? 'w-full' : 'w-0 group-hover:w-full',
-        )}
-      />
+      {isActive && (
+        <motion.span
+          layoutId="nav-pill"
+          className="absolute inset-0 rounded-full bg-accent/10 border border-accent/20"
+          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+        />
+      )}
+      <span className="relative z-10">{label}</span>
     </a>
   );
 }
@@ -44,13 +46,15 @@ export function NavLinks({ links }: NavLinksProps) {
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveSection(`#${entry.target.id}`);
-          }
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          const top = visible.reduce((a, b) =>
+            a.boundingClientRect.top < b.boundingClientRect.top ? a : b,
+          );
+          setActiveSection(`#${top.target.id}`);
         }
       },
-      { threshold: 0, rootMargin: '-80px 0px -60% 0px' },
+      { threshold: 0, rootMargin: '-20% 0px -70% 0px' },
     );
 
     for (const link of links) {
@@ -64,7 +68,10 @@ export function NavLinks({ links }: NavLinksProps) {
   }, [links]);
 
   return (
-    <nav className="hidden items-center gap-6 lg:flex" aria-label="Main navigation">
+    <nav
+      className="hidden lg:flex items-center gap-1 p-1 rounded-full border border-border/40 bg-muted/30 backdrop-blur-sm"
+      aria-label="Main navigation"
+    >
       {links.map((link) => (
         <NavLink
           key={link.href}

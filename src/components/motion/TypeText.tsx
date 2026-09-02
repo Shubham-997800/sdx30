@@ -1,73 +1,79 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'motion/react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface TypeTextProps {
   text: string;
   speed?: number;
+  deleteSpeed?: number;
+  pauseDuration?: number;
   delay?: number;
   className?: string;
   as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
-  showCursor?: boolean;
 }
 
 export function TypeText({
   text,
   speed = 60,
+  deleteSpeed = 40,
+  pauseDuration = 2000,
   delay = 0,
   className,
   as: Tag = 'span',
-  showCursor = true,
 }: TypeTextProps) {
   const prefersReducedMotion = useReducedMotion();
   const [currentText, setCurrentText] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
     if (prefersReducedMotion) {
       setCurrentText(text);
-      setIsComplete(true);
       return;
     }
-
-    const startTimer = setTimeout(() => {
-      setHasStarted(true);
-    }, delay);
-
-    return () => clearTimeout(startTimer);
+    const timer = setTimeout(() => setHasStarted(true), delay);
+    return () => clearTimeout(timer);
   }, [delay, prefersReducedMotion, text]);
+
+  const tick = useCallback(() => {
+    if (!isDeleting) {
+      if (currentText.length < text.length) {
+        setCurrentText(text.slice(0, currentText.length + 1));
+      } else {
+        setTimeout(() => setIsDeleting(true), pauseDuration);
+        return;
+      }
+    } else {
+      if (currentText.length > 0) {
+        setCurrentText(currentText.slice(0, -1));
+      } else {
+        setIsDeleting(false);
+      }
+    }
+  }, [currentText, isDeleting, text, pauseDuration]);
 
   useEffect(() => {
     if (!hasStarted || prefersReducedMotion) return;
-
-    if (currentText.length < text.length) {
-      const timer = setTimeout(() => {
-        setCurrentText(text.slice(0, currentText.length + 1));
-      }, speed);
-      return () => clearTimeout(timer);
-    } else {
-      setIsComplete(true);
-    }
-  }, [currentText, text, speed, hasStarted, prefersReducedMotion]);
+    const speed_ = isDeleting ? deleteSpeed : speed;
+    const timer = setTimeout(tick, speed_);
+    return () => clearTimeout(timer);
+  }, [tick, isDeleting, speed, deleteSpeed, hasStarted, prefersReducedMotion]);
 
   return (
     <Tag className={className}>
       {currentText}
-      {showCursor && !isComplete && (
-        <motion.span
-          className="inline-block w-[3px] h-[0.9em] bg-accent ml-0.5 align-middle"
-          animate={{ opacity: [1, 0] }}
-          transition={{
-            duration: 0.7,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-          }}
-        />
-      )}
+      <motion.span
+        className="inline-block w-[3px] h-[0.9em] bg-accent ml-0.5 align-middle"
+        animate={{ opacity: [1, 0] }}
+        transition={{
+          duration: 0.7,
+          repeat: Infinity,
+          repeatType: 'reverse',
+          ease: 'easeInOut',
+        }}
+      />
     </Tag>
   );
 }

@@ -26,16 +26,31 @@ const FLOATING_SYMBOLS = [
 
 function ProjectShowcaseCard() {
   return (
-    <div className="rounded-2xl border border-border/60 bg-card/80 backdrop-blur-xl p-5 shadow-2xl shadow-black/5">
+    <motion.div
+      className="rounded-2xl border border-border/60 bg-card/80 backdrop-blur-xl p-5 shadow-2xl shadow-black/5"
+      animate={{ y: [0, -4, 0] }}
+      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+      whileHover={{ scale: 1.02, rotateX: 2, rotateY: -2 }}
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <div className="size-2 rounded-full bg-accent animate-pulse" />
+          <motion.div
+            className="size-2 rounded-full bg-accent"
+            animate={{ opacity: [1, 0.4, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
           <span className="text-[0.6rem] font-mono uppercase tracking-[0.15em] text-muted-foreground">
             Featured Project
           </span>
         </div>
-        <span className="text-[0.55rem] font-mono text-accent/70">01 / 06</span>
+        <motion.span
+          className="text-[0.55rem] font-mono text-accent/70"
+          animate={{ opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        >
+          01 / 06
+        </motion.span>
       </div>
 
       {/* Project Name */}
@@ -52,83 +67,130 @@ function ProjectShowcaseCard() {
           { label: 'Year', value: '2026' },
           { label: 'Role', value: 'Sole Dev' },
           { label: 'Status', value: 'Live' },
-        ].map((stat) => (
-          <div key={stat.label} className="text-center">
+        ].map((stat, i) => (
+          <motion.div
+            key={stat.label}
+            className="text-center"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
+          >
             <span className="text-[0.5rem] font-mono uppercase tracking-widest text-muted-foreground/60 block mb-0.5">
               {stat.label}
             </span>
             <span className="text-[0.7rem] font-medium text-foreground">{stat.value}</span>
-          </div>
+          </motion.div>
         ))}
       </div>
 
       {/* Tech Tags */}
       <div className="flex flex-wrap gap-1.5">
-        {['React 19', 'Vite', 'Tailwind', 'Node.js', 'MongoDB'].map((tech) => (
-          <span
+        {['React 19', 'Vite', 'Tailwind', 'Node.js', 'MongoDB'].map((tech, i) => (
+          <motion.span
             key={tech}
             className="px-2 py-0.5 rounded-full text-[0.55rem] font-mono bg-accent/8 text-accent border border-accent/15"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.0 + i * 0.05, duration: 0.3 }}
           >
             {tech}
-          </span>
+          </motion.span>
         ))}
       </div>
 
       {/* Action */}
-      <div className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1.5 text-[0.6rem] font-mono text-accent">
+      <motion.div
+        className="mt-4 pt-3 border-t border-border/40 flex items-center gap-1.5 text-[0.6rem] font-mono text-accent"
+        whileHover={{ x: 4 }}
+      >
         <ExternalLink className="size-3" />
         <span>VIEW PROJECT</span>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
 function CodeSnippetCard() {
+  const codeLines = [
+    { indent: 0, parts: [
+      { text: 'const', color: 'text-accent' },
+      { text: ' developer', color: 'text-foreground/80' },
+      { text: ' = ', color: 'text-muted-foreground/40' },
+      { text: '{', color: 'text-muted-foreground/40' },
+    ]},
+    { indent: 1, parts: [
+      { text: 'focus', color: 'text-muted-foreground/60' },
+      { text: ': ', color: 'text-muted-foreground/40' },
+      { text: '"Frontend"', color: 'text-accent/80' },
+      { text: ',', color: 'text-muted-foreground/40' },
+    ]},
+    { indent: 1, parts: [
+      { text: 'stack', color: 'text-muted-foreground/60' },
+      { text: ': ', color: 'text-muted-foreground/40' },
+      { text: '["React", "TS"]', color: 'text-accent/70' },
+      { text: ',', color: 'text-muted-foreground/40' },
+    ]},
+    { indent: 1, parts: [
+      { text: 'status', color: 'text-muted-foreground/60' },
+      { text: ': ', color: 'text-muted-foreground/40' },
+      { text: '"building"', color: 'text-[#10b981]/80' },
+    ]},
+    { indent: 0, parts: [
+      { text: '}', color: 'text-muted-foreground/40' },
+      { text: ';', color: 'text-muted-foreground/40' },
+    ]},
+  ];
+
   return (
-    <div className="rounded-xl border border-border/50 bg-card/60 backdrop-blur-lg overflow-hidden shadow-xl shadow-black/5">
+    <motion.div
+      className="rounded-xl border border-border/50 bg-card/60 backdrop-blur-lg overflow-hidden shadow-xl shadow-black/5"
+      animate={{ y: [0, 4, 0] }}
+      transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+    >
       {/* Terminal Header */}
       <div className="flex items-center gap-1.5 px-3 py-2 border-b border-border/30">
-        <div className="size-[5px] rounded-full bg-[#ff5f57]" />
-        <div className="size-[5px] rounded-full bg-[#febc2e]" />
-        <div className="size-[5px] rounded-full bg-[#28c840]" />
+        <motion.div
+          className="size-[5px] rounded-full bg-[#ff5f57]"
+          animate={{ opacity: [1, 0.5, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+        <motion.div
+          className="size-[5px] rounded-full bg-[#febc2e]"
+          animate={{ opacity: [1, 0.5, 1] }}
+          transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+        />
+        <motion.div
+          className="size-[5px] rounded-full bg-[#28c840]"
+          animate={{ opacity: [1, 0.5, 1] }}
+          transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+        />
         <span className="ml-2 text-[0.5rem] font-mono text-muted-foreground/50">shubham.ts</span>
       </div>
 
       {/* Code */}
       <div className="px-3 py-2.5 font-mono text-[0.6rem] leading-[1.8]">
-        <div>
-          <span className="text-accent">const</span>{' '}
-          <span className="text-foreground/80">developer</span>{' '}
-          <span className="text-muted-foreground/40">=</span>{' '}
-          <span className="text-muted-foreground/40">{'{'}</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-muted-foreground/60">focus</span>
-          <span className="text-muted-foreground/40">:</span>{' '}
-          <span className="text-accent/80">&quot;Frontend&quot;</span>
-          <span className="text-muted-foreground/40">,</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-muted-foreground/60">stack</span>
-          <span className="text-muted-foreground/40">:</span>{' '}
-          <span className="text-muted-foreground/40">[</span>
-          <span className="text-accent/70">&quot;React&quot;</span>
-          <span className="text-muted-foreground/40">,</span>{' '}
-          <span className="text-accent/70">&quot;TS&quot;</span>
-          <span className="text-muted-foreground/40">]</span>
-          <span className="text-muted-foreground/40">,</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-muted-foreground/60">status</span>
-          <span className="text-muted-foreground/40">:</span>{' '}
-          <span className="text-[#10b981]/80">&quot;building&quot;</span>
-        </div>
-        <div>
-          <span className="text-muted-foreground/40">{'}'}</span>
-          <span className="text-muted-foreground/40">;</span>
-        </div>
+        {codeLines.map((line, li) => (
+          <motion.div
+            key={li}
+            className={li === 0 ? '' : ''}
+            style={{ paddingLeft: `${line.indent * 1}rem` }}
+            initial={{ opacity: 0, x: -8 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 + li * 0.15, duration: 0.4 }}
+          >
+            {line.parts.map((part, pi) => (
+              <span key={pi} className={part.color}>{part.text}</span>
+            ))}
+          </motion.div>
+        ))}
+        {/* Blinking cursor */}
+        <motion.span
+          className="inline-block w-[6px] h-[10px] bg-accent/70 ml-0.5 align-middle"
+          animate={{ opacity: [1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity, repeatType: 'reverse' }}
+        />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -139,13 +201,16 @@ function TechStackPills() {
         <motion.div
           key={tech.name}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/50 bg-card/60 backdrop-blur-md"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 + i * 0.08, ease: EASE }}
+          whileHover={{ scale: 1.1, borderColor: tech.color }}
         >
-          <div
+          <motion.div
             className="size-1.5 rounded-full"
             style={{ background: tech.color }}
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
           />
           <span className="text-[0.6rem] font-mono text-foreground/70">{tech.name}</span>
         </motion.div>
@@ -161,9 +226,14 @@ function StatusIndicator() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 1.2, ease: EASE }}
+      whileHover={{ scale: 1.05 }}
     >
       <div className="relative flex size-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10b981] opacity-60" />
+        <motion.span
+          className="absolute inline-flex h-full w-full rounded-full bg-[#10b981]"
+          animate={{ scale: [1, 2, 1], opacity: [0.6, 0, 0.6] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
         <span className="relative inline-flex size-2 rounded-full bg-[#10b981]" />
       </div>
       <span className="text-[0.6rem] font-mono text-muted-foreground">
@@ -181,10 +251,10 @@ function FloatingSymbols() {
           key={i}
           className={`absolute font-mono text-accent/[0.12] select-none pointer-events-none ${sym.size}`}
           style={{ left: sym.x, top: sym.y }}
-          initial={{ opacity: 0 }}
           animate={{
-            opacity: [0, 0.12, 0],
-            y: [0, -8, 0],
+            opacity: [0, 0.15, 0],
+            y: [0, -12, 0],
+            rotate: [0, i % 2 === 0 ? 10 : -10, 0],
           }}
           transition={{
             duration: 5 + i * 0.5,
@@ -219,18 +289,71 @@ function GridOverlay() {
 function ConnectionLines() {
   return (
     <svg
-      className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.05]"
+      className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.08]"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <line x1="20%" y1="30%" x2="50%" y2="50%" stroke="var(--accent)" strokeWidth="0.5" strokeDasharray="4 6" />
-      <line x1="50%" y1="50%" x2="80%" y2="35%" stroke="var(--accent)" strokeWidth="0.5" strokeDasharray="4 6" />
-      <line x1="50%" y1="50%" x2="35%" y2="78%" stroke="var(--accent)" strokeWidth="0.5" strokeDasharray="4 6" />
-      <line x1="50%" y1="50%" x2="75%" y2="75%" stroke="var(--accent)" strokeWidth="0.5" strokeDasharray="4 6" />
-      <circle cx="20%" cy="30%" r="2" fill="var(--accent)" fillOpacity="0.3" />
-      <circle cx="80%" cy="35%" r="2" fill="var(--accent)" fillOpacity="0.3" />
-      <circle cx="35%" cy="78%" r="2" fill="var(--accent)" fillOpacity="0.3" />
-      <circle cx="75%" cy="75%" r="2" fill="var(--accent)" fillOpacity="0.3" />
+      <defs>
+        <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="var(--accent)" stopOpacity="0" />
+          <stop offset="50%" stopColor="var(--accent)" stopOpacity="1" />
+          <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {[
+        { x1: '20%', y1: '30%', x2: '50%', y2: '50%' },
+        { x1: '50%', y1: '50%', x2: '80%', y2: '35%' },
+        { x1: '50%', y1: '50%', x2: '35%', y2: '78%' },
+        { x1: '50%', y1: '50%', x2: '75%', y2: '75%' },
+      ].map((line, i) => (
+        <motion.line
+          key={i}
+          x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
+          stroke="url(#line-grad)"
+          strokeWidth="0.5"
+          strokeDasharray="4 6"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 1.5, delay: 0.5 + i * 0.2, ease: EASE }}
+        />
+      ))}
+      {[
+        { cx: '20%', cy: '30%' },
+        { cx: '80%', cy: '35%' },
+        { cx: '35%', cy: '78%' },
+        { cx: '75%', cy: '75%' },
+      ].map((dot, i) => (
+        <motion.circle
+          key={i}
+          cx={dot.cx} cy={dot.cy} r="2"
+          fill="var(--accent)"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity, delay: 1 + i * 0.2 }}
+        />
+      ))}
     </svg>
+  );
+}
+
+function OrbitRing() {
+  return (
+    <motion.div
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-accent/10"
+      animate={{ rotate: 360 }}
+      transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+    >
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-2 rounded-full bg-accent/40" />
+    </motion.div>
+  );
+}
+
+function ScanLine() {
+  return (
+    <motion.div
+      className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent pointer-events-none"
+      animate={{ top: ['0%', '100%'] }}
+      transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+    />
   );
 }
 
@@ -240,13 +363,23 @@ export function HeroVisual() {
   return (
     <div className="relative w-full h-[420px] lg:h-[480px]">
       {/* ── Ambient Glow ── */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-accent/[0.04] rounded-full blur-[120px] pointer-events-none" />
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-accent/[0.04] rounded-full blur-[120px] pointer-events-none"
+        animate={{ scale: [1, 1.15, 1], opacity: [0.04, 0.07, 0.04] }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+      />
 
       {/* ── Grid Dots ── */}
       <GridOverlay />
 
+      {/* ── Scan Line ── */}
+      {!prefersReducedMotion && <ScanLine />}
+
       {/* ── Connection Lines ── */}
       <ConnectionLines />
+
+      {/* ── Orbit Ring ── */}
+      {!prefersReducedMotion && <OrbitRing />}
 
       {/* ── Floating Code Symbols ── */}
       <FloatingSymbols />
@@ -255,7 +388,6 @@ export function HeroVisual() {
       <div className="relative z-10 grid grid-cols-2 gap-3 h-full p-2">
         {/* Left Column */}
         <div className="flex flex-col gap-3 justify-center">
-          {/* Code Snippet Card */}
           <motion.div
             initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -264,7 +396,6 @@ export function HeroVisual() {
             <CodeSnippetCard />
           </motion.div>
 
-          {/* Status Indicator */}
           <div className="flex justify-center">
             <StatusIndicator />
           </div>
@@ -272,7 +403,6 @@ export function HeroVisual() {
 
         {/* Right Column */}
         <div className="flex flex-col gap-3 justify-center">
-          {/* Project Showcase Card */}
           <motion.div
             initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -292,16 +422,19 @@ export function HeroVisual() {
               { Icon: Code2, label: 'Code' },
               { Icon: Layers, label: 'Systems' },
               { Icon: Sparkles, label: 'Design' },
-            ].map(({ Icon, label }) => (
-              <div
+            ].map(({ Icon, label }, i) => (
+              <motion.div
                 key={label}
-                className="flex flex-col items-center gap-1.5 p-2.5 rounded-xl border border-border/30 bg-card/30 backdrop-blur-sm transition-colors duration-300 hover:border-accent/30 hover:bg-accent/5"
+                className="flex flex-col items-center gap-1.5 p-2.5 rounded-xl border border-border/30 bg-card/30 backdrop-blur-sm"
+                whileHover={{ scale: 1.1, borderColor: 'var(--accent)', backgroundColor: 'rgba(var(--accent), 0.05)' }}
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
               >
                 <Icon className="size-4 text-accent/60" strokeWidth={1.5} />
                 <span className="text-[0.5rem] font-mono text-muted-foreground/60 uppercase tracking-wider">
                   {label}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>

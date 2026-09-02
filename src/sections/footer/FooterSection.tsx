@@ -19,9 +19,9 @@ export function FooterSection() {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="text-h3 text-foreground font-heading hover:text-accent transition-colors duration-200"
+              className="text-h3 font-heading font-semibold tracking-tight text-foreground hover:text-accent transition-colors duration-200"
             >
-              {SITE.name}
+              shubham<span className="text-accent">.dev</span>
             </a>
             <div className="flex items-center gap-2">
               <span className="text-label text-muted-foreground">{personalInfo.shortRole}</span>
