@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { ExternalLink, ArrowUpRight, Eye, Code2 } from 'lucide-react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { cn } from '@/lib/utils';
@@ -9,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import type { Project } from '@/types';
 import { ProjectThumbnail } from './ProjectThumbnail';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 function ProjectFeatures({ features, isInView }: { features: string[]; isInView: boolean }) {
   return (

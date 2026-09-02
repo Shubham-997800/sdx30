@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionHeading } from '@/components/shared/SectionHeading';
@@ -9,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { githubProfile } from '@/data/github';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 const LANGUAGE_COLORS: Record<string, string> = {
   JavaScript: '#f1e05a',

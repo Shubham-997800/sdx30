@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface CharRevealProps {
@@ -12,7 +13,7 @@ interface CharRevealProps {
   as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
 }
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function CharReveal({
   text,

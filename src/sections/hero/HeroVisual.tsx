@@ -1,10 +1,11 @@
 'use client';
 
 import { motion } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { ExternalLink, Code2, Layers, Sparkles } from 'lucide-react';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 const TECH_STACK = [
   { name: 'React', color: '#61dafb' },

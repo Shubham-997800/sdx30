@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, useMotionValueEvent, useScroll } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from './ThemeToggle';
 import { NavLinks } from './NavLinks';
@@ -11,7 +12,7 @@ import { navigation } from '@/data/navigation';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useCommandMenu } from '@/hooks/useCommandMenu';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

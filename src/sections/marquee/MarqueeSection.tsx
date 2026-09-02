@@ -2,11 +2,12 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { Container } from '@/components/layout/Container';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { marqueeWords, marqueeStatement } from '@/data/content';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function MarqueeSection() {
   const prefersReducedMotion = useReducedMotion();

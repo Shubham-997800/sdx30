@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { Send, Loader2, CheckCircle2 } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
@@ -12,7 +13,7 @@ import { personalInfo } from '@/data/site';
 import { submitContact } from '@/services/contact';
 import { contactSchema } from '@/schemas/contact';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function ContactSection() {
   const prefersReducedMotion = useReducedMotion();

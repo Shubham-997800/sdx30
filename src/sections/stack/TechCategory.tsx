@@ -2,11 +2,12 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { cn } from '@/lib/utils';
 import type { TechCategory as TechCategoryType } from '@/types';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 interface TechCategoryProps {
   category: TechCategoryType;

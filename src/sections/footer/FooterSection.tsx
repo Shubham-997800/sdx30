@@ -2,11 +2,12 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
+import { EASE } from '@/lib/animations';
 import { Container } from '@/components/layout/Container';
 import { personalInfo, socialLinks } from '@/data/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+
 
 export function FooterSection() {
   const currentYear = new Date().getFullYear();
