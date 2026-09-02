@@ -76,7 +76,7 @@ export function Navbar() {
             )}
             aria-label="Go to top"
           >
-            SD<span className="text-accent">.</span>
+            shubham<span className="text-accent">.dev</span>
           </a>
 
           {/* Desktop Navigation */}

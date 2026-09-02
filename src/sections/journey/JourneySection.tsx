@@ -14,10 +14,10 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function JourneySection() {
   const prefersReducedMotion = useReducedMotion();
   const headerRef = useRef<HTMLDivElement>(null);
-  const isHeaderInView = useInView(headerRef, { once: true, margin: '-80px' });
+  const isHeaderInView = useInView(headerRef, { once: false, margin: '-80px' });
 
   const timelineRef = useRef<HTMLDivElement>(null);
-  const isTimelineInView = useInView(timelineRef, { once: true, margin: '-60px' });
+  const isTimelineInView = useInView(timelineRef, { once: false, margin: '-60px' });
 
   return (
     <Section id="journey" className="py-24 md:py-36">

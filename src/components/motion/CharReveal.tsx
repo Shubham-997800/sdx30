@@ -23,7 +23,7 @@ export function CharReveal({
 }: CharRevealProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const isInView = useInView(wrapperRef, { once: true, margin: '-40px' });
+  const isInView = useInView(wrapperRef, { once: false, margin: '-40px' });
 
   if (prefersReducedMotion) {
     return <Tag className={className}>{text}</Tag>;

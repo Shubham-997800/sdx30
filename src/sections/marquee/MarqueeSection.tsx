@@ -11,7 +11,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function MarqueeSection() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: false, margin: '-80px' });
 
   const words = [...marqueeWords, ...marqueeWords, ...marqueeWords];
 

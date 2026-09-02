@@ -18,7 +18,7 @@ export function Marquee({
 }: MarqueeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const isInView = useInView(containerRef, { once: true, margin: '-50px' });
+  const isInView = useInView(containerRef, { once: false, margin: '-50px' });
 
   const duration = speed;
 
