@@ -17,7 +17,7 @@ interface EngineeringCategoryProps {
 export function EngineeringCategory({ category, index }: EngineeringCategoryProps) {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, margin: '-50px' });
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
     <motion.div

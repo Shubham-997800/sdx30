@@ -12,7 +12,7 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 export function FooterSection() {
   const currentYear = new Date().getFullYear();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, margin: '-40px' });
+  const isInView = useInView(ref, { once: true, margin: '-40px' });
   const prefersReducedMotion = useReducedMotion();
 
   return (

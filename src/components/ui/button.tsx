@@ -1,6 +1,6 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -103,8 +103,6 @@ function Button({
   onClick,
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
-  const rippleRef = useRef<HTMLSpanElement>(null);
-
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       const btn = e.currentTarget;

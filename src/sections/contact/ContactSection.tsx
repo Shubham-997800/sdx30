@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'motion/react';
 import { EASE } from '@/lib/animations';
-import { Send, Loader2, CheckCircle2 } from 'lucide-react';
+import { Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { Button } from '@/components/ui/button';
@@ -18,7 +18,7 @@ import { contactSchema } from '@/schemas/contact';
 export function ContactSection() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -199,6 +199,23 @@ export function ContactSection() {
                   </>
                 )}
               </Button>
+            </div>
+
+            {/* Error message */}
+            <div aria-live="polite">
+              {formState === 'error' && (
+                <motion.div
+                  className="flex items-center gap-2 mt-3 p-3 rounded-lg bg-destructive/10 border border-destructive/20"
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <AlertCircle className="size-4 text-destructive shrink-0" />
+                  <span className="text-body-sm text-destructive">
+                    {contactContent.errorMessage}
+                  </span>
+                </motion.div>
+              )}
             </div>
           </motion.form>
 

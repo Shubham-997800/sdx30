@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { EASE } from '@/lib/animations';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { ExternalLink, Code2, Layers, Sparkles } from 'lucide-react';
+import { projects } from '@/data/projects';
 
 
 
@@ -13,7 +14,7 @@ const TECH_STACK = [
   { name: 'Tailwind', color: '#06b6d4' },
   { name: 'Vite', color: '#646cff' },
   { name: 'Node.js', color: '#339933' },
-  { name: 'Next.js', color: '#ffffff' },
+  { name: 'Next.js', color: '#111827' },
 ];
 
 const FLOATING_SYMBOLS = [
@@ -26,6 +27,8 @@ const FLOATING_SYMBOLS = [
 ];
 
 function ProjectShowcaseCard() {
+  const featuredProject = projects.find((p) => p.featured) ?? projects[0];
+
   return (
     <motion.div
       className="rounded-2xl border border-border/60 bg-card/80 backdrop-blur-xl p-5 shadow-2xl shadow-black/5"
@@ -50,24 +53,24 @@ function ProjectShowcaseCard() {
           animate={{ opacity: [0.7, 1, 0.7] }}
           transition={{ duration: 3, repeat: Infinity }}
         >
-          01 / 06
+          {featuredProject.number} / 06
         </motion.span>
       </div>
 
       {/* Project Name */}
       <h3 className="text-lg font-heading font-bold text-foreground tracking-tight mb-1">
-        FlowSync AI
+        {featuredProject.name}
       </h3>
       <p className="text-[0.7rem] text-muted-foreground mb-4 leading-relaxed">
-        AI-Powered Productivity Operating System
+        {featuredProject.tagline}
       </p>
 
       {/* Stats Row */}
       <div className="grid grid-cols-3 gap-3 mb-4">
         {[
-          { label: 'Year', value: '2026' },
+          { label: 'Year', value: featuredProject.year },
           { label: 'Role', value: 'Sole Dev' },
-          { label: 'Status', value: 'Live' },
+          { label: 'Status', value: featuredProject.liveUrl ? 'Live' : 'Built' },
         ].map((stat, i) => (
           <motion.div
             key={stat.label}
@@ -86,7 +89,7 @@ function ProjectShowcaseCard() {
 
       {/* Tech Tags */}
       <div className="flex flex-wrap gap-1.5">
-        {['React 19', 'Vite', 'Tailwind', 'Node.js', 'MongoDB'].map((tech, i) => (
+        {featuredProject.technologies.slice(0, 5).map((tech, i) => (
           <motion.span
             key={tech}
             className="px-2 py-0.5 rounded-full text-[0.55rem] font-mono bg-accent/8 text-accent border border-accent/15"
@@ -105,7 +108,7 @@ function ProjectShowcaseCard() {
         whileHover={{ x: 4 }}
       >
         <ExternalLink className="size-3" />
-        <span>VIEW PROJECT</span>
+        <span>{featuredProject.liveUrl ? 'VIEW PROJECT' : 'VIEW CODE'}</span>
       </motion.div>
     </motion.div>
   );

@@ -1,4 +1,4 @@
-export type ProjectSlug = 'flowsync-ai' | 'workos' | 'assetrix' | 'campus360' | 'startuplaunchai' | 'sdx30' | 'sofawala';
+export type ProjectSlug = 'flowsync-ai' | 'workos' | 'assetrix' | 'campus360' | 'startuplaunchai' | 'sofawala';
 
 export type ProjectLayout = 'media-left' | 'media-right' | 'featured' | 'asymmetric';
 

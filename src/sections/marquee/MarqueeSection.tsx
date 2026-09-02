@@ -12,7 +12,7 @@ import { marqueeWords, marqueeStatement } from '@/data/content';
 export function MarqueeSection() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const words = [...marqueeWords, ...marqueeWords, ...marqueeWords];
 

@@ -165,11 +165,3 @@ export const projects: Project[] = [
     imageUrl: '/projects/sofawala.jpg',
   },
 ];
-
-export const moreProjects: {
-  name: string;
-  description: string;
-  technologies: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-}[] = [];
