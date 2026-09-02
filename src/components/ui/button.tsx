@@ -11,23 +11,23 @@ const buttonVariants = cva(
       variant: {
         // ── Primary: white bg, sharp, premium ──
         default:
-          "bg-primary text-primary-foreground border border-primary/20 rounded-[4px] hover:bg-primary/90 hover:border-primary/30 hover:shadow-[0_0_20px_oklch(from_var(--primary)_l_c_h_/_0.15)] active:bg-primary/85",
+          "bg-primary text-primary-foreground border border-primary/20 rounded-sm hover:bg-primary/90 hover:border-primary/30 hover:shadow-[0_0_20px_oklch(from_var(--primary)_l_c_h_/_0.15)] active:bg-primary/85",
 
         // ── Outline: transparent, border only ──
         outline:
-          "bg-transparent text-foreground border border-border rounded-[4px] hover:border-foreground/30 hover:bg-foreground/[0.03] active:bg-foreground/[0.06]",
+          "bg-transparent text-foreground border border-border rounded-sm hover:border-foreground/30 hover:bg-foreground/[0.03] active:bg-foreground/[0.06]",
 
         // ── Secondary: subtle surface ──
         secondary:
-          "bg-secondary text-secondary-foreground border border-transparent rounded-[4px] hover:bg-secondary/80 active:bg-secondary/70",
+          "bg-secondary text-secondary-foreground border border-transparent rounded-sm hover:bg-secondary/80 active:bg-secondary/70",
 
         // ── Ghost: no border ──
         ghost:
-          "bg-transparent text-foreground border border-transparent rounded-[4px] hover:bg-foreground/[0.05] active:bg-foreground/[0.08]",
+          "bg-transparent text-foreground border border-transparent rounded-sm hover:bg-foreground/[0.05] active:bg-foreground/[0.08]",
 
         // ── Destructive: danger ──
         destructive:
-          "bg-destructive text-white border border-destructive rounded-[4px] hover:bg-destructive/90 hover:border-destructive/80 active:bg-destructive/80",
+          "bg-destructive text-white border border-destructive rounded-sm hover:bg-destructive/90 hover:border-destructive/80 active:bg-destructive/80",
 
         // ── Link: inline text ──
         link:
@@ -35,19 +35,19 @@ const buttonVariants = cva(
 
         // ── Accent: teal accent bg ──
         accent:
-          "bg-accent text-accent-foreground border border-accent rounded-[4px] hover:bg-accent/90 hover:shadow-[0_0_20px_oklch(from_var(--accent)_l_c_h_/_0.2)] active:bg-accent/80",
+          "bg-accent text-accent-foreground border border-accent rounded-sm hover:bg-accent/90 hover:shadow-[0_0_20px_oklch(from_var(--accent)_l_c_h_/_0.2)] active:bg-accent/80",
 
         // ── Glass: frosted for dark sections ──
         glass:
-          "bg-white/5 text-foreground border border-white/10 rounded-[4px] backdrop-blur-md hover:bg-white/10 hover:border-white/20 active:bg-white/[0.08]",
+          "bg-foreground/[0.05] text-foreground border border-foreground/10 rounded-sm backdrop-blur-md hover:bg-foreground/[0.1] hover:border-foreground/20 active:bg-foreground/[0.08]",
 
         // ── Glow: accent with ambient halo ──
         glow:
-          "relative bg-accent text-accent-foreground border border-accent rounded-[4px] shadow-[0_0_24px_oklch(from_var(--accent)_l_c_h_/_0.2)] hover:shadow-[0_0_32px_oklch(from_var(--accent)_l_c_h_/_0.35)] hover:bg-accent/90 active:bg-accent/80",
+          "relative bg-accent text-accent-foreground border border-accent rounded-sm shadow-[0_0_24px_oklch(from_var(--accent)_l_c_h_/_0.2)] hover:shadow-[0_0_32px_oklch(from_var(--accent)_l_c_h_/_0.35)] hover:bg-accent/90 active:bg-accent/80",
 
         // ── Shimmer: light sweep ──
         shimmer:
-          "relative bg-primary text-primary-foreground border border-primary/20 rounded-[4px] shadow-[0_0_16px_oklch(from_var(--primary)_l_c_h_/_0.1)] hover:shadow-[0_0_24px_oklch(from_var(--primary)_l_c_h_/_0.2)] hover:border-primary/30 hover:bg-primary/90 active:bg-primary/85 overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent hover:before:translate-x-full before:transition-transform before:duration-500",
+          "relative bg-primary text-primary-foreground border border-primary/20 rounded-sm shadow-[0_0_16px_oklch(from_var(--primary)_l_c_h_/_0.1)] hover:shadow-[0_0_24px_oklch(from_var(--primary)_l_c_h_/_0.2)] hover:border-primary/30 hover:bg-primary/90 active:bg-primary/85 overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-primary-foreground/20 before:to-transparent hover:before:translate-x-full before:transition-transform before:duration-500",
 
         // ── Neo: sharp offset shadow ──
         neo:
@@ -55,15 +55,15 @@ const buttonVariants = cva(
       },
 
       size: {
-        xs: "h-7 rounded-[3px] px-2.5 text-[0.7rem] gap-1 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-8 rounded-[3px] px-3.5 text-[0.75rem] has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-3.5",
+        xs: "h-7 rounded-sm px-2.5 text-[0.7rem] gap-1 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-8 rounded-sm px-3.5 text-[0.75rem] has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-3.5",
         default: "h-9 px-5 text-[0.8rem] has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
         lg: "h-11 px-6 text-[0.85rem] has-data-[icon=inline-end]:pr-5 has-data-[icon=inline-start]:pl-5",
         xl: "h-12 px-8 text-sm gap-2 has-data-[icon=inline-end]:pr-7 has-data-[icon=inline-start]:pl-7",
-        icon: "size-9 rounded-[3px]",
-        "icon-xs": "size-7 rounded-[3px] [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm": "size-8 rounded-[3px]",
-        "icon-lg": "size-11 rounded-[4px]",
+        icon: "size-9 rounded-sm",
+        "icon-xs": "size-7 rounded-sm [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm": "size-8 rounded-sm",
+        "icon-lg": "size-11 rounded-sm",
       },
     },
 
@@ -121,7 +121,7 @@ function Button({
       btn.appendChild(ripple);
       setTimeout(() => ripple.remove(), 600);
 
-      onClick?.(e);
+      (onClick as ((event: React.MouseEvent<HTMLButtonElement>) => void) | undefined)?.(e);
     },
     [onClick],
   );

@@ -1,25 +1,20 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, useInView } from 'motion/react';
-import { EASE } from '@/lib/animations';
+import { useState } from 'react';
+import { motion } from 'motion/react';
 import { Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { Button } from '@/components/ui/button';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { Reveal } from '@/components/motion/RevealSystem';
 import { contactContent } from '@/data/contact';
 import { personalInfo } from '@/data/site';
 import { submitContact } from '@/services/contact';
 import { contactSchema } from '@/schemas/contact';
 
-
+const inputClass = "w-full rounded-lg border border-input bg-muted/30 px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-accent focus:ring-2 focus:ring-accent/20 focus:shadow-[0_0_16px_oklch(from_var(--accent)_l_c_h_/_0.12)] outline-none";
 
 export function ContactSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -56,43 +51,31 @@ export function ContactSection() {
   };
 
   return (
-    <Section id="contact" className="py-24 md:py-40 editorial-border-top">
+    <Section id="contact" className="py-16 sm:py-24 md:py-40 editorial-border-top">
       <Container>
-        <div ref={ref} className="max-w-3xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           {/* Large editorial heading */}
-          <motion.div
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: EASE }}
-          >
+          <Reveal direction="up">
             <span className="text-label text-accent mb-6 block">{contactContent.label}</span>
-            <h2 className="text-section md:text-[clamp(2.5rem,6vw,5rem)] text-foreground leading-[1.05] tracking-tight font-heading font-bold">
+            <h2 className="text-section text-foreground leading-[1.05] tracking-tight font-heading font-bold">
               {contactContent.heading}
             </h2>
-          </motion.div>
+          </Reveal>
 
           {/* Message */}
-          <motion.p
-            className="mt-6 text-body-lg text-muted-foreground max-w-lg mx-auto"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
-          >
-            {contactContent.message}
-          </motion.p>
+          <Reveal direction="up" delay={0.15}>
+            <p className="mt-6 text-body-lg text-muted-foreground max-w-lg mx-auto">
+              {contactContent.message}
+            </p>
+          </Reveal>
 
           {/* Form */}
-          <motion.form
+          <form
             className="mt-10 md:mt-12 space-y-5 text-left max-w-lg mx-auto"
             onSubmit={handleSubmit}
           >
             {/* Name */}
-            <motion.div
-              className="space-y-2"
-              initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.25, ease: EASE }}
-            >
+            <Reveal direction="up" delay={0.1} className="space-y-2">
               <label htmlFor="name" className="text-label text-muted-foreground block">
                 {contactContent.nameLabel}
               </label>
@@ -101,7 +84,7 @@ export function ContactSection() {
                 name="name"
                 type="text"
                 placeholder={contactContent.namePlaceholder}
-                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-accent focus:ring-2 focus:ring-accent/20 focus:shadow-[0_0_16px_oklch(from_var(--accent)_l_c_h_/_0.12)] outline-none"
+                className={inputClass}
               />
               {errors.name && (
                 <motion.span
@@ -113,15 +96,10 @@ export function ContactSection() {
                   {errors.name}
                 </motion.span>
               )}
-            </motion.div>
+            </Reveal>
 
             {/* Email */}
-            <motion.div
-              className="space-y-2"
-              initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
-            >
+            <Reveal direction="up" delay={0.15} className="space-y-2">
               <label htmlFor="email" className="text-label text-muted-foreground block">
                 {contactContent.emailLabel}
               </label>
@@ -130,7 +108,7 @@ export function ContactSection() {
                 name="email"
                 type="email"
                 placeholder={contactContent.emailPlaceholder}
-                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-accent focus:ring-2 focus:ring-accent/20 focus:shadow-[0_0_16px_oklch(from_var(--accent)_l_c_h_/_0.12)] outline-none"
+                className={inputClass}
               />
               {errors.email && (
                 <motion.span
@@ -142,15 +120,10 @@ export function ContactSection() {
                   {errors.email}
                 </motion.span>
               )}
-            </motion.div>
+            </Reveal>
 
             {/* Message */}
-            <motion.div
-              className="space-y-2"
-              initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.45, ease: EASE }}
-            >
+            <Reveal direction="up" delay={0.2} className="space-y-2">
               <label htmlFor="message" className="text-label text-muted-foreground block">
                 {contactContent.messageLabel}
               </label>
@@ -159,7 +132,7 @@ export function ContactSection() {
                 name="message"
                 rows={5}
                 placeholder={contactContent.messagePlaceholder}
-                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-accent focus:ring-2 focus:ring-accent/20 focus:shadow-[0_0_16px_oklch(from_var(--accent)_l_c_h_/_0.12)] outline-none resize-y"
+                className={`${inputClass} resize-y`}
               />
               {errors.message && (
                 <motion.span
@@ -171,7 +144,7 @@ export function ContactSection() {
                   {errors.message}
                 </motion.span>
               )}
-            </motion.div>
+            </Reveal>
 
             {/* Submit */}
             <div className="pt-2">
@@ -217,15 +190,10 @@ export function ContactSection() {
                 </motion.div>
               )}
             </div>
-          </motion.form>
+          </form>
 
           {/* Social links */}
-          <motion.div
-            className="mt-12 flex items-center justify-center gap-6"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
-          >
+          <Reveal direction="up" delay={0.3} className="mt-12 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             <span className="text-caption text-muted-foreground">OR</span>
             <a
               href={`mailto:${personalInfo.email}`}
@@ -233,7 +201,7 @@ export function ContactSection() {
             >
               EMAIL DIRECTLY
             </a>
-            <span className="text-muted-foreground/30">·</span>
+            <span className="text-muted-foreground/30 hidden sm:inline">·</span>
             <a
               href={`https://github.com/${personalInfo.github}`}
               target="_blank"
@@ -242,7 +210,7 @@ export function ContactSection() {
             >
               GITHUB
             </a>
-            <span className="text-muted-foreground/30">·</span>
+            <span className="text-muted-foreground/30 hidden sm:inline">·</span>
             <a
               href={`https://linkedin.com/in/${personalInfo.linkedin}`}
               target="_blank"
@@ -251,7 +219,7 @@ export function ContactSection() {
             >
               LINKEDIN
             </a>
-          </motion.div>
+          </Reveal>
         </div>
       </Container>
     </Section>

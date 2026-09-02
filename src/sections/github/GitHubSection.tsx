@@ -1,14 +1,13 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'motion/react';
-import { EASE } from '@/lib/animations';
+import { motion } from 'motion/react';
+import { EASE, DURATION } from '@/lib/animations';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { Button } from '@/components/ui/button';
+import { Reveal, RevealGroup } from '@/components/motion/RevealSystem';
 import { githubProfile } from '@/data/github';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 
 
@@ -21,37 +20,23 @@ const LANGUAGE_COLORS: Record<string, string> = {
 };
 
 export function GitHubSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
   const profile = githubProfile;
 
   return (
-    <Section id="github" className="py-24 md:py-36">
+    <Section id="github" className="py-16 sm:py-24 md:py-36">
       <Container>
-        <motion.div
-          ref={ref}
-          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }}
-        >
+        <Reveal direction="up">
           <SectionHeading
-            number="08"
+            number="07"
             label="ACTIVITY"
             title="GitHub"
             description="Open source contributions, pinned repositories, and development activity."
           />
-        </motion.div>
+        </Reveal>
 
-        <div className="mt-12 md:mt-16 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 md:gap-5">
+        <div className="mt-8 sm:mt-12 md:mt-16 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 md:gap-5">
           {/* ─── Contribution Stats ─── */}
-          <motion.div
-            className="col-span-4 lg:col-span-3 rounded-xl border border-border bg-card p-6"
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
-          >
+          <Reveal direction="up" delay={0.1} className="col-span-4 lg:col-span-3 rounded-xl border border-border bg-card p-6">
             <div className="space-y-1 mb-4">
               <span className="text-label text-muted-foreground">CONTRIBUTIONS</span>
               <p className="text-stat text-foreground">{profile.stats.contributions}</p>
@@ -67,15 +52,10 @@ export function GitHubSection() {
                 <span className="text-accent transition-transform duration-200 group-hover/btn:translate-x-0.5">↗</span>
               </Button>
             </a>
-          </motion.div>
+          </Reveal>
 
           {/* ─── Languages ─── */}
-          <motion.div
-            className="col-span-4 lg:col-span-5 rounded-xl border border-border bg-card p-6"
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
-          >
+          <Reveal direction="up" delay={0.2} className="col-span-4 lg:col-span-5 rounded-xl border border-border bg-card p-6">
             <span className="text-label text-muted-foreground mb-4 block">TOP LANGUAGES</span>
             <div className="space-y-3">
               {profile.topLanguages.map((lang, i) => (
@@ -95,34 +75,27 @@ export function GitHubSection() {
                       className="h-full rounded-full"
                       style={{ background: LANGUAGE_COLORS[lang.name] || 'var(--muted-foreground)' }}
                       initial={{ width: 0 }}
-                      animate={isInView ? { width: `${lang.percentage}%` } : { width: 0 }}
-                      transition={{ duration: 0.8, delay: 0.4 + i * 0.1, ease: EASE }}
+                      whileInView={{ width: `${lang.percentage}%` }}
+                      viewport={{ once: true, margin: '-60px' }}
+                      transition={{ duration: DURATION.medium, delay: 0.15 + i * 0.06, ease: EASE }}
                     />
                   </div>
                 </div>
               ))}
             </div>
-          </motion.div>
+          </Reveal>
 
           {/* ─── Pinned Repos ─── */}
-          <motion.div
-            className="col-span-4 lg:col-span-4 rounded-xl border border-border bg-card p-6"
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-          >
+          <RevealGroup className="col-span-4 lg:col-span-4 rounded-xl border border-border bg-card p-6">
             <span className="text-label text-muted-foreground mb-4 block">PINNED REPOS</span>
             <div className="space-y-2">
-              {profile.pinnedRepos.slice(0, 4).map((repo, i) => (
-                <motion.a
+              {profile.pinnedRepos.slice(0, 4).map((repo) => (
+                <a
                   key={repo.name}
                   href={repo.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-3 rounded-lg px-3 py-2.5 transition-colors duration-200 hover:bg-muted/50 -mx-1"
-                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -8 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.4 + i * 0.06, ease: EASE }}
                 >
                   <div className="min-w-0 flex-1">
                     <span className="text-body-sm font-medium text-foreground block truncate">
@@ -139,37 +112,29 @@ export function GitHubSection() {
                     />
                     <span className="text-caption text-muted-foreground">{repo.language}</span>
                   </div>
-                </motion.a>
+                </a>
               ))}
             </div>
-          </motion.div>
+          </RevealGroup>
 
           {/* ─── Recent Activity ─── */}
-          <motion.div
-            className="col-span-4 lg:col-span-12 rounded-xl border border-border bg-card p-6"
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
-          >
+          <RevealGroup className="col-span-4 lg:col-span-12 rounded-xl border border-border bg-card p-6">
             <span className="text-label text-muted-foreground mb-4 block">RECENT ACTIVITY</span>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
               {profile.recentActivity.slice(0, 6).map((activity, i) => (
-                <motion.div
+                <div
                   key={i}
                   className="flex items-start gap-3 rounded-lg px-3 py-2.5 transition-colors duration-200 hover:bg-muted/50"
-                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.3, delay: 0.5 + i * 0.04, ease: EASE }}
                 >
                   <span className="mt-1 size-1 rounded-full bg-accent/60 shrink-0" />
                   <div className="min-w-0 flex-1">
                     <span className="text-body-sm text-foreground block truncate">{activity.message}</span>
                     <span className="text-caption text-muted-foreground">{activity.date}</span>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </RevealGroup>
         </div>
       </Container>
     </Section>

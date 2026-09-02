@@ -15,7 +15,7 @@ interface MagneticProps {
 export function Magnetic({
   children,
   className,
-  strength = 8,
+  strength = 4,
   springConfig = { stiffness: 300, damping: 20, mass: 0.5 },
 }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null);

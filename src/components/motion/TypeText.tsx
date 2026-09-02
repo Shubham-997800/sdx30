@@ -64,16 +64,18 @@ export function TypeText({
   return (
     <Tag className={className}>
       {currentText}
-      <motion.span
-        className="inline-block w-[3px] h-[0.9em] bg-accent ml-0.5 align-middle"
-        animate={{ opacity: [1, 0] }}
-        transition={{
-          duration: 0.7,
-          repeat: Infinity,
-          repeatType: 'reverse',
-          ease: 'easeInOut',
-        }}
-      />
+      {!prefersReducedMotion && (
+        <motion.span
+          className="inline-block w-[3px] h-[0.9em] bg-accent ml-0.5 align-middle"
+          animate={{ opacity: [1, 0] }}
+          transition={{
+            duration: 0.7,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            ease: 'easeInOut',
+          }}
+        />
+      )}
     </Tag>
   );
 }
