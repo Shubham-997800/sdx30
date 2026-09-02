@@ -17,12 +17,6 @@ import { HeroVisual } from './HeroVisual';
 
 
 
-const fadeUp = (delay: number, reduced: boolean) => ({
-  initial: reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, delay, ease: EASE },
-});
-
 export function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -32,9 +26,9 @@ export function HeroSection() {
     offset: ['start start', 'end start'],
   });
 
-  const nameY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const nameY = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const nameOpacity = useTransform(scrollYProgress, [0, 0.6], [0.05, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 40]);
 
   const scrollToWork = useCallback(() => {
     document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' });
@@ -48,12 +42,12 @@ export function HeroSection() {
     >
       {/* ─── Giant Background Name ─── */}
       <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
         style={{ y: nameY, opacity: nameOpacity }}
       >
         <BackgroundGlitch
           text="SHUBHAM"
-          className="relative text-[clamp(6rem,20vw,16rem)] font-heading font-bold tracking-[-0.06em] text-foreground whitespace-nowrap"
+          className="relative text-[clamp(4rem,18vw,16rem)] font-heading font-bold tracking-[-0.06em] text-foreground whitespace-nowrap"
         />
       </motion.div>
 
@@ -69,15 +63,15 @@ export function HeroSection() {
         </svg>
       </div>
 
-      <Container className="w-full relative z-10 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* ─── Content (Left) ─── */}
+      <Container className="w-full relative z-10 py-12 sm:py-16 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* ─── Content (Left) — ALL content visible immediately ─── */}
           <motion.div
             className="col-span-1 lg:col-span-6 min-w-0"
             style={{ y: contentY }}
           >
-            {/* Availability */}
-            <motion.div {...fadeUp(0.1, prefersReducedMotion)}>
+            {/* Availability — visible instantly, typewriter is enhancement */}
+            <div>
               <span className="inline-flex items-center gap-2.5 text-label text-accent">
                 <span className="relative flex size-2">
                   {!prefersReducedMotion && (
@@ -101,68 +95,60 @@ export function HeroSection() {
                   />
                 )}
               </span>
-            </motion.div>
+            </div>
 
-            {/* Name — Scramble Reveal */}
-            <div className="mt-6 md:mt-8">
+            {/* Name — ScrambleText handles its own visibility */}
+            <div className="mt-4 sm:mt-6 md:mt-8">
               <ScrambleText
                 text={heroContent.name}
                 as="h1"
                 className="text-display text-foreground whitespace-nowrap"
-                delay={300}
-                speed={40}
-                pauseDuration={3000}
+                delay={100}
+                speed={35}
+                pauseDuration={4000}
               />
             </div>
 
-            {/* Role — Typewriter */}
-            <div className="mt-3 md:mt-4">
+            {/* Role — TypeText handles its own visibility */}
+            <div className="mt-2 sm:mt-3 md:mt-4">
               <TypeText
                 text={heroContent.role}
                 as="p"
                 className="text-feature text-accent font-semibold"
-                delay={1500}
+                delay={600}
                 speed={50}
                 deleteSpeed={30}
                 pauseDuration={2000}
               />
             </div>
 
-            {/* Statement — Word by word */}
-            <motion.div className="mt-6 md:mt-8" {...fadeUp(0.9, prefersReducedMotion)}>
+            {/* Statement — content visible, fade is enhancement */}
+            <motion.div
+              className="mt-4 sm:mt-6 md:mt-8"
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, ease: EASE }}
+            >
               <p className="text-body-lg text-foreground/80 max-w-[520px] leading-relaxed">
-                {heroContent.mainStatement.split(' ').map((word, i) => (
-                  <motion.span
-                    key={i}
-                    className="inline-block mr-[0.3em]"
-                    initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10, filter: 'blur(4px)' }}
-                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                    transition={{ duration: 0.5, delay: 0.9 + i * 0.04, ease: EASE }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
+                {heroContent.mainStatement}
               </p>
             </motion.div>
 
-            {/* Description — Slide up + fade */}
+            {/* Description — content visible, fade is enhancement */}
             <motion.div
               className="mt-3"
-              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16, filter: 'blur(4px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.8, delay: 1.4, ease: EASE }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.1, ease: EASE }}
             >
               <p className="text-body text-muted-foreground max-w-[460px]">
                 {heroContent.introduction}
               </p>
             </motion.div>
 
-            {/* CTAs */}
-            <motion.div
-              className="flex flex-wrap items-center gap-3 mt-8 md:mt-10"
-              {...fadeUp(1.1, prefersReducedMotion)}
-            >
-              <Magnetic strength={8}>
+            {/* CTAs — visible immediately, no delay */}
+            <div className="flex flex-wrap items-center gap-3 mt-6 sm:mt-8 md:mt-10">
+              <Magnetic strength={4}>
                 <Button
                   variant="shimmer"
                   size="lg"
@@ -170,54 +156,48 @@ export function HeroSection() {
                   className="group/btn"
                 >
                   {heroContent.cta.primary}
-                  <ArrowRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                  <ArrowRight className="size-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
                 </Button>
               </Magnetic>
-              <Magnetic strength={8}>
+              <Magnetic strength={4}>
                 <a
                   href={personalInfo.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <Button variant="outline" size="lg" className="group/btn">
-                    <Download className="size-4 transition-transform duration-300 group-hover/btn:-translate-y-0.5" />
+                    <Download className="size-4 transition-transform duration-200 group-hover/btn:-translate-y-0.5" />
                     {heroContent.cta.secondary}
                   </Button>
                 </a>
               </Magnetic>
-            </motion.div>
+            </div>
 
-            {/* Social Links — Wave stagger */}
-            <motion.div
-              className="flex flex-wrap items-center gap-6 mt-8 md:mt-10"
-            >
-              {socialLinks.map((link, i) => (
-                <motion.a
+            {/* Social Links — visible immediately */}
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-6 sm:mt-8 md:mt-10">
+              {socialLinks.map((link) => (
+                <a
                   key={link.label}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-label text-muted-foreground transition-colors duration-200 hover:text-foreground relative group"
-                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1.5 + i * 0.08, ease: EASE }}
-                  whileHover={{ y: -2 }}
                 >
                   {link.label}
-                  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
-                </motion.a>
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent transition-all duration-200 group-hover:w-full" />
+                </a>
               ))}
-            </motion.div>
+            </div>
           </motion.div>
 
-          {/* ─── Visual (Right) — Animated Developer Character ─── */}
+          {/* ─── Visual (Right) — visible immediately, enhancement is the entrance ─── */}
           <motion.div
             className="col-span-1 lg:col-span-6 flex items-center justify-center relative"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: 30 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.4, ease: EASE }}
+            transition={{ duration: 0.5, ease: EASE }}
           >
-            <div className="relative w-full h-full min-h-[380px] lg:min-h-[420px]">
+            <div className="relative w-full h-full min-h-[300px] md:min-h-[380px] lg:min-h-[420px]">
               <HeroVisual />
             </div>
           </motion.div>
@@ -225,19 +205,14 @@ export function HeroSection() {
       </Container>
 
       {/* ─── Scroll Indicator ─── */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.8 }}
-      >
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <span className="text-label text-muted-foreground">SCROLL</span>
         <motion.div
           className="h-8 w-px bg-gradient-to-b from-muted-foreground/30 to-transparent"
           animate={prefersReducedMotion ? {} : { scaleY: [1, 0.4, 1] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
         />
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -42,7 +42,7 @@ function FlowSyncThumbnail() {
       <rect x="96" y="170" width="60" height="4" rx="1" fill="var(--color-foreground)" fillOpacity="0.06" />
       <rect x="198" y="130" width="106" height="54" rx="8" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1" />
       <text x="214" y="150" fontSize="7" fill="var(--color-foreground)" fillOpacity="0.3" fontFamily="sans-serif">Risk Alerts</text>
-      <rect x="214" y="158" width="30" height="8" rx="2" fill="#f59e0b" fillOpacity="0.2" />
+      <rect x="214" y="158" width="30" height="8" rx="2" fill="var(--color-warning)" fillOpacity="0.2" />
       <rect x="214" y="170" width="50" height="4" rx="1" fill="var(--color-foreground)" fillOpacity="0.06" />
       {/* AI badge */}
       <circle cx="280" cy="44" r="12" fill="var(--color-accent)" fillOpacity="0.1" stroke="var(--color-accent)" strokeWidth="1" strokeOpacity="0.3" />
@@ -74,7 +74,7 @@ function WorkOSThumbnail() {
           {[0,1,2].map(card => (
             <rect key={card} x={24 + col * 102} y={78 + card * 38} width="76" height="30" rx="4" fill="var(--color-background)" stroke="var(--color-border)" strokeWidth="0.5" />
           ))}
-          <circle cx={88 + col * 102} cy={88} r="2" fill={col === 0 ? 'var(--color-accent)' : col === 1 ? '#f59e0b' : '#10b981'} fillOpacity="0.5" />
+          <circle cx={88 + col * 102} cy={88} r="2" fill={col === 0 ? 'var(--color-accent)' : col === 1 ? 'var(--color-warning)' : 'var(--color-success)'} fillOpacity="0.5" />
         </g>
       ))}
     </svg>
@@ -96,7 +96,7 @@ function AssetrixThumbnail() {
             <rect x={46 + col * 76} y={46 + row * 40} width="28" height="4" rx="1" fill="var(--color-foreground)" fillOpacity="0.12" />
             <rect x={46 + col * 76} y={54 + row * 40} width="18" height="3" rx="1" fill="var(--color-foreground)" fillOpacity="0.08" />
             {(row + col) % 3 === 0 && (
-              <circle cx={84 + col * 76} cy={40 + row * 40} r="5" fill="#10b981" fillOpacity="0.3" />
+              <circle cx={84 + col * 76} cy={40 + row * 40} r="5" fill="var(--color-success)" fillOpacity="0.3" />
             )}
           </g>
         ))
@@ -147,7 +147,7 @@ function StartupLaunchThumbnail() {
       <g transform="translate(150, 20)">
         <path d="M10 0 L20 30 L0 30 Z" fill="var(--color-accent)" fillOpacity="0.2" stroke="var(--color-accent)" strokeWidth="1" strokeOpacity="0.3" />
         <rect x="4" y="30" width="12" height="8" rx="2" fill="var(--color-foreground)" fillOpacity="0.1" />
-        <path d="M6 38 Q10 50 14 38" fill="#f59e0b" fillOpacity="0.3" />
+        <path d="M6 38 Q10 50 14 38" fill="var(--color-warning)" fillOpacity="0.3" />
       </g>
       {/* Charts */}
       <rect x="24" y="90" width="120" height="94" rx="8" fill="var(--color-card)" stroke="var(--color-border)" strokeWidth="1" />
@@ -216,7 +216,7 @@ export function ProjectThumbnail({ projectId, projectName }: ProjectThumbnailPro
         initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 1.02 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: EASE }}
-        viewport={{ once: false }}
+        viewport={{ once: true }}
       >
         {Thumbnail ? <Thumbnail /> : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent/5 via-transparent to-accent/10">

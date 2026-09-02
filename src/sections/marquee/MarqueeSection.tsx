@@ -1,23 +1,20 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'motion/react';
-import { EASE } from '@/lib/animations';
+import { motion } from 'motion/react';
 import { Container } from '@/components/layout/Container';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { RevealSection } from '@/components/motion/RevealSystem';
 import { marqueeWords, marqueeStatement } from '@/data/content';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 
 
 export function MarqueeSection() {
   const prefersReducedMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const words = [...marqueeWords, ...marqueeWords, ...marqueeWords];
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden editorial-border-top editorial-border-bottom" ref={ref}>
+    <section className="relative py-16 md:py-24 overflow-hidden editorial-border-top editorial-border-bottom">
       {/* Marquee */}
       <div className="relative overflow-hidden">
         {prefersReducedMotion ? (
@@ -34,7 +31,8 @@ export function MarqueeSection() {
             className="marquee"
             style={{ '--marquee-duration': '35s' } as React.CSSProperties}
             initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 1 }}
           >
             {words.map((word, i) => (
@@ -49,16 +47,11 @@ export function MarqueeSection() {
 
       {/* Statement */}
       <Container>
-        <motion.div
-          className="mt-12 md:mt-16 text-center"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
-        >
+        <RevealSection className="mt-12 md:mt-16 text-center">
           <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed italic">
             "{marqueeStatement}"
           </p>
-        </motion.div>
+        </RevealSection>
       </Container>
     </section>
   );

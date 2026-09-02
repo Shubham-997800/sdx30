@@ -57,45 +57,59 @@
 }
 
 /* ═══════════════════════════════════════════════
-   LIGHT MODE — Editorial, clean, high-end
+   LIGHT MODE — Bright Editorial, Swiss-inspired
+
+   Art Direction: Warm paper, structured depth,
+   intentional borders, physical shadows.
+   NOT a generic white website.
    ═══════════════════════════════════════════════ */
 
 :root {
-  --background: oklch(0.99 0.002 100);
-  --foreground: oklch(0.1 0.015 270);
+  /* ── Backgrounds: Warm tonal hierarchy ── */
+  --background: oklch(0.975 0.003 95);
+  --foreground: oklch(0.13 0.02 270);
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.1 0.015 270);
+  --card: oklch(0.995 0.001 95);
+  --card-foreground: oklch(0.13 0.02 270);
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.1 0.015 270);
+  --popover: oklch(0.995 0.001 95);
+  --popover-foreground: oklch(0.13 0.02 270);
 
-  --primary: oklch(0.1 0.015 270);
-  --primary-foreground: oklch(0.99 0.002 100);
+  --primary: oklch(0.13 0.02 270);
+  --primary-foreground: oklch(0.975 0.003 95);
 
-  --secondary: oklch(0.95 0.005 100);
-  --secondary-foreground: oklch(0.1 0.015 270);
+  --secondary: oklch(0.945 0.005 95);
+  --secondary-foreground: oklch(0.13 0.02 270);
 
-  --muted: oklch(0.95 0.005 100);
-  --muted-foreground: oklch(0.42 0.02 270);
+  --muted: oklch(0.94 0.005 95);
+  --muted-foreground: oklch(0.38 0.025 270);
 
-  --accent: oklch(0.55 0.2 195);
+  /* ── Accent: Richer teal for light bg ── */
+  --accent: oklch(0.52 0.18 195);
   --accent-foreground: oklch(1 0 0);
 
-  --destructive: oklch(0.5 0.24 25);
+  --destructive: oklch(0.48 0.22 25);
 
-  --border: oklch(0.88 0.005 100);
-  --border-subtle: oklch(0.93 0.005 100);
-  --border-strong: oklch(0.72 0.01 270);
-  --border-accent: oklch(0.55 0.2 195);
+  /* ── Semantic status colors ── */
+  --color-success: oklch(0.65 0.22 155);
+  --color-warning: oklch(0.78 0.16 85);
 
-  --input: oklch(0.92 0.005 100);
-  --ring: oklch(0.55 0.2 195);
+  /* ── Borders: Stronger structural presence ── */
+  --border: oklch(0.87 0.008 95);
+  --border-subtle: oklch(0.91 0.005 95);
+  --border-strong: oklch(0.7 0.015 270);
+  --border-accent: oklch(0.52 0.18 195);
 
-  --surface: oklch(1 0 0);
-  --surface-elevated: oklch(0.99 0.002 100);
-  --editorial: oklch(0.1 0.015 270);
-  --editorial-muted: oklch(0.78 0.01 270);
+  --input: oklch(0.92 0.005 95);
+  --ring: oklch(0.52 0.18 195);
+
+  /* ── Surfaces: Physical depth hierarchy ── */
+  --surface: oklch(0.985 0.002 95);
+  --surface-elevated: oklch(0.995 0.001 95);
+
+  /* ── Editorial: Visible decorative text ── */
+  --editorial: oklch(0.13 0.02 270);
+  --editorial-muted: oklch(0.72 0.015 270);
 
   color-scheme: light;
 }
@@ -128,6 +142,10 @@
 
   --destructive: oklch(0.65 0.22 25);
 
+  /* ── Semantic status colors ── */
+  --color-success: oklch(0.72 0.19 155);
+  --color-warning: oklch(0.82 0.14 85);
+
   --border: oklch(0.22 0.008 270);
   --border-subtle: oklch(0.16 0.008 270);
   --border-strong: oklch(0.32 0.015 270);
@@ -142,6 +160,186 @@
   --editorial-muted: oklch(0.35 0.015 270);
 
   color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════
+   LIGHT MODE — Component Overrides
+
+   Physical depth, editorial shadows,
+   structured borders, warm surfaces.
+   ═══════════════════════════════════════════════ */
+
+/* ── Cards: Soft physical shadow ── */
+:not(.dark) .code-card {
+  box-shadow:
+    0 1px 3px oklch(0.13 0.02 270 / 0.04),
+    0 4px 12px oklch(0.13 0.02 270 / 0.03);
+}
+
+:not(.dark) .code-card:hover {
+  box-shadow:
+    0 2px 6px oklch(0.13 0.02 270 / 0.06),
+    0 8px 24px oklch(0.13 0.02 270 / 0.05);
+}
+
+/* ── Code card: Dark mode deeper ── */
+.dark .code-card {
+  background: oklch(0.10 0.008 270) !important;
+  border-color: oklch(0.22 0.008 270) !important;
+}
+
+.dark .code-card-header {
+  background: oklch(0.08 0.008 270) !important;
+  border-color: oklch(0.22 0.008 270) !important;
+}
+
+.dark .code-card-body {
+  background: oklch(0.10 0.008 270) !important;
+}
+
+/* ── Editorial card: Dark mode deeper ── */
+.editorial-card {
+  background: var(--card);
+}
+
+.dark .editorial-card {
+  background: oklch(0.12 0.008 270) !important;
+}
+
+/* ── Code card header: Warmer ── */
+:not(.dark) .code-card-header {
+  background: oklch(0.97 0.003 95);
+}
+
+/* ── Card neo: Structured shadow ── */
+:not(.dark) .card-neo {
+  box-shadow: 3px 3px 0 oklch(0.13 0.02 270 / 0.06);
+}
+
+:not(.dark) .card-neo:hover {
+  box-shadow: 4px 4px 0 oklch(0.13 0.02 270 / 0.08);
+}
+
+/* ── Editorial grid: More visible ── */
+:not(.dark) .editorial-grid-overlay {
+  opacity: 0.035;
+}
+
+/* ── Timeline: Stronger presence ── */
+:not(.dark) .timeline-line {
+  background: oklch(0.82 0.01 95);
+}
+
+:not(.dark) .timeline-dot {
+  border-color: oklch(0.82 0.01 95);
+  background: var(--background);
+  box-shadow: 0 1px 3px oklch(0.13 0.02 270 / 0.06);
+}
+
+:not(.dark) .timeline-dot.is-active {
+  box-shadow:
+    0 0 0 4px oklch(0.52 0.18 195 / 0.12),
+    0 2px 6px oklch(0.13 0.02 270 / 0.08);
+}
+
+/* ── Section divider: More visible ── */
+:not(.dark) .section-divider {
+  background: oklch(0.85 0.008 95);
+}
+
+/* ── Selection: Richer ── */
+:not(.dark) ::selection {
+  background: oklch(0.52 0.18 195 / 0.2);
+  color: var(--foreground);
+}
+
+/* ── Scrollbar: More visible ── */
+:not(.dark) ::-webkit-scrollbar-thumb {
+  background: oklch(0.13 0.02 270 / 0.15);
+}
+
+:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.13 0.02 270 / 0.25);
+}
+
+/* ── Marquee ghost text: Slightly stronger ── */
+:not(.dark) .text-marquee {
+  -webkit-text-stroke: 0.5px oklch(0.13 0.02 270 / 0.06);
+}
+
+/* ── Buttons: Light mode adjustments ── */
+:not(.dark) [data-slot="button"] {
+  box-shadow: 0 1px 2px oklch(0.13 0.02 270 / 0.06);
+}
+
+:not(.dark) [data-slot="button"]:hover {
+  box-shadow: 0 2px 6px oklch(0.13 0.02 270 / 0.08);
+}
+
+/* ── HeroVisual: Stronger glow in light ── */
+:not(.dark) .hero-ambient-glow {
+  opacity: 0.06;
+}
+
+/* ── Cards in sections: Subtle shadow ── */
+:not(.dark) [data-slot="card"] {
+  box-shadow:
+    0 1px 3px oklch(0.13 0.02 270 / 0.03),
+    0 4px 12px oklch(0.13 0.02 270 / 0.02);
+}
+
+:not(.dark) [data-slot="card"]:hover {
+  box-shadow:
+    0 2px 6px oklch(0.13 0.02 270 / 0.05),
+    0 8px 24px oklch(0.13 0.02 270 / 0.04);
+}
+
+/* ── Input/Textarea: Light mode ── */
+:not(.dark) input,
+:not(.dark) textarea {
+  background: oklch(1 0 0);
+  border-color: oklch(0.85 0.008 95);
+}
+
+:not(.dark) input:focus,
+:not(.dark) textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px oklch(0.52 0.18 195 / 0.08);
+}
+
+/* ── Badge: Light mode ── */
+:not(.dark) [data-slot="badge"] {
+  border-color: oklch(0.85 0.008 95);
+}
+
+/* ── Project overlay: Stronger in light ── */
+:not(.dark) .project-overlay {
+  background: linear-gradient(
+    to top,
+    oklch(0.975 0.003 95 / 0.92) 0%,
+    oklch(0.975 0.003 95 / 0) 60%
+  );
+}
+
+/* ── Contact form error: Light mode ── */
+:not(.dark) [role="alert"] {
+  background: oklch(0.48 0.22 25 / 0.06);
+  border-color: oklch(0.48 0.22 25 / 0.15);
+}
+
+/* ── Contact form inputs: Dark mode deeper ── */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark textarea {
+  background: oklch(0.14 0.008 270);
+  border-color: oklch(0.25 0.008 270);
+}
+
+.dark input[type="text"]:focus,
+.dark input[type="email"]:focus,
+.dark textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px oklch(from var(--accent) l c h / 0.15);
 }
 
 /* ═══════════════════════════════════════════════
@@ -527,7 +725,7 @@
   position: relative;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   font-family: var(--font-mono);
 }
@@ -538,6 +736,7 @@
   gap: 6px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--border);
+  background: var(--muted);
 }
 
 .code-card-dot {
@@ -555,6 +754,7 @@
   padding: 20px;
   font-size: 0.8125rem;
   line-height: 1.7;
+  background: var(--card);
 }
 
 .code-keyword { color: var(--accent); }
@@ -566,21 +766,6 @@
 /* ═══════════════════════════════════════════════
    ANIMATION KEYFRAMES
    ═══════════════════════════════════════════════ */
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes clipReveal {
-  from { clip-path: inset(100% 0 0 0); }
-  to { clip-path: inset(0 0 0 0); }
-}
 
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -596,29 +781,6 @@
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
 }
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
-}
-
-.animate-clip-reveal {
-  animation: clipReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-stagger-1 { animation-delay: 0.1s; }
-.animate-stagger-2 { animation-delay: 0.2s; }
-.animate-stagger-3 { animation-delay: 0.3s; }
-.animate-stagger-4 { animation-delay: 0.4s; }
-.animate-stagger-5 { animation-delay: 0.5s; }
-.animate-stagger-6 { animation-delay: 0.6s; }
-.animate-stagger-7 { animation-delay: 0.7s; }
-.animate-stagger-8 { animation-delay: 0.8s; }
 
 .marquee {
   display: flex;

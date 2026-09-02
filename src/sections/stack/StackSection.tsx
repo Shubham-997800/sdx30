@@ -1,40 +1,28 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'motion/react';
-import { EASE } from '@/lib/animations';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionHeading } from '@/components/shared/SectionHeading';
+import { RevealSection } from '@/components/motion/RevealSystem';
 import { techCategories } from '@/data/stack';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { TechCategory } from './TechCategory';
 
 
 
 export function StackSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
   return (
-    <Section id="stack" className="py-24 md:py-36">
+    <Section id="stack" className="py-16 sm:py-24 md:py-36">
       <Container>
-        <motion.div
-          ref={ref}
-          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }}
-        >
+        <RevealSection>
           <SectionHeading
             number="04"
             label="ECOSYSTEM"
             title="Tech Stack"
             description="Technologies I work with and actively learning. Honest progression, not inflated expertise."
           />
-        </motion.div>
+        </RevealSection>
 
-        <div className="mt-12 md:mt-16 space-y-8 md:space-y-10">
+        <div className="mt-8 sm:mt-12 md:mt-16 space-y-8 md:space-y-10">
           {techCategories.map((category, index) => (
             <TechCategory
               key={category.id}

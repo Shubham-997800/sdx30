@@ -3,10 +3,6 @@ export const githubProfile = {
   url: 'https://github.com/Shubham-997800',
   stats: {
     contributions: '438',
-    streak: '—',
-    commits: '—',
-    prs: '—',
-    stars: '—',
   },
   topLanguages: [
     { name: 'JavaScript', percentage: 40 },

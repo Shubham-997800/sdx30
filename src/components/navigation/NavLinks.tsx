@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
 interface NavLinkProps {
@@ -15,20 +14,19 @@ function NavLink({ href, label, isActive }: NavLinkProps) {
     <a
       href={href}
       className={cn(
-        'relative px-3 py-1.5 text-[0.78rem] font-medium tracking-wide rounded-full transition-colors duration-300',
+        'relative px-3 py-1.5 text-nav font-medium tracking-wide transition-colors duration-150',
+        'rounded-sm',
         isActive
           ? 'text-foreground'
           : 'text-muted-foreground hover:text-foreground',
+        'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/50',
       )}
     >
-      {isActive && (
-        <motion.span
-          layoutId="nav-pill"
-          className="absolute inset-0 rounded-full bg-accent/10 border border-accent/20"
-          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-        />
-      )}
       <span className="relative z-10">{label}</span>
+      {/* Active indicator — thin editorial underline */}
+      {isActive && (
+        <span className="absolute bottom-1 left-3 right-3 h-px bg-foreground/70" />
+      )}
     </a>
   );
 }
@@ -69,7 +67,7 @@ export function NavLinks({ links }: NavLinksProps) {
 
   return (
     <nav
-      className="hidden lg:flex items-center gap-1 p-1 rounded-full border border-border/40 bg-muted/30 backdrop-blur-sm"
+      className="hidden lg:flex items-center gap-0.5"
       aria-label="Main navigation"
     >
       {links.map((link) => (

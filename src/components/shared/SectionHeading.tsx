@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
-import { EASE } from '@/lib/animations';
+import { EASE, DURATION, STAGGER, DISTANCE } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 import { SectionLabel } from './SectionLabel';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
@@ -29,7 +29,7 @@ export function SectionHeading({
   align = 'left',
 }: SectionHeadingProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, margin: '-60px' });
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -44,15 +44,15 @@ export function SectionHeading({
       {/* Label with line draw */}
       {(label || number) && (
         <motion.div
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -12 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
-          transition={{ duration: 0.5, ease: EASE }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: -8 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }}
+          transition={{ duration: DURATION.normal, ease: EASE }}
         >
           <SectionLabel number={number}>{label}</SectionLabel>
         </motion.div>
       )}
 
-      {/* Title — CharReveal */}
+      {/* Title — simple fade up, no per-char rotation */}
       <h2
         className={cn(
           'text-section text-foreground max-w-3xl',
@@ -63,42 +63,18 @@ export function SectionHeading({
         {prefersReducedMotion ? (
           title
         ) : (
-          <span style={{ perspective: '600px' }}>
-            {title.split(' ').map((word, wordIndex) => (
-              <span key={wordIndex} className="inline-block">
-                {word.split('').map((char, charIndex) => {
-                  const globalIndex = title.split(' ').slice(0, wordIndex).join('').length + wordIndex + charIndex;
-                  return (
-                    <span key={charIndex} className="inline-block overflow-hidden">
-                      <motion.span
-                        className="inline-block origin-bottom"
-                        initial={{ y: '100%', opacity: 0, rotateX: -60 }}
-                        animate={
-                          isInView
-                            ? { y: '0%', opacity: 1, rotateX: 0 }
-                            : { y: '100%', opacity: 0, rotateX: -60 }
-                        }
-                        transition={{
-                          duration: 0.6,
-                          delay: globalIndex * 0.03,
-                          ease: EASE,
-                        }}
-                      >
-                        {char}
-                      </motion.span>
-                    </span>
-                  );
-                })}
-                {wordIndex < title.split(' ').length - 1 && (
-                  <span className="inline-block">&nbsp;</span>
-                )}
-              </span>
-            ))}
-          </span>
+          <motion.span
+            className="inline-block"
+            initial={{ opacity: 0, y: DISTANCE.small }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: DISTANCE.small }}
+            transition={{ duration: DURATION.normal, ease: EASE }}
+          >
+            {title}
+          </motion.span>
         )}
       </h2>
 
-      {/* Description — word-by-word */}
+      {/* Description — simple fade up, no blur */}
       {description && (
         <p
           className={cn(
@@ -109,25 +85,14 @@ export function SectionHeading({
           {prefersReducedMotion ? (
             description
           ) : (
-            description.split(' ').map((word, i) => (
-              <motion.span
-                key={i}
-                className="inline-block mr-[0.3em]"
-                initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-                animate={
-                  isInView
-                    ? { opacity: 1, y: 0, filter: 'blur(0px)' }
-                    : { opacity: 0, y: 8, filter: 'blur(4px)' }
-                }
-                transition={{
-                  duration: 0.4,
-                  delay: title.length * 0.03 + 0.3 + i * 0.03,
-                  ease: EASE,
-                }}
-              >
-                {word}
-              </motion.span>
-            ))
+            <motion.span
+              className="inline-block"
+              initial={{ opacity: 0, y: DISTANCE.small }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: DISTANCE.small }}
+              transition={{ duration: DURATION.normal, delay: STAGGER.fast, ease: EASE }}
+            >
+              {description}
+            </motion.span>
           )}
         </p>
       )}

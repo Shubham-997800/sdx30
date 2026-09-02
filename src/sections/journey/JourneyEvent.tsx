@@ -1,36 +1,28 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { EASE } from '@/lib/animations';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { EASE, DURATION, STAGGER } from '@/lib/animations';
 import { cn } from '@/lib/utils';
+import { Reveal } from '@/components/motion/RevealSystem';
 import type { JourneyEvent as JourneyEventType } from '@/types';
 
 
 
 function Milestone({
   milestone,
-  index,
   isFeatured,
-  isInView,
 }: {
   milestone: JourneyEventType['milestones'][number];
-  index: number;
   isFeatured: boolean;
-  isInView: boolean;
 }) {
-  const prefersReducedMotion = useReducedMotion();
   const isAchievement = milestone.type === 'achievement';
 
   return (
-    <motion.div
+    <div
       className={cn(
         'flex items-center gap-3 py-1.5',
         isAchievement && 'font-medium',
       )}
-      initial={prefersReducedMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.4, delay: 0.3 + index * 0.08, ease: EASE }}
     >
       {/* Milestone indicator */}
       <span
@@ -55,30 +47,26 @@ function Milestone({
       >
         {milestone.label}
       </span>
-    </motion.div>
+    </div>
   );
 }
 
 export function JourneyEvent({
   event,
   index,
-  isInView,
   isLast,
 }: {
   event: JourneyEventType;
   index: number;
-  isInView: boolean;
   isLast: boolean;
 }) {
-  const prefersReducedMotion = useReducedMotion();
   const isFeatured = !!event.featured;
 
   return (
-    <motion.div
+    <Reveal
+      direction="up"
+      delay={0.1 + index * STAGGER.fast}
       className="relative grid grid-cols-[2.5rem_1px_1fr] md:grid-cols-[3rem_1px_1fr] gap-0 items-start"
-      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.1 + index * 0.12, ease: EASE }}
     >
       {/* ─── Left: Number + Node ─── */}
       <div className="relative flex flex-col items-center">
@@ -95,17 +83,13 @@ export function JourneyEvent({
               ? 'border-accent bg-accent/20'
               : 'border-border bg-background hover:border-accent/50',
           )}
-          whileHover={{ scale: 1.3, boxShadow: '0 0 12px oklch(from var(--accent) l c h / 0.3)' }}
+          whileHover={{ scale: 1.1, boxShadow: '0 0 12px oklch(from var(--accent) l c h / 0.3)' }}
           transition={{ duration: 0.2 }}
         >
           {isFeatured && (
             <motion.div
               className="absolute inset-0 rounded-full bg-accent/30"
-              animate={
-                prefersReducedMotion
-                  ? {}
-                  : { scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }
-              }
+              animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             />
           )}
@@ -116,8 +100,9 @@ export function JourneyEvent({
           <motion.div
             className="w-px flex-1 min-h-[3rem] bg-border mt-2 origin-top"
             initial={{ scaleY: 0 }}
-            animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 + index * 0.12, ease: EASE }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: DURATION.normal, delay: 0.15 + index * STAGGER.fast, ease: EASE }}
           />
         )}
       </div>
@@ -140,14 +125,9 @@ export function JourneyEvent({
         )}
       >
         {/* Category label */}
-        <motion.span
-          className="text-label text-muted-foreground/70"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.3, delay: 0.2 + index * 0.12 }}
-        >
+        <span className="text-label text-muted-foreground/70">
           {event.category}
-        </motion.span>
+        </span>
 
         {/* Title */}
         <h3
@@ -169,13 +149,11 @@ export function JourneyEvent({
         {/* Milestones */}
         {event.milestones.length > 0 && (
           <div className="mt-4 space-y-0.5">
-            {event.milestones.map((milestone, i) => (
+            {event.milestones.map((milestone) => (
               <Milestone
                 key={milestone.id}
                 milestone={milestone}
-                index={i}
                 isFeatured={isFeatured}
-                isInView={isInView}
               />
             ))}
           </div>
@@ -183,21 +161,18 @@ export function JourneyEvent({
 
         {/* Project link for Vibe2Ship → FlowSync AI */}
         {event.project && (
-          <motion.a
+          <a
             href="#work"
             className={cn(
               'inline-flex items-center gap-1.5 mt-4 text-caption',
               'text-accent transition-all duration-200',
               'hover:gap-2.5',
             )}
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.3, delay: 0.5 + index * 0.12 }}
           >
             VIEW PROJECT <span className="text-label">→</span>
-          </motion.a>
+          </a>
         )}
       </div>
-    </motion.div>
+    </Reveal>
   );
 }

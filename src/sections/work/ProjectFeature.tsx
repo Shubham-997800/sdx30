@@ -1,35 +1,33 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'motion/react';
+import { motion } from 'motion/react';
 import { EASE } from '@/lib/animations';
 import { ExternalLink, ArrowUpRight, Eye, Code2 } from 'lucide-react';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { Reveal, RevealGroup } from '@/components/motion/RevealSystem';
 import type { Project } from '@/types';
 import { ProjectThumbnail } from './ProjectThumbnail';
 
 
 
-function ProjectFeatures({ features, isInView }: { features: string[]; isInView: boolean }) {
+function ProjectFeatures({ features }: { features: string[] }) {
   return (
     <div className="space-y-2.5">
       <span className="text-label text-muted-foreground">KEY FEATURES</span>
-      <ul className="space-y-1.5">
-        {features.map((feature, i) => (
-          <motion.li
-            key={i}
-            className="flex items-start gap-2.5 text-body-sm text-foreground/80"
-            initial={{ opacity: 0, x: -8 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }}
-            transition={{ duration: 0.4, delay: 0.4 + i * 0.06, ease: EASE }}
-          >
-            <span className="mt-1.5 size-1 rounded-full bg-accent shrink-0" />
-            {feature}
-          </motion.li>
-        ))}
-      </ul>
+      <RevealGroup>
+        <ul className="space-y-1.5">
+          {features.map((feature, i) => (
+            <li
+              key={i}
+              className="flex items-start gap-2.5 text-body-sm text-foreground/80"
+            >
+              <span className="mt-1.5 size-1 rounded-full bg-accent shrink-0" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </RevealGroup>
     </div>
   );
 }
@@ -87,38 +85,26 @@ function ProjectActions({ project }: { project: Project }) {
 }
 
 export function ProjectFeature({ project, index }: { project: Project; index: number }) {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
   const isMediaLeft = project.layout === 'media-left';
   const isAsymmetric = project.layout === 'asymmetric';
-  const isFeatured = project.featured;
   const num = String(index + 1).padStart(2, '0');
 
   return (
-    <div ref={ref} className="relative">
+    <div className="relative">
       {/* Separator */}
       {index > 0 && (
-        <motion.div
-          className="mb-12 md:mb-16 h-px w-full bg-border"
-          initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-          style={{ transformOrigin: 'left' }}
-        />
+        <div className="mb-12 md:mb-16 h-px w-full bg-border" />
       )}
 
       <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
         {/* ─── Left Column ─── */}
-        <motion.div
+        <Reveal
+          direction="up"
+          delay={0.15}
           className={cn(
             'col-span-4 space-y-5',
             isMediaLeft ? 'lg:col-span-5 order-2 lg:order-2' : 'lg:col-span-5 order-2 lg:order-1',
           )}
-          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
         >
           {/* Number + Category */}
           <div className="flex items-center gap-3">
@@ -143,7 +129,7 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
           </p>
 
           {/* Features */}
-          <ProjectFeatures features={project.features} isInView={isInView} />
+          <ProjectFeatures features={project.features} />
 
           {/* Tech Stack */}
           <ProjectTechStack technologies={project.technologies} />
@@ -152,18 +138,17 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
           <div className="pt-1">
             <ProjectActions project={project} />
           </div>
-        </motion.div>
+        </Reveal>
 
         {/* ─── Right Column (thumbnail) ─── */}
-        <motion.div
+        <Reveal
+          direction="up"
+          delay={0.25}
           className={cn(
             'col-span-4',
             isMediaLeft ? 'lg:col-span-6 order-1 lg:order-1' : 'lg:col-span-6 order-1 lg:order-2',
             isAsymmetric && 'lg:col-span-7',
           )}
-          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.25, ease: EASE }}
         >
           <motion.div
             className="group relative overflow-hidden rounded-xl"
@@ -192,7 +177,7 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
               </a>
             )}
           </motion.div>
-        </motion.div>
+        </Reveal>
       </div>
     </div>
   );

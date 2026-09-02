@@ -1,10 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'motion/react';
-import { EASE } from '@/lib/animations';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { STAGGER } from '@/lib/animations';
 import { cn } from '@/lib/utils';
+import { Reveal } from '@/components/motion/RevealSystem';
 import type { EngineeringCategory as EngineeringCategoryType } from '@/types';
 
 
@@ -15,20 +13,14 @@ interface EngineeringCategoryProps {
 }
 
 export function EngineeringCategory({ category, index }: EngineeringCategoryProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
-
   return (
-    <motion.div
-      ref={ref}
+    <Reveal
+      direction="up"
+      delay={index * STAGGER.fast}
       className={cn(
-        "group relative rounded-xl border border-border bg-card p-6 md:p-8 transition-all duration-300",
-        "hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5"
+        "group relative rounded-xl border border-border bg-card p-6 md:p-8 transition-all duration-200",
+        "hover:border-accent/30"
       )}
-      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: EASE }}
     >
       {/* Category header */}
       <div className="flex items-start justify-between mb-6">
@@ -44,13 +36,10 @@ export function EngineeringCategory({ category, index }: EngineeringCategoryProp
 
       {/* Skills grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        {category.skills.map((skill, i) => (
-          <motion.div
+        {category.skills.map((skill) => (
+          <div
             key={skill.name}
             className="flex items-start gap-3 rounded-lg px-3 py-2.5 transition-colors duration-200 hover:bg-muted/50"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4, delay: 0.2 + i * 0.04, ease: EASE }}
           >
             <span className="mt-1 size-1 rounded-full bg-accent/60 shrink-0" />
             <div className="space-y-0.5">
@@ -59,7 +48,7 @@ export function EngineeringCategory({ category, index }: EngineeringCategoryProp
                 <span className="text-caption text-muted-foreground">{skill.detail}</span>
               )}
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -68,6 +57,6 @@ export function EngineeringCategory({ category, index }: EngineeringCategoryProp
         <div className="absolute top-0 right-0 w-px h-8 bg-gradient-to-b from-accent/40 to-transparent" />
         <div className="absolute top-0 right-0 h-px w-8 bg-gradient-to-l from-accent/40 to-transparent" />
       </div>
-    </motion.div>
+    </Reveal>
   );
 }

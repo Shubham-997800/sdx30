@@ -28,13 +28,6 @@ export const philosophy = [
   },
 ];
 
-export const productThinking = [
-  'Problem',
-  'User',
-  'Solution',
-  'Iteration',
-  'Impact',
-];
 
 export const buildShipIterate = {
   build: {

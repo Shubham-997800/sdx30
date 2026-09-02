@@ -1,45 +1,28 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'motion/react';
-import { EASE } from '@/lib/animations';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionHeading } from '@/components/shared/SectionHeading';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { Reveal, RevealGroup } from '@/components/motion/RevealSystem';
 import { aboutIntro, philosophy, buildShipIterate, developerCodeCard } from '@/data/about';
 
 
 
 export function AboutSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
   return (
-    <Section id="about" className="py-24 md:py-36">
+    <Section id="about" className="py-16 sm:py-24 md:py-36">
       <Container>
-        <motion.div
-          ref={ref}
-          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }}
-        >
+        <Reveal direction="up">
           <SectionHeading
-            number="06"
+            number="05"
             label="PROFILE"
             title="About"
           />
-        </motion.div>
+        </Reveal>
 
-        <div className="mt-12 md:mt-16 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-8 lg:gap-12">
+        <div className="mt-8 sm:mt-12 md:mt-16 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* ─── Left: Editorial text ─── */}
-          <motion.div
-            className="col-span-4 lg:col-span-6 space-y-8"
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
-          >
+          <Reveal direction="up" delay={0.15} className="col-span-4 lg:col-span-6 space-y-8">
             {/* Role */}
             <div>
               <span className="text-label text-accent">{aboutIntro.role}</span>
@@ -56,34 +39,25 @@ export function AboutSection() {
             </p>
 
             {/* Philosophy */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
-              {philosophy.map((item, i) => (
-                <motion.div
+            <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
+              {philosophy.map((item) => (
+                <div
                   key={item.number}
                   className="flex items-start gap-3 rounded-lg border border-border bg-card px-4 py-3.5 transition-colors duration-200 hover:border-border-strong"
-                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.3 + i * 0.06, ease: EASE }}
                 >
                   <span className="text-label text-accent mt-0.5">{item.number}</span>
                   <div className="space-y-1">
                     <span className="text-body-sm font-medium text-foreground block">{item.title}</span>
                     <span className="text-caption text-muted-foreground">{item.body}</span>
                   </div>
-                </motion.div>
+                </div>
               ))}
-            </div>
+            </RevealGroup>
 
             {/* Build → Ship → Iterate */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+            <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
               {Object.values(buildShipIterate).map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  className="space-y-2"
-                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.5 + i * 0.08, ease: EASE }}
-                >
+                <div key={item.title} className="space-y-2">
                   <div className="flex items-center gap-2">
                     <span className="text-label text-accent">{item.title}</span>
                     {i < 2 && <span className="text-muted-foreground/30 hidden md:inline">→</span>}
@@ -91,19 +65,14 @@ export function AboutSection() {
                   <p className="text-body-sm text-muted-foreground leading-relaxed">
                     {item.body}
                   </p>
-                </motion.div>
+                </div>
               ))}
-            </div>
-          </motion.div>
+            </RevealGroup>
+          </Reveal>
 
           {/* ─── Right: Code Card ─── */}
-          <motion.div
-            className="col-span-4 lg:col-span-5 lg:col-start-8"
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.25, ease: EASE }}
-          >
-            <div className="code-card sticky top-24">
+          <Reveal direction="up" delay={0.25} className="col-span-4 lg:col-span-5 lg:col-start-8">
+            <div className="code-card lg:sticky lg:top-24">
               <div className="code-card-header">
                 <span className="code-card-dot" />
                 <span className="code-card-dot" />
@@ -128,7 +97,7 @@ export function AboutSection() {
                           if (part.match(/^\/\//)) {
                             return <span key={j} className="code-comment">{part}</span>;
                           }
-                          if (part.match(/^[\[\]{}]$/)) {
+                          if (part.match(/^[[\]{}]$/)) {
                             return <span key={j} className="code-punctuation">{part}</span>;
                           }
                           return <span key={j} className="code-property">{part}</span>;
@@ -139,7 +108,7 @@ export function AboutSection() {
                 </pre>
               </div>
             </div>
-          </motion.div>
+          </Reveal>
         </div>
       </Container>
     </Section>
