@@ -84,12 +84,14 @@ export function ContactSection() {
           <motion.form
             className="mt-10 md:mt-12 space-y-5 text-left max-w-lg mx-auto"
             onSubmit={handleSubmit}
-            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
           >
             {/* Name */}
-            <div className="space-y-2">
+            <motion.div
+              className="space-y-2"
+              initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.25, ease: EASE }}
+            >
               <label htmlFor="name" className="text-label text-muted-foreground block">
                 {contactContent.nameLabel}
               </label>
@@ -98,13 +100,27 @@ export function ContactSection() {
                 name="name"
                 type="text"
                 placeholder={contactContent.namePlaceholder}
-                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-colors duration-200 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none"
+                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-accent focus:ring-2 focus:ring-accent/20 focus:shadow-[0_0_16px_oklch(from_var(--accent)_l_c_h_/_0.12)] outline-none"
               />
-              {errors.name && <span className="text-caption text-destructive">{errors.name}</span>}
-            </div>
+              {errors.name && (
+                <motion.span
+                  className="text-caption text-destructive"
+                  initial={{ opacity: 0, x: -4 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {errors.name}
+                </motion.span>
+              )}
+            </motion.div>
 
             {/* Email */}
-            <div className="space-y-2">
+            <motion.div
+              className="space-y-2"
+              initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+            >
               <label htmlFor="email" className="text-label text-muted-foreground block">
                 {contactContent.emailLabel}
               </label>
@@ -113,13 +129,27 @@ export function ContactSection() {
                 name="email"
                 type="email"
                 placeholder={contactContent.emailPlaceholder}
-                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-colors duration-200 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none"
+                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-accent focus:ring-2 focus:ring-accent/20 focus:shadow-[0_0_16px_oklch(from_var(--accent)_l_c_h_/_0.12)] outline-none"
               />
-              {errors.email && <span className="text-caption text-destructive">{errors.email}</span>}
-            </div>
+              {errors.email && (
+                <motion.span
+                  className="text-caption text-destructive"
+                  initial={{ opacity: 0, x: -4 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {errors.email}
+                </motion.span>
+              )}
+            </motion.div>
 
             {/* Message */}
-            <div className="space-y-2">
+            <motion.div
+              className="space-y-2"
+              initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.45, ease: EASE }}
+            >
               <label htmlFor="message" className="text-label text-muted-foreground block">
                 {contactContent.messageLabel}
               </label>
@@ -128,10 +158,19 @@ export function ContactSection() {
                 name="message"
                 rows={5}
                 placeholder={contactContent.messagePlaceholder}
-                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-colors duration-200 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none resize-y"
+                className="w-full rounded-lg border border-input bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-accent focus:ring-2 focus:ring-accent/20 focus:shadow-[0_0_16px_oklch(from_var(--accent)_l_c_h_/_0.12)] outline-none resize-y"
               />
-              {errors.message && <span className="text-caption text-destructive">{errors.message}</span>}
-            </div>
+              {errors.message && (
+                <motion.span
+                  className="text-caption text-destructive"
+                  initial={{ opacity: 0, x: -4 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {errors.message}
+                </motion.span>
+              )}
+            </motion.div>
 
             {/* Submit */}
             <div className="pt-2">

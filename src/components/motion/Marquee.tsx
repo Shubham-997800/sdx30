@@ -20,8 +20,6 @@ export function Marquee({
   const prefersReducedMotion = useReducedMotion();
   const isInView = useInView(containerRef, { once: false, margin: '-50px' });
 
-  const duration = speed;
-
   if (prefersReducedMotion) {
     return (
       <div ref={containerRef} className={cn('overflow-hidden', className)}>
@@ -36,10 +34,14 @@ export function Marquee({
     <div
       ref={containerRef}
       className={cn(
-        'group overflow-hidden',
+        'group relative overflow-hidden',
         className,
       )}
     >
+      {/* Fade edges */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
       <motion.div
         className="flex items-center whitespace-nowrap gap-8"
         initial={{ opacity: 0 }}
@@ -50,16 +52,17 @@ export function Marquee({
           className="flex items-center gap-8"
           animate={{ x: '-50%' }}
           transition={{
-            duration,
+            duration: speed,
             repeat: Infinity,
             ease: 'linear',
             repeatType: 'loop',
           }}
           style={{ willChange: 'transform' }}
+          whileHover={{ animationPlayState: 'paused' }}
         >
-          {/* Duplicate content for seamless loop */}
-          <div className="flex items-center gap-8">{children}</div>
-          <div className="flex items-center gap-8" aria-hidden="true">
+          {/* Pause on hover via CSS */}
+          <div className="flex items-center gap-8 group-hover:[animation-play-state:paused]">{children}</div>
+          <div className="flex items-center gap-8 group-hover:[animation-play-state:paused]" aria-hidden="true">
             {children}
           </div>
         </motion.div>

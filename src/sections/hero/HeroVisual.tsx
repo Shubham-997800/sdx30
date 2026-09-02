@@ -412,31 +412,58 @@ export function HeroVisual() {
           </motion.div>
 
           {/* Icons Row */}
-          <motion.div
-            className="flex items-center justify-center gap-4"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.0, ease: EASE }}
-          >
+          <div className="flex items-center justify-center gap-3">
             {[
-              { Icon: Code2, label: 'Code' },
-              { Icon: Layers, label: 'Systems' },
-              { Icon: Sparkles, label: 'Design' },
-            ].map(({ Icon, label }, i) => (
+              { Icon: Code2, label: 'Code', color: '#61dafb', delay: 0 },
+              { Icon: Layers, label: 'Systems', color: '#a78bfa', delay: 0.15 },
+              { Icon: Sparkles, label: 'Design', color: '#f472b6', delay: 0.3 },
+            ].map(({ Icon, label, color, delay }) => (
               <motion.div
                 key={label}
-                className="flex flex-col items-center gap-1.5 p-2.5 rounded-xl border border-border/30 bg-card/30 backdrop-blur-sm"
-                whileHover={{ scale: 1.1, borderColor: 'var(--accent)', backgroundColor: 'rgba(var(--accent), 0.05)' }}
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
+                className="group relative flex flex-col items-center gap-2 p-3 rounded-2xl border border-border/30 bg-card/30 backdrop-blur-sm cursor-pointer overflow-hidden"
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.6, delay: 1.0 + delay, ease: EASE }}
+                whileHover={{ scale: 1.08, y: -4 }}
               >
-                <Icon className="size-4 text-accent/60" strokeWidth={1.5} />
-                <span className="text-[0.5rem] font-mono text-muted-foreground/60 uppercase tracking-wider">
+                {/* Hover glow background */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: `radial-gradient(circle at 50% 50%, ${color}15, transparent 70%)`,
+                  }}
+                />
+
+                {/* Icon container */}
+                <motion.div
+                  className="relative z-10 flex items-center justify-center size-9 rounded-xl"
+                  style={{ backgroundColor: `${color}10` }}
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Icon
+                    className="size-5 transition-all duration-300"
+                    style={{ color }}
+                    strokeWidth={1.5}
+                  />
+                </motion.div>
+
+                {/* Label */}
+                <span className="relative z-10 text-[0.5rem] font-mono text-muted-foreground/60 uppercase tracking-wider group-hover:text-foreground/70 transition-colors duration-300">
                   {label}
                 </span>
+
+                {/* Bottom accent line */}
+                <motion.div
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] rounded-full"
+                  style={{ backgroundColor: color }}
+                  initial={{ width: 0 }}
+                  whileHover={{ width: '60%' }}
+                  transition={{ duration: 0.3 }}
+                />
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
 

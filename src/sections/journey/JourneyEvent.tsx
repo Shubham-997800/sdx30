@@ -87,13 +87,15 @@ export function JourneyEvent({
         </span>
 
         {/* Timeline node */}
-        <div
+        <motion.div
           className={cn(
-            'relative z-10 size-3 rounded-full border-2',
+            'relative z-10 size-3 rounded-full border-2 cursor-pointer',
             isFeatured
               ? 'border-accent bg-accent/20'
-              : 'border-border bg-background',
+              : 'border-border bg-background hover:border-accent/50',
           )}
+          whileHover={{ scale: 1.3, boxShadow: '0 0 12px oklch(from var(--accent) l c h / 0.3)' }}
+          transition={{ duration: 0.2 }}
         >
           {isFeatured && (
             <motion.div
@@ -106,11 +108,16 @@ export function JourneyEvent({
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             />
           )}
-        </div>
+        </motion.div>
 
         {/* Timeline line */}
         {!isLast && (
-          <div className="w-px flex-1 min-h-[3rem] bg-border mt-2" />
+          <motion.div
+            className="w-px flex-1 min-h-[3rem] bg-border mt-2 origin-top"
+            initial={{ scaleY: 0 }}
+            animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 + index * 0.12, ease: EASE }}
+          />
         )}
       </div>
 

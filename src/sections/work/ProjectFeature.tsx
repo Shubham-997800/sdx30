@@ -11,16 +11,22 @@ import { ProjectThumbnail } from './ProjectThumbnail';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-function ProjectFeatures({ features }: { features: string[] }) {
+function ProjectFeatures({ features, isInView }: { features: string[]; isInView: boolean }) {
   return (
     <div className="space-y-2.5">
       <span className="text-label text-muted-foreground">KEY FEATURES</span>
       <ul className="space-y-1.5">
         {features.map((feature, i) => (
-          <li key={i} className="flex items-start gap-2.5 text-body-sm text-foreground/80">
+          <motion.li
+            key={i}
+            className="flex items-start gap-2.5 text-body-sm text-foreground/80"
+            initial={{ opacity: 0, x: -8 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }}
+            transition={{ duration: 0.4, delay: 0.4 + i * 0.06, ease: EASE }}
+          >
             <span className="mt-1.5 size-1 rounded-full bg-accent shrink-0" />
             {feature}
-          </li>
+          </motion.li>
         ))}
       </ul>
     </div>
@@ -136,7 +142,7 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
           </p>
 
           {/* Features */}
-          <ProjectFeatures features={project.features} />
+          <ProjectFeatures features={project.features} isInView={isInView} />
 
           {/* Tech Stack */}
           <ProjectTechStack technologies={project.technologies} />
@@ -158,7 +164,12 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.25, ease: EASE }}
         >
-          <div className="group relative overflow-hidden rounded-xl">
+          <motion.div
+            className="group relative overflow-hidden rounded-xl"
+            whileHover={{ rotateX: 2, rotateY: -2, scale: 1.01 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            style={{ perspective: 800 }}
+          >
             <ProjectThumbnail projectId={project.id} projectName={project.name} />
 
             {/* Hover overlay */}
@@ -179,7 +190,7 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
                 </span>
               </a>
             )}
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </div>
