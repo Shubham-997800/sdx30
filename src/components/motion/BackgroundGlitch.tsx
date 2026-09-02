@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -11,78 +10,99 @@ interface BackgroundGlitchProps {
 
 export function BackgroundGlitch({ text, className }: BackgroundGlitchProps) {
   const prefersReducedMotion = useReducedMotion();
-  const [layers, setLayers] = useState<{ x: number; y: number; clipTop: number; clipBot: number; visible: boolean }[]>([
-    { x: 0, y: 0, clipTop: 0, clipBot: 85, visible: false },
-    { x: 0, y: 0, clipTop: 85, clipBot: 100, visible: false },
-  ]);
 
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    const glitch = () => {
-      const newLayers = [
-        {
-          x: (Math.random() - 0.5) * 6,
-          y: (Math.random() - 0.5) * 3,
-          clipTop: Math.random() * 60,
-          clipBot: 100 - Math.random() * 40,
-          visible: Math.random() > 0.5,
-        },
-        {
-          x: (Math.random() - 0.5) * 6,
-          y: (Math.random() - 0.5) * 3,
-          clipTop: Math.random() * 50,
-          clipBot: 100 - Math.random() * 50,
-          visible: Math.random() > 0.4,
-        },
-      ];
-      setLayers(newLayers);
-
-      setTimeout(() => {
-        setLayers([
-          { x: 0, y: 0, clipTop: 0, clipBot: 85, visible: false },
-          { x: 0, y: 0, clipTop: 85, clipBot: 100, visible: false },
-        ]);
-      }, 120);
-    };
-
-    const interval = setInterval(glitch, 4000 + Math.random() * 3000);
-    return () => clearInterval(interval);
-  }, [prefersReducedMotion]);
+  if (prefersReducedMotion) {
+    return <span className={className}>{text}</span>;
+  }
 
   return (
     <span className={className}>
       {/* Base text */}
-      <span>{text}</span>
+      <span className="relative z-10">{text}</span>
 
-      {/* Glitch layer 1 — accent */}
-      <span
-        className="absolute inset-0 pointer-events-none transition-none"
-        style={{
-          transform: `translate(${layers[0].x}px, ${layers[0].y}px)`,
-          clipPath: `inset(${layers[0].clipTop}% 0 ${100 - layers[0].clipBot}% 0)`,
-          opacity: layers[0].visible ? 0.7 : 0,
-          color: 'var(--accent)',
+      {/* Layer 1 — accent color, continuous drift */}
+      <motion.span
+        className="absolute inset-0 z-20 pointer-events-none"
+        style={{ color: 'var(--accent)' }}
+        animate={{
+          x: [0, -3, 2, -1, 3, 0],
+          y: [0, 1, -2, 1, -1, 0],
+          opacity: [0, 0.15, 0, 0.2, 0, 0.1, 0],
+          clipPath: [
+            'inset(0 0 90% 0)',
+            'inset(10% 0 60% 0)',
+            'inset(30% 0 30% 0)',
+            'inset(60% 0 10% 0)',
+            'inset(80% 0 0% 0)',
+            'inset(0 0 90% 0)',
+          ],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: 'easeInOut',
         }}
         aria-hidden
       >
         {text}
-      </span>
+      </motion.span>
 
-      {/* Glitch layer 2 — accent muted */}
-      <span
-        className="absolute inset-0 pointer-events-none transition-none"
-        style={{
-          transform: `translate(${layers[1].x}px, ${layers[1].y}px)`,
-          clipPath: `inset(${layers[1].clipTop}% 0 ${100 - layers[1].clipBot}% 0)`,
-          opacity: layers[1].visible ? 0.4 : 0,
-          color: 'var(--accent)',
-          filter: 'blur(0.5px)',
+      {/* Layer 2 — accent muted, opposite drift */}
+      <motion.span
+        className="absolute inset-0 z-20 pointer-events-none"
+        style={{ color: 'var(--accent)', filter: 'blur(1px)' }}
+        animate={{
+          x: [0, 2, -3, 1, -2, 0],
+          y: [0, -1, 2, -1, 1, 0],
+          opacity: [0, 0.1, 0, 0.15, 0, 0.08, 0],
+          clipPath: [
+            'inset(90% 0 0 0)',
+            'inset(50% 0 20% 0)',
+            'inset(20% 0 50% 0)',
+            'inset(5% 0 70% 0)',
+            'inset(0% 0 85% 0)',
+            'inset(90% 0 0 0)',
+          ],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          delay: 2,
         }}
         aria-hidden
       >
         {text}
-      </span>
+      </motion.span>
+
+      {/* Layer 3 — intense glitch burst, periodic */}
+      <motion.span
+        className="absolute inset-0 z-30 pointer-events-none"
+        style={{ color: 'var(--accent)' }}
+        animate={{
+          x: [0, 0, -6, 4, -2, 5, 0, 0],
+          opacity: [0, 0, 0.4, 0, 0.3, 0, 0, 0],
+          clipPath: [
+            'inset(0 0 100% 0)',
+            'inset(0 0 100% 0)',
+            'inset(20% 0 40% 0)',
+            'inset(50% 0 20% 0)',
+            'inset(10% 0 60% 0)',
+            'inset(40% 0 30% 0)',
+            'inset(0 0 100% 0)',
+            'inset(0 0 100% 0)',
+          ],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          times: [0, 0.4, 0.42, 0.44, 0.46, 0.48, 0.5, 1],
+        }}
+        aria-hidden
+      >
+        {text}
+      </motion.span>
     </span>
   );
 }

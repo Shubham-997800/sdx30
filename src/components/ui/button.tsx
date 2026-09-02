@@ -1,5 +1,6 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
+import { useCallback, useRef } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -99,12 +100,42 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  onClick,
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+  const rippleRef = useRef<HTMLSpanElement>(null);
+
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const btn = e.currentTarget;
+      const ripple = document.createElement("span");
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+
+      ripple.style.cssText = `
+        position:absolute;border-radius:50%;pointer-events:none;
+        width:${size}px;height:${size}px;left:${x}px;top:${y}px;
+        background:currentColor;opacity:0.15;
+        transform:scale(0);animation:ripple-expand 0.6s ease-out forwards;
+      `;
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+
+      onClick?.(e);
+    },
+    [onClick],
+  );
+
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        'relative overflow-hidden',
+        buttonVariants({ variant, size, className }),
+      )}
+      onClick={handleClick}
       {...props}
     />
   );

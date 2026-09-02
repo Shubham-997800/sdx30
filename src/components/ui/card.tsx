@@ -1,5 +1,7 @@
-import * as React from "react";
+'use client';
 
+import * as React from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 function Card({
@@ -8,13 +10,20 @@ function Card({
   ...props
 }: React.ComponentProps<"div"> & { size?: "default" | "sm" }) {
   return (
-    <div
+    <motion.div
       data-slot="card"
       data-size={size}
       className={cn(
-        "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+        "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl transition-shadow duration-300 hover:shadow-[0_0_30px_oklch(from_var(--accent)_l_c_h_/_0.08)] hover:ring-accent/20",
         className
       )}
+      whileHover={{
+        rotateX: -2,
+        rotateY: 2,
+        scale: 1.01,
+        transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+      }}
+      style={{ perspective: 800 }}
       {...props}
     />
   );
