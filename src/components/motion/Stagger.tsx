@@ -17,7 +17,7 @@ export function Stagger({
   className,
   staggerDelay = 0.08,
   delay = 0,
-  once = true,
+  once = false,
 }: StaggerProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();

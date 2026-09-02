@@ -28,7 +28,7 @@ export function Reveal({
   duration = 0.7,
   direction = 'up',
   distance = 28,
-  once = true,
+  once = false,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();

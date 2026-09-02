@@ -215,7 +215,7 @@ export function ProjectThumbnail({ projectId, projectName }: ProjectThumbnailPro
         initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 1.02 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: EASE }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
       >
         {Thumbnail ? <Thumbnail /> : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent/5 via-transparent to-accent/10">

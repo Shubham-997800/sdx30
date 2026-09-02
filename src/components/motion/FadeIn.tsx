@@ -17,7 +17,7 @@ export function FadeIn({
   className,
   delay = 0,
   duration = 0.6,
-  once = true,
+  once = false,
 }: FadeInProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();

@@ -14,7 +14,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function StackSection() {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: false, margin: '-80px' });
 
   return (
     <Section id="stack" className="py-24 md:py-36">

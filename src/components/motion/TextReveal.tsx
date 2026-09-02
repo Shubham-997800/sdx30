@@ -11,7 +11,7 @@ interface TextRevealProps {
   once?: boolean;
 }
 
-export function TextReveal({ children, className, delay = 0, once = true }: TextRevealProps) {
+export function TextReveal({ children, className, delay = 0, once = false }: TextRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const isInView = useInView(ref, { once, margin: '-50px 0px' });

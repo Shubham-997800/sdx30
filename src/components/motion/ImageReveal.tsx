@@ -11,7 +11,7 @@ interface ImageRevealProps {
   once?: boolean;
 }
 
-export function ImageReveal({ children, className, delay = 0, once = true }: ImageRevealProps) {
+export function ImageReveal({ children, className, delay = 0, once = false }: ImageRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const isInView = useInView(ref, { once, margin: "-50px 0px" });

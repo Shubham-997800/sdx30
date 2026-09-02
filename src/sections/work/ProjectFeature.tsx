@@ -82,7 +82,7 @@ function ProjectActions({ project }: { project: Project }) {
 export function ProjectFeature({ project, index }: { project: Project; index: number }) {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: false, margin: '-80px' });
 
   const isMediaLeft = project.layout === 'media-left';
   const isAsymmetric = project.layout === 'asymmetric';
@@ -123,10 +123,7 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
           </div>
 
           {/* Title */}
-          <h3 className={cn(
-            "text-feature text-foreground",
-            isFeatured && "text-[clamp(1.75rem,4vw,3.25rem)]"
-          )}>
+          <h3 className="text-feature text-foreground">
             {project.name}
           </h3>
 

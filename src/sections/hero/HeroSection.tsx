@@ -6,7 +6,8 @@ import { ArrowRight, Download } from 'lucide-react';
 import { Container } from '@/components/layout/Container';
 import { Magnetic } from '@/components/interaction/Magnetic';
 import { Button } from '@/components/ui/button';
-import { CharReveal } from '@/components/motion/CharReveal';
+import { TypeText } from '@/components/motion/TypeText';
+import { Typewriter } from '@/components/motion/Typewriter';
 import { heroContent, personalInfo, socialLinks } from '@/data/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { HeroVisual } from './HeroVisual';
@@ -79,42 +80,44 @@ export function HeroSection() {
                   )}
                   <span className="relative inline-flex size-2 rounded-full bg-accent" />
                 </span>
-                {heroContent.availability}
+                {prefersReducedMotion ? (
+                  heroContent.availability
+                ) : (
+                  <Typewriter
+                    words={[
+                      'BUILDING INTERFACES',
+                      'LEARNING THE ENGINEERING',
+                      'SHIPPING PRODUCTS',
+                      'CRAFTING EXPERIENCES',
+                    ]}
+                    typingSpeed={50}
+                    deletingSpeed={30}
+                    pauseDuration={2000}
+                  />
+                )}
               </span>
             </motion.div>
 
             {/* Name */}
             <div className="mt-6 md:mt-8">
-              {prefersReducedMotion ? (
-                <h1 className="text-display text-foreground break-words">
-                  {heroContent.name}
-                </h1>
-              ) : (
-                <CharReveal
-                  text={heroContent.name}
-                  as="h1"
-                  className="text-display text-foreground break-words"
-                  delay={0.2}
-                  staggerDelay={0.05}
-                />
-              )}
+              <TypeText
+                text={heroContent.name}
+                as="h1"
+                className="text-display text-foreground whitespace-nowrap"
+                delay={200}
+                speed={80}
+              />
             </div>
 
             {/* Role */}
             <div className="mt-3 md:mt-4">
-              {prefersReducedMotion ? (
-                <p className="text-feature text-accent font-semibold">
-                  {heroContent.role}
-                </p>
-              ) : (
-                <CharReveal
-                  text={heroContent.role}
-                  as="p"
-                  className="text-feature text-accent font-semibold"
-                  delay={0.7}
-                  staggerDelay={0.04}
-                />
-              )}
+              <TypeText
+                text={heroContent.role}
+                as="p"
+                className="text-feature text-accent font-semibold"
+                delay={900}
+                speed={50}
+              />
             </div>
 
             {/* Statement */}
@@ -183,14 +186,16 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* ─── Visual (Right) ─── */}
+          {/* ─── Visual (Right) — Animated Developer Character ─── */}
           <motion.div
-            className="col-span-1 lg:col-span-6 flex items-center justify-center"
+            className="col-span-1 lg:col-span-6 flex items-center justify-center relative"
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.4, ease: EASE }}
           >
-            <HeroVisual />
+            <div className="relative w-full h-full min-h-[380px] lg:min-h-[420px]">
+              <HeroVisual />
+            </div>
           </motion.div>
         </div>
       </Container>
