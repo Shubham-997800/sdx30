@@ -7,7 +7,7 @@ import { Section } from '@/components/layout/Section';
 import { SectionLabel } from '@/components/shared/SectionLabel';
 import { Reveal } from '@/components/motion/RevealSystem';
 import { journeyEvents } from '@/data/journey';
-import { JourneyRoadmap } from './JourneyRoadmap';
+import { JourneySlider } from './JourneySlider';
 
 export function JourneySection() {
   return (
@@ -47,9 +47,9 @@ export function JourneySection() {
           />
         </div>
 
-        {/* ─── Highway Roadmap Alternating Left-Right Track ─── */}
+        {/* ─── Horizontal Milestone Track Slider ─── */}
         <Reveal direction="up" delay={0.15}>
-          <JourneyRoadmap events={journeyEvents} />
+          <JourneySlider events={journeyEvents} />
         </Reveal>
       </Container>
     </Section>
