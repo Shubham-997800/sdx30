@@ -159,19 +159,35 @@ export function JourneyEvent({
           </div>
         )}
 
-        {/* Project link for Vibe2Ship → FlowSync AI */}
-        {event.project && (
-          <a
-            href="#work"
-            className={cn(
-              'inline-flex items-center gap-1.5 mt-4 text-caption',
-              'text-accent transition-all duration-200',
-              'hover:gap-2.5',
-            )}
-          >
-            VIEW PROJECT <span className="text-label">→</span>
-          </a>
-        )}
+        {/* Actions / Links */}
+        <div className="flex flex-wrap items-center gap-4 mt-4">
+          {event.githubUrl && (
+            <a
+              href={event.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                'inline-flex items-center gap-1.5 text-caption font-mono',
+                'text-accent transition-all duration-200',
+                'hover:gap-2.5 hover:underline',
+              )}
+            >
+              {event.linkText || 'VIEW REPOSITORY'} <span className="text-label">↗</span>
+            </a>
+          )}
+          {event.project && !event.githubUrl && (
+            <a
+              href="#work"
+              className={cn(
+                'inline-flex items-center gap-1.5 text-caption',
+                'text-accent transition-all duration-200',
+                'hover:gap-2.5',
+              )}
+            >
+              VIEW PROJECT <span className="text-label">→</span>
+            </a>
+          )}
+        </div>
       </div>
     </Reveal>
   );

@@ -13,4 +13,6 @@ export interface JourneyEvent {
   category: string;
   milestones: JourneyMilestone[];
   featured?: boolean;
+  githubUrl?: string;
+  linkText?: string;
 }

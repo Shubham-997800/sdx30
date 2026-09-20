@@ -5,17 +5,50 @@ export const journeyEvents: JourneyEvent[] = [
     id: 'odoo-hackathon-2026',
     number: '01',
     title: 'Odoo Hackathon 2026',
-    organization: 'Odoo',
+    organization: 'Odoo India · Gandhinagar',
     category: 'HACKATHON',
+    project: 'DealFlow360 MSR',
+    githubUrl: 'https://github.com/lab4-MSR/dealflow360-msr',
+    linkText: 'DEALFLOW360 REPO',
     milestones: [
       {
         id: 'grand-finale',
-        label: 'Grand Finale Finalist · Team Leader — selected from 20,000+ applicants',
+        label: 'Grand Finale Finalist & Team Lead — selected from 20,000+ applicants across India',
+        type: 'achievement',
+      },
+      {
+        id: 'dealflow360',
+        label: 'Built DealFlow360 MSR — Enterprise B2B ERP & deal flow management platform',
         type: 'achievement',
       },
       {
         id: 'gandhinagar',
-        label: '5–6 Sep 2026 · Gandhinagar',
+        label: '5–6 Sep 2026 · Gandhinagar (Grand Finale Concluded)',
+        type: 'default',
+      },
+    ],
+    featured: true,
+  },
+  {
+    id: 'sih-2026',
+    number: '02',
+    title: 'Smart India Hackathon (SIH)',
+    organization: 'MoE (Govt. of India) × IIT Hyderabad',
+    category: 'HACKATHON',
+    milestones: [
+      {
+        id: 'sih-domain',
+        label: 'CyberSecurity & Automated Threat Intelligence for PSB (Public Sector Banks)',
+        type: 'achievement',
+      },
+      {
+        id: 'sih-venue',
+        label: 'Competed & Evaluated at IIT Hyderabad Nodal Center',
+        type: 'achievement',
+      },
+      {
+        id: 'sih-scope',
+        label: "Engineered secure banking threat detection and financial security infrastructure",
         type: 'default',
       },
     ],
@@ -23,7 +56,7 @@ export const journeyEvents: JourneyEvent[] = [
   },
   {
     id: 'bharatiya-antariksh-2026',
-    number: '02',
+    number: '03',
     title: 'Bharatiya Antariksh Hackathon 2026',
     organization: 'ISRO',
     category: 'HACKATHON',
@@ -42,7 +75,7 @@ export const journeyEvents: JourneyEvent[] = [
   },
   {
     id: 'vibe2ship',
-    number: '03',
+    number: '04',
     title: 'Vibe2Ship',
     organization: 'Coding Ninjas × Google',
     category: 'HACKATHON',
@@ -57,7 +90,7 @@ export const journeyEvents: JourneyEvent[] = [
   },
   {
     id: 'ai-agents-intensive',
-    number: '04',
+    number: '05',
     title: 'AI Agents Intensive',
     organization: 'Kaggle × Google',
     category: 'COURSE',
