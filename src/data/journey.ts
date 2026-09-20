@@ -2,8 +2,40 @@ import type { JourneyEvent } from '@/types';
 
 export const journeyEvents: JourneyEvent[] = [
   {
-    id: 'odoo-hackathon-2026',
+    id: 'sih-2026',
     number: '01',
+    shortTitle: 'Smart India (SIH)',
+    title: 'Smart India Hackathon (SIH 2026)',
+    organization: 'Ministry of Education (Govt. of India)',
+    category: 'HACKATHON',
+    date: 'Concluded Yesterday',
+    venue: 'National Stage',
+    statusBadge: 'CONCLUDED YESTERDAY',
+    projectDescription:
+      'Competed in the grand edition of the world’s biggest open innovation hackathon, architecting scalable solutions for national-level problem statements.',
+    tags: ['SIH 2026', 'Govt of India', 'National Finalist', 'System Architecture'],
+    milestones: [
+      {
+        id: 'sih-yesterday',
+        label: 'Concluded Yesterday — Successfully completed premier nationwide innovation hackathon',
+        type: 'achievement',
+      },
+      {
+        id: 'sih-compete',
+        label: 'Competed against top engineering minds across India on complex national challenges',
+        type: 'achievement',
+      },
+      {
+        id: 'sih-design',
+        label: 'Designed modular, resilient software architecture under strict regulatory guidelines',
+        type: 'default',
+      },
+    ],
+    featured: true,
+  },
+  {
+    id: 'odoo-hackathon-2026',
+    number: '02',
     shortTitle: "Odoo Combat '26",
     title: 'Odoo Hackathon 2026',
     organization: 'Odoo India · Gandhinagar',
@@ -37,72 +69,8 @@ export const journeyEvents: JourneyEvent[] = [
     featured: true,
   },
   {
-    id: 'psb-cybersecurity-iith',
-    number: '02',
-    shortTitle: 'IIT-H CyberSecurity',
-    title: 'PSB CyberSecurity Hackathon',
-    organization: 'Public Sector Banks (PSB) × IIT Hyderabad',
-    category: 'HACKATHON',
-    date: '2026',
-    venue: 'IIT Hyderabad Nodal Center',
-    statusBadge: 'SECURITY BUILD',
-    projectDescription:
-      'Security-focused national build at IIT Hyderabad developing automated threat detection, penetration analysis, and cyber vulnerability mitigation for Public Sector Banks (PSB).',
-    tags: ['CyberSecurity', 'IIT Hyderabad', 'PSB Banking', 'Threat Intelligence'],
-    milestones: [
-      {
-        id: 'iith-venue',
-        label: 'Security-focused national build evaluated at IIT Hyderabad Nodal Center',
-        type: 'achievement',
-      },
-      {
-        id: 'iith-domain',
-        label: 'Problem Statement: CyberSecurity & Automated Threat Intelligence for PSB (Public Sector Banks)',
-        type: 'achievement',
-      },
-      {
-        id: 'iith-arch',
-        label: 'Engineered real-time vulnerability detection and banking financial threat mitigation workflows',
-        type: 'default',
-      },
-    ],
-    featured: true,
-  },
-  {
-    id: 'sih-2026',
-    number: '03',
-    shortTitle: 'Smart India (SIH)',
-    title: 'Smart India Hackathon (SIH 2026)',
-    organization: 'Ministry of Education (Govt. of India)',
-    category: 'HACKATHON',
-    date: '2026',
-    venue: 'National Stage',
-    statusBadge: 'NATIONAL BUILD',
-    projectDescription:
-      'Participated in the world’s biggest open innovation hackathon, building scalable technology solutions for national-level problem statements.',
-    tags: ['SIH 2026', 'Govt of India', 'National Finalist', 'System Architecture'],
-    milestones: [
-      {
-        id: 'sih-selection',
-        label: 'Selected for Smart India Hackathon (SIH) — Premier nationwide innovation initiative',
-        type: 'achievement',
-      },
-      {
-        id: 'sih-compete',
-        label: 'Competed against top engineering teams across India on complex national challenges',
-        type: 'achievement',
-      },
-      {
-        id: 'sih-design',
-        label: 'Designed modular, resilient software architecture under strict regulatory guidelines',
-        type: 'default',
-      },
-    ],
-    featured: true,
-  },
-  {
     id: 'bharatiya-antariksh-2026',
-    number: '04',
+    number: '03',
     shortTitle: 'ISRO SpaceTech',
     title: 'Bharatiya Antariksh Hackathon 2026',
     organization: 'ISRO (Indian Space Research Organisation)',
@@ -130,6 +98,38 @@ export const journeyEvents: JourneyEvent[] = [
         type: 'default',
       },
     ],
+  },
+  {
+    id: 'psb-cybersecurity-iith',
+    number: '04',
+    shortTitle: 'IIT-H CyberSecurity',
+    title: 'PSB CyberSecurity Hackathon',
+    organization: 'Public Sector Banks (PSB) × IIT Hyderabad',
+    category: 'HACKATHON',
+    date: '2026 · Before Bharatiya Antariksh',
+    venue: 'IIT Hyderabad Nodal Center',
+    statusBadge: 'SECURITY BUILD',
+    projectDescription:
+      'Security-focused national build evaluated at IIT Hyderabad Nodal Center — developing automated threat detection, penetration analysis, and cyber vulnerability mitigation for Public Sector Banks (PSB). Conducted prior to Bharatiya Antariksh Hackathon.',
+    tags: ['CyberSecurity', 'IIT Hyderabad', 'PSB Banking', 'Threat Intelligence'],
+    milestones: [
+      {
+        id: 'iith-venue',
+        label: 'Held prior to Bharatiya Antariksh Hackathon — Evaluated at IIT Hyderabad Nodal Center',
+        type: 'achievement',
+      },
+      {
+        id: 'iith-domain',
+        label: 'Problem Statement: CyberSecurity & Automated Threat Intelligence for PSB (Public Sector Banks)',
+        type: 'achievement',
+      },
+      {
+        id: 'iith-arch',
+        label: 'Engineered real-time vulnerability detection and banking financial threat mitigation workflows',
+        type: 'default',
+      },
+    ],
+    featured: true,
   },
   {
     id: 'vibe2ship',

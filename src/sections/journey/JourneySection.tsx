@@ -7,9 +7,7 @@ import { Section } from '@/components/layout/Section';
 import { SectionLabel } from '@/components/shared/SectionLabel';
 import { Reveal } from '@/components/motion/RevealSystem';
 import { journeyEvents } from '@/data/journey';
-import { JourneySlider } from './JourneySlider';
-
-
+import { JourneyRoadmap } from './JourneyRoadmap';
 
 export function JourneySection() {
   return (
@@ -33,7 +31,7 @@ export function JourneySection() {
 
             <div className="flex items-center gap-2 self-start md:self-end">
               <span className="text-caption font-mono text-muted-foreground">
-                5 MILESTONES (2025–2026)
+                6 EXPEDITIONS · 2026 CIRCUIT
               </span>
             </div>
           </Reveal>
@@ -49,9 +47,9 @@ export function JourneySection() {
           />
         </div>
 
-        {/* ─── Horizontal Milestone Track Slider ─── */}
+        {/* ─── Highway Roadmap Alternating Left-Right Track ─── */}
         <Reveal direction="up" delay={0.15}>
-          <JourneySlider events={journeyEvents} />
+          <JourneyRoadmap events={journeyEvents} />
         </Reveal>
       </Container>
     </Section>
