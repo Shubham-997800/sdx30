@@ -2,7 +2,7 @@ export const githubProfile = {
   username: 'Shubham-997800',
   url: 'https://github.com/Shubham-997800',
   stats: {
-    contributions: '1,106',
+    contributions: '663',
     streak: '5 Days',
     repos: '10',
   },
