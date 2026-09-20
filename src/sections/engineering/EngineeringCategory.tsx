@@ -18,8 +18,8 @@ export function EngineeringCategory({ category, index }: EngineeringCategoryProp
       direction="up"
       delay={index * STAGGER.fast}
       className={cn(
-        "group relative rounded-xl border border-border bg-card p-6 md:p-8 transition-all duration-200",
-        "hover:border-accent/30"
+        "group relative rounded-xl border border-border bg-card p-6 md:p-8 transition-all duration-300",
+        "hover:border-accent/40 hover:shadow-md hover:-translate-y-0.5"
       )}
     >
       {/* Category header */}

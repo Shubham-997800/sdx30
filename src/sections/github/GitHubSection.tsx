@@ -12,11 +12,11 @@ import { githubProfile } from '@/data/github';
 
 
 const LANGUAGE_COLORS: Record<string, string> = {
-  JavaScript: '#f1e05a',
+  JavaScript: 'var(--color-lang-js, #eab308)',
   TypeScript: '#3178c6',
   HTML: '#e34c26',
-  CSS: '#563d7c',
-  Python: '#3572A5',
+  CSS: '#7c3aed',
+  Python: '#2563eb',
 };
 
 export function GitHubSection() {

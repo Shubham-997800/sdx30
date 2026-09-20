@@ -1,14 +1,23 @@
 'use client';
 
+import { useState } from 'react';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { Reveal, RevealGroup } from '@/components/motion/RevealSystem';
 import { aboutIntro, philosophy, buildShipIterate, developerCodeCard } from '@/data/about';
-
-
+import { Copy, Check } from 'lucide-react';
+import { toast } from 'sonner';
 
 export function AboutSection() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(developerCodeCard);
+    setCopied(true);
+    toast.success('shubham-dangi.ts copied to clipboard!');
+    setTimeout(() => setCopied(false), 2000);
+  };
   return (
     <Section id="about" className="py-16 sm:py-24 md:py-36">
       <Container>
@@ -73,11 +82,31 @@ export function AboutSection() {
           {/* ─── Right: Code Card ─── */}
           <Reveal direction="up" delay={0.25} className="col-span-4 lg:col-span-5 lg:col-start-8">
             <div className="code-card lg:sticky lg:top-24">
-              <div className="code-card-header">
-                <span className="code-card-dot" />
-                <span className="code-card-dot" />
-                <span className="code-card-dot" />
-                <span className="text-caption text-muted-foreground ml-2 font-mono">shubham-dangi.ts</span>
+              <div className="code-card-header flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span className="code-card-dot" />
+                  <span className="code-card-dot" />
+                  <span className="code-card-dot" />
+                  <span className="text-caption text-muted-foreground ml-2 font-mono text-[0.72rem]">shubham-dangi.ts</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCopyCode}
+                  className="flex items-center gap-1 px-2 py-0.5 rounded text-[0.68rem] font-mono text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                  title="Copy code"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="size-3 text-accent" />
+                      <span className="text-accent">Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="size-3" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
               </div>
               <div className="code-card-body">
                 <pre className="text-code whitespace-pre-wrap">

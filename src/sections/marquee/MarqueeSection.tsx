@@ -16,19 +16,19 @@ export function MarqueeSection() {
   return (
     <section className="relative py-16 md:py-24 overflow-hidden editorial-border-top editorial-border-bottom">
       {/* Marquee */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden group">
         {prefersReducedMotion ? (
           <div className="flex items-center justify-center gap-6 md:gap-10 px-4">
             {marqueeWords.map((word, i) => (
-              <span key={i} className="text-marquee text-foreground/10 dark:text-foreground/15 whitespace-nowrap">
+              <span key={i} className="text-marquee text-foreground/25 dark:text-foreground/15 whitespace-nowrap transition-colors duration-200 hover:text-accent">
                 {word}
-                <span className="text-accent/30 mx-4 md:mx-8">·</span>
+                <span className="text-accent/40 mx-4 md:mx-8">·</span>
               </span>
             ))}
           </div>
         ) : (
           <motion.div
-            className="marquee"
+            className="marquee group-hover:[animation-play-state:paused]"
             style={{ '--marquee-duration': '35s' } as React.CSSProperties}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -36,7 +36,10 @@ export function MarqueeSection() {
             transition={{ duration: 1 }}
           >
             {words.map((word, i) => (
-              <span key={i} className="text-marquee text-foreground/10 dark:text-foreground/15 whitespace-nowrap flex items-center">
+              <span
+                key={i}
+                className="text-marquee text-foreground/25 dark:text-foreground/15 whitespace-nowrap flex items-center transition-colors duration-300 hover:text-accent cursor-default select-none"
+              >
                 {word}
                 <span className="text-accent/30 mx-6 md:mx-12 text-4xl md:text-6xl">·</span>
               </span>

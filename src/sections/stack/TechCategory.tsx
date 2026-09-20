@@ -30,15 +30,15 @@ export function TechCategory({ category, index }: TechCategoryProps) {
             key={item.name}
             className={cn(
               "group relative rounded-lg border border-border bg-card px-4 py-3 transition-all duration-300",
-              "hover:border-accent/30 hover:bg-muted/30"
+              "hover:border-accent/40 hover:bg-muted/40 hover:shadow-xs hover:-translate-y-0.5"
             )}
           >
             <div className="flex items-center justify-between gap-2">
-              <span className="text-body-sm font-medium text-foreground truncate">{item.name}</span>
+              <span className="text-body-sm font-medium text-foreground group-hover:text-accent transition-colors truncate">{item.name}</span>
               <span
                 className={cn(
-                  "size-1.5 rounded-full shrink-0",
-                  item.status === 'using' ? 'bg-accent' : 'bg-muted-foreground/30'
+                  "size-1.5 rounded-full shrink-0 transition-transform group-hover:scale-125",
+                  item.status === 'using' ? 'bg-accent shadow-xs shadow-accent/60' : 'bg-muted-foreground/30'
                 )}
               />
             </div>

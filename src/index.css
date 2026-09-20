@@ -93,6 +93,7 @@
   /* ── Semantic status colors ── */
   --color-success: oklch(0.65 0.22 155);
   --color-warning: oklch(0.78 0.16 85);
+  --color-lang-js: #b45309;
 
   /* ── Borders: Stronger structural presence ── */
   --border: oklch(0.87 0.008 95);
@@ -145,6 +146,7 @@
   /* ── Semantic status colors ── */
   --color-success: oklch(0.72 0.19 155);
   --color-warning: oklch(0.82 0.14 85);
+  --color-lang-js: #facc15;
 
   --border: oklch(0.22 0.008 270);
   --border-subtle: oklch(0.16 0.008 270);
@@ -757,11 +759,38 @@
   background: var(--card);
 }
 
-.code-keyword { color: var(--accent); }
-.code-string { color: var(--muted-foreground); }
-.code-property { color: var(--foreground); }
-.code-punctuation { color: var(--muted-foreground); }
-.code-comment { color: var(--muted-foreground); opacity: 0.5; }
+.code-keyword {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+:not(.dark) .code-string {
+  color: #15803d;
+}
+.dark .code-string {
+  color: #4ade80;
+}
+
+.code-property {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+:not(.dark) .code-comment {
+  color: #64748b;
+  font-style: italic;
+  opacity: 0.85;
+}
+.dark .code-comment {
+  color: #94a3b8;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.code-punctuation {
+  color: var(--muted-foreground);
+  opacity: 0.8;
+}
 
 /* ═══════════════════════════════════════════════
    ANIMATION KEYFRAMES
@@ -770,6 +799,10 @@
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+.marquee:hover {
+  animation-play-state: paused;
 }
 
 @keyframes pulse-dot {

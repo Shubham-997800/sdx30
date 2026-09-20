@@ -78,19 +78,19 @@ export function JourneyEvent({
         {/* Timeline node */}
         <motion.div
           className={cn(
-            'relative z-10 size-3 rounded-full border-2 cursor-pointer',
+            'relative z-10 size-3.5 rounded-full border-2 cursor-pointer transition-all duration-200',
             isFeatured
-              ? 'border-accent bg-accent/20'
-              : 'border-border bg-background hover:border-accent/50',
+              ? 'border-accent bg-accent/25 ring-4 ring-accent/15 shadow-sm shadow-accent/25'
+              : 'border-border bg-background hover:border-accent/60',
           )}
-          whileHover={{ scale: 1.1, boxShadow: '0 0 12px oklch(from var(--accent) l c h / 0.3)' }}
+          whileHover={{ scale: 1.2, boxShadow: '0 0 16px oklch(from var(--accent) l c h / 0.4)' }}
           transition={{ duration: 0.2 }}
         >
           {isFeatured && (
             <motion.div
-              className="absolute inset-0 rounded-full bg-accent/30"
-              animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute inset-0 rounded-full bg-accent/40"
+              animate={{ scale: [1, 2, 1], opacity: [0.7, 0, 0.7] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
             />
           )}
         </motion.div>
@@ -113,7 +113,7 @@ export function JourneyEvent({
         <div
           className={cn(
             'w-full h-px',
-            isFeatured ? 'bg-accent/30' : 'bg-border/60',
+            isFeatured ? 'bg-accent/40' : 'bg-border/60',
           )}
         />
       </div>
@@ -124,15 +124,33 @@ export function JourneyEvent({
           isLast && 'pb-0',
         )}
       >
-        {/* Category label */}
-        <span className="text-label text-muted-foreground/70">
-          {event.category}
-        </span>
+        {/* Category & Date Metadata */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-label text-accent font-mono font-medium">
+            {event.category}
+          </span>
+          {event.date && (
+            <>
+              <span className="text-muted-foreground/30 text-[10px]">·</span>
+              <span className="text-caption font-mono text-muted-foreground/80 text-[0.72rem]">
+                {event.date}
+              </span>
+            </>
+          )}
+          {event.venue && (
+            <>
+              <span className="text-muted-foreground/30 text-[10px] hidden sm:inline">·</span>
+              <span className="text-caption font-mono text-muted-foreground/60 text-[0.7rem] hidden sm:inline">
+                {event.venue}
+              </span>
+            </>
+          )}
+        </div>
 
         {/* Title */}
         <h3
           className={cn(
-            'text-h3 mt-2 text-foreground',
+            'text-h3 mt-1.5 text-foreground',
             isFeatured ? 'text-foreground' : 'text-foreground/90',
           )}
         >
@@ -141,8 +159,15 @@ export function JourneyEvent({
 
         {/* Project or Organization */}
         {(event.project || event.organization) && (
-          <p className="mt-1.5 text-body-sm text-muted-foreground">
-            {event.project || event.organization}
+          <p className="mt-1 text-body-sm text-muted-foreground">
+            {event.project ? (
+              <>
+                <span className="font-semibold text-foreground/90">{event.project}</span>
+                {event.organization && <span> · {event.organization}</span>}
+              </>
+            ) : (
+              event.organization
+            )}
           </p>
         )}
 
@@ -159,19 +184,49 @@ export function JourneyEvent({
           </div>
         )}
 
-        {/* Project link for Vibe2Ship → FlowSync AI */}
-        {event.project && (
-          <a
-            href="#work"
-            className={cn(
-              'inline-flex items-center gap-1.5 mt-4 text-caption',
-              'text-accent transition-all duration-200',
-              'hover:gap-2.5',
-            )}
-          >
-            VIEW PROJECT <span className="text-label">→</span>
-          </a>
-        )}
+        {/* Action Links */}
+        <div className="flex flex-wrap items-center gap-4 mt-4">
+          {event.githubUrl && (
+            <a
+              href={event.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                'inline-flex items-center gap-1.5 text-caption font-mono',
+                'text-accent transition-all duration-200',
+                'hover:gap-2.5 hover:underline',
+              )}
+            >
+              {event.linkText || 'VIEW REPOSITORY'} <span className="text-label">↗</span>
+            </a>
+          )}
+          {event.liveUrl && (
+            <a
+              href={event.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                'inline-flex items-center gap-1.5 text-caption font-mono',
+                'text-accent transition-all duration-200',
+                'hover:gap-2.5 hover:underline',
+              )}
+            >
+              LIVE DEMO <span className="text-label">↗</span>
+            </a>
+          )}
+          {event.project && !event.githubUrl && !event.liveUrl && (
+            <a
+              href="#work"
+              className={cn(
+                'inline-flex items-center gap-1.5 text-caption',
+                'text-accent transition-all duration-200',
+                'hover:gap-2.5',
+              )}
+            >
+              VIEW PROJECT <span className="text-label">→</span>
+            </a>
+          )}
+        </div>
       </div>
     </Reveal>
   );
