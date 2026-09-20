@@ -10,15 +10,13 @@ import {
   Rocket,
   Cpu,
   Trophy,
-  CheckCircle2,
-  Route,
   ArrowUpRight,
   GitFork,
   Radio,
+  Route,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { Button } from '@/components/ui/button';
 import type { JourneyEvent } from '@/types';
 
 interface JourneyRoadmapProps {
@@ -54,130 +52,145 @@ function getStatusBadgeStyle(id: string) {
   return 'border-indigo-500/40 bg-indigo-500/10 text-indigo-300';
 }
 
+// Crisp 1-line senior summary for each stop (no fluff)
+function getHighlight(event: JourneyEvent): string {
+  if (event.id.includes('sih')) {
+    return 'Competed on complex national problem statements under strict regulatory standards.';
+  }
+  if (event.id.includes('odoo')) {
+    return 'Selected among top 1% of 20,000+ teams for the 24-hr on-site Grand Finale.';
+  }
+  if (event.id.includes('antariksh')) {
+    return 'Engineered computational telemetry and geospatial pipelines for ISRO challenges.';
+  }
+  if (event.id.includes('cybersecurity') || event.id.includes('psb')) {
+    return 'Security build at IIT Hyderabad evaluating automated threat detection for PSB banks.';
+  }
+  if (event.id.includes('vibe')) {
+    return 'Solo build: architected and shipped full-stack productivity OS with multi-model AI.';
+  }
+  if (event.id.includes('agents') || event.id.includes('kaggle')) {
+    return 'Engineered autonomous multi-agent launch system with tool loops & memory persistence.';
+  }
+  return event.milestones[0]?.label || '';
+}
+
 export function JourneyRoadmap({ events }: JourneyRoadmapProps) {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="w-full space-y-12 sm:space-y-16">
-      {/* ─── 1. Highway Quick Stats Bar ─── */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="rounded-xl border border-border/80 bg-card/60 backdrop-blur-xs p-3.5 sm:p-4">
-          <span className="text-[0.68rem] font-mono uppercase tracking-wider text-muted-foreground block">
-            National Circuit
+    <div className="w-full space-y-8 sm:space-y-10">
+      {/* ─── 1. Compact Executive Stats Bar ─── */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+        <div className="rounded-lg border border-border/70 bg-card/60 px-3.5 py-2.5">
+          <span className="text-[0.65rem] font-mono uppercase tracking-wider text-muted-foreground block">
+            Circuit
           </span>
-          <span className="text-h3 font-heading font-bold text-foreground mt-0.5 block">
+          <span className="text-base sm:text-lg font-heading font-bold text-foreground">
             6 Stops
           </span>
-          <span className="text-[0.72rem] text-accent mt-0.5 block">High-stakes hackathons</span>
+          <span className="text-[0.68rem] text-accent block">2026 Expeditions</span>
         </div>
 
-        <div className="rounded-xl border border-border/80 bg-card/60 backdrop-blur-xs p-3.5 sm:p-4">
-          <span className="text-[0.68rem] font-mono uppercase tracking-wider text-muted-foreground block">
-            Selection Rate
+        <div className="rounded-lg border border-border/70 bg-card/60 px-3.5 py-2.5">
+          <span className="text-[0.65rem] font-mono uppercase tracking-wider text-muted-foreground block">
+            Selection
           </span>
-          <span className="text-h3 font-heading font-bold text-foreground mt-0.5 block">
+          <span className="text-base sm:text-lg font-heading font-bold text-foreground">
             Top 1%
           </span>
-          <span className="text-[0.72rem] text-muted-foreground mt-0.5 block">From 20k+ applicants</span>
+          <span className="text-[0.68rem] text-muted-foreground block">From 20k+ applicants</span>
         </div>
 
-        <div className="rounded-xl border border-border/80 bg-card/60 backdrop-blur-xs p-3.5 sm:p-4">
-          <span className="text-[0.68rem] font-mono uppercase tracking-wider text-muted-foreground block">
-            Shipped in Hackathons
+        <div className="rounded-lg border border-border/70 bg-card/60 px-3.5 py-2.5">
+          <span className="text-[0.65rem] font-mono uppercase tracking-wider text-muted-foreground block">
+            Shipped
           </span>
-          <span className="text-h3 font-heading font-bold text-foreground mt-0.5 block">
+          <span className="text-base sm:text-lg font-heading font-bold text-foreground">
             3 Repos
           </span>
-          <span className="text-[0.72rem] text-accent mt-0.5 block">B2B ERP · Agentic · OS</span>
+          <span className="text-[0.68rem] text-accent block">B2B · Agents · OS</span>
         </div>
 
-        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 backdrop-blur-xs p-3.5 sm:p-4">
-          <span className="text-[0.68rem] font-mono uppercase tracking-wider text-emerald-400 block flex items-center gap-1.5">
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 px-3.5 py-2.5">
+          <span className="text-[0.65rem] font-mono uppercase tracking-wider text-emerald-400 block flex items-center gap-1.5">
             <span className="size-1.5 rounded-full bg-emerald-400 animate-ping" />
-            Latest Checkpoint
+            Latest Stop
           </span>
-          <span className="text-h3 font-heading font-bold text-foreground mt-0.5 block">
+          <span className="text-base sm:text-lg font-heading font-bold text-foreground">
             SIH 2026
           </span>
-          <span className="text-[0.72rem] text-emerald-400 font-medium mt-0.5 block">
+          <span className="text-[0.68rem] text-emerald-400 font-medium block">
             Concluded Yesterday
           </span>
         </div>
       </div>
 
-      {/* ─── 2. Road Track Container ─── */}
-      <div className="relative w-full py-4">
-        {/* Highway Entrance Signpost (Desktop Center / Mobile Left) */}
-        <div className="relative z-10 flex items-center justify-start md:justify-center mb-8 pl-4 md:pl-0">
-          <div className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-card/90 px-4 py-1.5 shadow-sm">
-            <Radio className="size-3.5 text-emerald-400 animate-pulse" />
-            <span className="text-[0.72rem] font-mono font-bold tracking-wider uppercase text-foreground">
-              START POINT · LATEST MILE (SIH CONCLUDED YESTERDAY)
-            </span>
+      {/* ─── 2. Compact Road Track Container ─── */}
+      <div className="relative w-full py-2">
+        {/* Road Start Checkpoint (Top) */}
+        <div className="relative z-10 flex items-center justify-start md:justify-center mb-6 pl-2 md:pl-0">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-card/90 px-3 py-1 text-[0.68rem] font-mono font-semibold text-foreground shadow-2xs">
+            <Radio className="size-3 text-emerald-400 animate-pulse" />
+            <span>START POINT · SIH 2026 (CONCLUDED YESTERDAY)</span>
           </div>
         </div>
 
-        {/* ─── Central Asphalt Road Spine (Desktop: Center | Mobile: Left-6) ─── */}
+        {/* ─── Central Asphalt Road Spine ─── */}
         <div
           aria-hidden="true"
           className={cn(
-            'absolute top-14 bottom-14 pointer-events-none z-0',
-            // Mobile: sits at left-6
-            'left-6 -translate-x-1/2 w-8',
-            // Desktop: sits right at 50%
-            'md:left-1/2 md:-translate-x-1/2 md:w-14'
+            'absolute top-10 bottom-10 pointer-events-none z-0',
+            // Mobile: sits at left-5
+            'left-5 -translate-x-1/2 w-6',
+            // Desktop: sits right at center
+            'md:left-1/2 md:-translate-x-1/2 md:w-10'
           )}
         >
-          {/* Road Asphalt Bed */}
-          <div className="relative h-full w-full rounded-full border-x-2 border-border/70 bg-secondary/30 backdrop-blur-xs flex items-center justify-center overflow-hidden">
-            {/* Dashed Center Dividing Highway Strip */}
-            <div className="h-full w-0.5 border-r-2 border-dashed border-accent/50 opacity-80" />
-            {/* Subtle road side markers */}
-            <div className="absolute inset-y-0 left-0.5 w-0.5 bg-border/40" />
-            <div className="absolute inset-y-0 right-0.5 w-0.5 bg-border/40" />
+          <div className="relative h-full w-full rounded-full border-x border-border/70 bg-secondary/30 flex items-center justify-center overflow-hidden">
+            {/* Dashed Center Dividing Line */}
+            <div className="h-full w-0.5 border-r border-dashed border-accent/40" />
           </div>
         </div>
 
-        {/* ─── Alternating Road Milestone Stops ─── */}
-        <div className="space-y-12 sm:space-y-16 relative z-10">
+        {/* ─── Alternating Road Milestone Stops (Tight Spacing) ─── */}
+        <div className="space-y-6 sm:space-y-7 relative z-10">
           {events.map((event, idx) => {
             const isEven = idx % 2 === 0; // Even: LEFT on desktop | Odd: RIGHT on desktop
             const isSih = event.id.includes('sih');
+            const highlight = getHighlight(event);
 
             return (
               <div
                 key={event.id}
                 className={cn(
                   'relative flex flex-col md:flex-row items-start',
-                  // Mobile: card is always offset to the right of the road line
-                  'pl-12 sm:pl-16 md:pl-0',
+                  // Mobile: offset right of road
+                  'pl-11 sm:pl-14 md:pl-0',
                   // Desktop alignment
                   isEven ? 'md:justify-start' : 'md:justify-end'
                 )}
               >
-                {/* ─── Center Road Waypoint / Stop Node ─── */}
+                {/* ─── Compact Road Waypoint Stop Node ─── */}
                 <div
                   className={cn(
-                    'absolute top-5 z-20 flex items-center justify-center',
-                    // Mobile: aligns with left-6 road line
-                    'left-6 -translate-x-1/2',
-                    // Desktop: dead-center on highway line
+                    'absolute top-4 z-20 flex items-center justify-center',
+                    'left-5 -translate-x-1/2',
                     'md:left-1/2 md:-translate-x-1/2'
                   )}
                 >
                   <motion.div
                     initial={prefersReducedMotion ? false : { scale: 0.8, opacity: 0 }}
                     whileInView={prefersReducedMotion ? undefined : { scale: 1, opacity: 1 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.3, delay: idx * 0.08 }}
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{ duration: 0.3, delay: idx * 0.05 }}
                     className={cn(
-                      'relative size-11 sm:size-12 rounded-full border-2 bg-card flex items-center justify-center shadow-md transition-transform duration-300 hover:scale-110',
+                      'relative size-9 sm:size-10 rounded-full border-2 bg-card flex items-center justify-center shadow-xs transition-transform duration-200 hover:scale-110',
                       isSih
-                        ? 'border-emerald-500 shadow-[0_0_20px_oklch(0.65_0.22_155_/_0.4)]'
-                        : 'border-accent/70 hover:border-accent shadow-[0_0_14px_oklch(from_var(--accent)_l_c_h_/_0.25)]'
+                        ? 'border-emerald-500 shadow-[0_0_14px_oklch(0.65_0.22_155_/_0.35)]'
+                        : 'border-accent/70 hover:border-accent shadow-[0_0_10px_oklch(from_var(--accent)_l_c_h_/_0.2)]'
                     )}
                   >
-                    {/* Live pulse radar for SIH */}
                     {isSih && (
                       <span className="absolute -inset-1 rounded-full bg-emerald-500/25 animate-ping" />
                     )}
@@ -185,152 +198,126 @@ export function JourneyRoadmap({ events }: JourneyRoadmapProps) {
                     <EventStopIcon
                       id={event.id}
                       className={cn(
-                        'size-5 sm:size-5.5',
+                        'size-4 sm:size-4.5',
                         isSih ? 'text-emerald-400' : 'text-accent'
                       )}
                     />
 
-                    {/* Milestone Stop Pill above Node */}
-                    <span className="absolute -top-3 rounded-full border border-border/80 bg-background/95 px-1.5 py-0.2 text-[0.6rem] font-mono font-bold text-muted-foreground shadow-xs">
+                    {/* Small number tag */}
+                    <span className="absolute -bottom-2 rounded-full border border-border/80 bg-background/95 px-1 py-0.2 text-[0.55rem] font-mono font-bold text-muted-foreground">
                       {event.number}
                     </span>
                   </motion.div>
                 </div>
 
-                {/* ─── Horizontal Connector Arm from Road Node to Card ─── */}
-                {/* Desktop Left Connector (for Even cards on Left) */}
+                {/* ─── Compact Horizontal Connector ─── */}
                 {isEven && (
                   <div
                     aria-hidden="true"
-                    className="hidden md:block absolute right-[calc(50%+1.3rem)] top-10.5 w-[calc(50%-1.3rem-theme(spacing.4))] max-w-10 h-0.5 bg-gradient-to-l from-accent/70 to-border pointer-events-none"
+                    className="hidden md:block absolute right-[calc(50%+1.1rem)] top-8.5 w-6 h-px bg-accent/60 pointer-events-none"
                   />
                 )}
-
-                {/* Desktop Right Connector (for Odd cards on Right) */}
                 {!isEven && (
                   <div
                     aria-hidden="true"
-                    className="hidden md:block absolute left-[calc(50%+1.3rem)] top-10.5 w-[calc(50%-1.3rem-theme(spacing.4))] max-w-10 h-0.5 bg-gradient-to-r from-accent/70 to-border pointer-events-none"
+                    className="hidden md:block absolute left-[calc(50%+1.1rem)] top-8.5 w-6 h-px bg-accent/60 pointer-events-none"
                   />
                 )}
-
-                {/* Mobile Connector (Left road to Right card) */}
                 <div
                   aria-hidden="true"
-                  className="block md:hidden absolute left-6 top-10.5 w-6 h-0.5 bg-gradient-to-r from-accent/70 to-border pointer-events-none"
+                  className="block md:hidden absolute left-5 top-8.5 w-5 h-px bg-accent/60 pointer-events-none"
                 />
 
-                {/* ─── Milestone Card (Alternating Left / Right) ─── */}
+                {/* ─── Senior Compact Milestone Card ─── */}
                 <motion.div
                   initial={
                     prefersReducedMotion
                       ? false
-                      : { opacity: 0, x: isEven ? -24 : 24, y: 12 }
+                      : { opacity: 0, x: isEven ? -16 : 16, y: 8 }
                   }
                   whileInView={
                     prefersReducedMotion ? undefined : { opacity: 1, x: 0, y: 0 }
                   }
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.45, delay: 0.1 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.35, delay: 0.05 }}
                   className={cn(
-                    'w-full md:w-[calc(50%-3.2rem)]',
-                    'rounded-2xl border border-border/80 bg-card/85 backdrop-blur-md p-5 sm:p-6 shadow-md hover:shadow-xl hover:border-accent/40 transition-all duration-300 group'
+                    'w-full md:w-[calc(50%-2.6rem)]',
+                    'rounded-xl border border-border/80 bg-card/85 backdrop-blur-md p-4 sm:p-4.5 shadow-xs hover:shadow-md hover:border-accent/40 transition-all duration-200 group'
                   )}
                 >
-                  {/* Card Header: Stop Number & Status Pill */}
-                  <div className="flex items-center justify-between gap-2 flex-wrap mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[0.68rem] font-mono font-bold uppercase tracking-wider text-muted-foreground">
-                        STOP #{event.number}
-                      </span>
-                      <span className="text-muted-foreground/40 text-xs">·</span>
-                      <span className="text-[0.68rem] font-mono text-accent">
-                        {event.category}
-                      </span>
+                  {/* Row 1: Stop # + Status Pill */}
+                  <div className="flex items-center justify-between gap-2 flex-wrap mb-1.5">
+                    <div className="flex items-center gap-1.5 text-[0.65rem] font-mono text-muted-foreground">
+                      <span className="font-bold text-foreground">STOP #{event.number}</span>
+                      <span>·</span>
+                      <span className="text-accent">{event.category}</span>
                     </div>
 
                     {event.statusBadge && (
                       <span
                         className={cn(
-                          'inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[0.68rem] font-mono font-bold uppercase tracking-wide',
+                          'inline-flex items-center gap-1 rounded-full border px-2 py-0.2 text-[0.62rem] font-mono font-bold uppercase tracking-wide',
                           getStatusBadgeStyle(event.id)
                         )}
                       >
-                        {isSih && <span className="size-1.5 rounded-full bg-emerald-400 animate-ping" />}
+                        {isSih && <span className="size-1 rounded-full bg-emerald-400 animate-ping" />}
                         {event.statusBadge}
                       </span>
                     )}
                   </div>
 
-                  {/* Title & Short Title */}
-                  <h3 className="text-lg sm:text-xl font-heading font-bold text-foreground group-hover:text-accent transition-colors leading-snug">
+                  {/* Row 2: Title */}
+                  <h3 className="text-base sm:text-lg font-heading font-bold text-foreground group-hover:text-accent transition-colors leading-snug">
                     {event.title}
                   </h3>
 
-                  {/* Org, Venue & Date */}
-                  <div className="mt-2.5 flex flex-wrap items-center gap-y-1.5 gap-x-3 text-caption text-muted-foreground">
-                    <span className="font-medium text-foreground/90">
+                  {/* Row 3: Meta (Org, Venue, Date) */}
+                  <div className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[0.72rem] text-muted-foreground">
+                    <span className="font-medium text-foreground/85">
                       {event.organization}
                     </span>
 
                     {event.venue && (
-                      <span className="flex items-center gap-1">
-                        <MapPin className="size-3 text-accent shrink-0" />
+                      <span className="flex items-center gap-1 text-muted-foreground/80">
+                        <MapPin className="size-2.5 text-accent shrink-0" />
                         {event.venue}
                       </span>
                     )}
 
                     {event.date && (
-                      <span className="flex items-center gap-1 font-mono text-[0.72rem]">
-                        <Calendar className="size-3 text-muted-foreground shrink-0" />
+                      <span className="flex items-center gap-1 font-mono text-[0.68rem] text-muted-foreground/80">
+                        <Calendar className="size-2.5 shrink-0" />
                         {event.date}
                       </span>
                     )}
                   </div>
 
-                  {/* Summary / Description */}
-                  {event.projectDescription && (
-                    <p className="mt-3 text-body-sm text-foreground/80 leading-relaxed">
-                      {event.projectDescription}
-                    </p>
-                  )}
+                  {/* Row 4: Crisp 1-Liner Highlight */}
+                  <p className="mt-2 text-[0.8rem] text-foreground/80 leading-relaxed">
+                    {highlight}
+                  </p>
 
-                  {/* ─── "What I Built" Project Spotlight Box (If project exists) ─── */}
+                  {/* Row 5: Project Spotlight Chip (If project was built) */}
                   {event.project && (
-                    <div className="mt-4 rounded-xl border border-accent/25 bg-accent/[0.04] p-3.5 sm:p-4 space-y-3">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-[0.68rem] font-mono font-bold uppercase tracking-wider text-accent flex items-center gap-1.5">
-                          <GitFork className="size-3" />
-                          Built In Hackathon
-                        </span>
-                        <span className="text-[0.68rem] font-mono text-muted-foreground/70">
-                          Production Ready
-                        </span>
-                      </div>
-
-                      <div>
-                        <h4 className="text-sm sm:text-base font-heading font-bold text-foreground">
+                    <div className="mt-2.5 flex items-center justify-between gap-2 rounded-lg border border-accent/20 bg-accent/[0.03] px-2.5 py-1.5 flex-wrap">
+                      <div className="flex items-center gap-1.5">
+                        <GitFork className="size-3 text-accent shrink-0" />
+                        <span className="text-[0.72rem] font-mono text-muted-foreground">Built:</span>
+                        <span className="text-[0.75rem] font-heading font-bold text-foreground">
                           {event.project}
-                        </h4>
+                        </span>
                       </div>
 
-                      {/* Direct Repository & Live Links */}
-                      <div className="flex items-center gap-2 pt-1 flex-wrap">
+                      <div className="flex items-center gap-2">
                         {event.githubUrl && (
                           <a
                             href={event.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block"
+                            className="inline-flex items-center gap-0.5 text-[0.68rem] font-mono text-accent hover:underline"
                           >
-                            <Button
-                              variant="outline"
-                              size="xs"
-                              className="text-[0.72rem] font-mono group/btn hover:border-accent"
-                            >
-                              <span>{event.linkText || 'VIEW REPO'}</span>
-                              <ArrowUpRight className="size-3 text-accent transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
-                            </Button>
+                            <span>Repo</span>
+                            <ArrowUpRight className="size-2.5" />
                           </a>
                         )}
 
@@ -339,63 +326,23 @@ export function JourneyRoadmap({ events }: JourneyRoadmapProps) {
                             href={event.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block"
+                            className="inline-flex items-center gap-0.5 text-[0.68rem] font-mono text-foreground/90 hover:text-accent"
                           >
-                            <Button
-                              variant="glow"
-                              size="xs"
-                              className="text-[0.72rem] font-mono group/btn"
-                            >
-                              <span>LIVE DEMO</span>
-                              <ExternalLink className="size-3 transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
-                            </Button>
+                            <span>Live</span>
+                            <ExternalLink className="size-2.5" />
                           </a>
                         )}
                       </div>
                     </div>
                   )}
 
-                  {/* ─── Key Deliverables / Milestones ─── */}
-                  <div className="mt-4 space-y-2 border-t border-border/60 pt-3.5">
-                    <span className="text-[0.68rem] font-mono font-semibold uppercase tracking-wider text-muted-foreground/80 block">
-                      KEY ACHIEVEMENTS
-                    </span>
-                    <ul className="space-y-1.5">
-                      {event.milestones.map((m) => {
-                        const isAchievement = m.type === 'achievement';
-                        return (
-                          <li
-                            key={m.id}
-                            className="flex items-start gap-2 text-body-sm"
-                          >
-                            <CheckCircle2
-                              className={cn(
-                                'size-3.5 mt-0.5 shrink-0',
-                                isAchievement ? 'text-accent' : 'text-muted-foreground/50'
-                              )}
-                            />
-                            <span
-                              className={cn(
-                                isAchievement
-                                  ? 'text-foreground font-medium'
-                                  : 'text-foreground/80'
-                              )}
-                            >
-                              {m.label}
-                            </span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-
-                  {/* ─── Tech Tags ─── */}
+                  {/* Row 6: Compact Tech Tags */}
                   {event.tags && event.tags.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-1.5 pt-2">
-                      {event.tags.map((tag) => (
+                    <div className="mt-2.5 flex flex-wrap gap-1">
+                      {event.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-md border border-border/70 bg-secondary/40 px-2 py-0.5 text-[0.65rem] font-mono text-muted-foreground hover:border-accent/40 transition-colors"
+                          className="rounded border border-border/70 bg-secondary/30 px-1.5 py-0.2 text-[0.6rem] font-mono text-muted-foreground"
                         >
                           {tag}
                         </span>
@@ -408,13 +355,11 @@ export function JourneyRoadmap({ events }: JourneyRoadmapProps) {
           })}
         </div>
 
-        {/* Highway Terminus / Continuing Road Signpost */}
-        <div className="relative z-10 flex items-center justify-start md:justify-center mt-12 pl-4 md:pl-0">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/90 px-4 py-1.5 shadow-sm text-muted-foreground">
-            <Route className="size-3.5 text-accent" />
-            <span className="text-[0.72rem] font-mono font-bold tracking-wider uppercase">
-              HIGHWAY CONTINUES · NEW EXPEDITIONS & BUILDS IN PROGRESS
-            </span>
+        {/* Road Terminus Checkpoint (Bottom) */}
+        <div className="relative z-10 flex items-center justify-start md:justify-center mt-6 pl-2 md:pl-0">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/90 px-3 py-1 text-[0.68rem] font-mono text-muted-foreground shadow-2xs">
+            <Route className="size-3 text-accent" />
+            <span>CIRCUIT CONTINUES · NEXT BUILDS IN PROGRESS</span>
           </div>
         </div>
       </div>
