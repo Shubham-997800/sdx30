@@ -175,7 +175,21 @@ export function JourneyEvent({
               {event.linkText || 'VIEW REPOSITORY'} <span className="text-label">↗</span>
             </a>
           )}
-          {event.project && !event.githubUrl && (
+          {event.liveUrl && (
+            <a
+              href={event.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                'inline-flex items-center gap-1.5 text-caption font-mono',
+                'text-accent transition-all duration-200',
+                'hover:gap-2.5 hover:underline',
+              )}
+            >
+              LIVE DEMO <span className="text-label">↗</span>
+            </a>
+          )}
+          {event.project && !event.githubUrl && !event.liveUrl && (
             <a
               href="#work"
               className={cn(
