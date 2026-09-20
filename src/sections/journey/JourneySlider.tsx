@@ -26,9 +26,10 @@ interface JourneySliderProps {
 
 function EventIcon({ id, className }: { id: string; className?: string }) {
   if (id.includes('odoo')) return <Trophy className={className} />;
+  if (id.includes('cybersecurity') || id.includes('psb') || id.includes('iith')) return <Shield className={className} />;
   if (id.includes('sih')) return <Shield className={className} />;
   if (id.includes('antariksh')) return <Rocket className={className} />;
-  if (id.includes('agents')) return <Cpu className={className} />;
+  if (id.includes('agents') || id.includes('kaggle')) return <Cpu className={className} />;
   return <Sparkles className={className} />;
 }
 
@@ -91,7 +92,7 @@ export function JourneySlider({ events }: JourneySliderProps) {
             Competitions
           </span>
           <span className="text-h3 font-heading font-bold text-foreground mt-0.5 block">
-            5 National
+            6 National
           </span>
           <span className="text-[0.72rem] text-accent mt-0.5 block">High-stakes builds</span>
         </div>
@@ -113,7 +114,7 @@ export function JourneySlider({ events }: JourneySliderProps) {
           <span className="text-h3 font-heading font-bold text-foreground mt-0.5 block">
             IIT-H & Odoo
           </span>
-          <span className="text-[0.72rem] text-accent mt-0.5 block">Nodal center builds</span>
+          <span className="text-[0.72rem] text-accent mt-0.5 block">Grand Finale & Nodal</span>
         </div>
 
         <div className="rounded-xl border border-border/80 bg-card/50 p-3.5 sm:p-4">
@@ -121,9 +122,9 @@ export function JourneySlider({ events }: JourneySliderProps) {
             Domains Solved
           </span>
           <span className="text-h3 font-heading font-bold text-foreground mt-0.5 block">
-            ERP & Security
+            Security & AI
           </span>
-          <span className="text-[0.72rem] text-muted-foreground mt-0.5 block">SpaceTech & AI OS</span>
+          <span className="text-[0.72rem] text-muted-foreground mt-0.5 block">ERP, Threat Intel & OS</span>
         </div>
       </div>
 
