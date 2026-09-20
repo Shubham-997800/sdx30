@@ -166,7 +166,7 @@ export function JourneyRoadmap({ events }: JourneyRoadmapProps) {
                 className={cn(
                   'relative flex flex-col md:flex-row items-start',
                   // Mobile: offset right of road
-                  'pl-11 sm:pl-14 md:pl-0',
+                  'pl-12 sm:pl-14 md:pl-0',
                   // Desktop alignment
                   isEven ? 'md:justify-start' : 'md:justify-end'
                 )}
@@ -214,18 +214,18 @@ export function JourneyRoadmap({ events }: JourneyRoadmapProps) {
                 {isEven && (
                   <div
                     aria-hidden="true"
-                    className="hidden md:block absolute right-[calc(50%+1.1rem)] top-8.5 w-6 h-px bg-accent/60 pointer-events-none"
+                    className="hidden md:block absolute right-[calc(50%+1.15rem)] top-8.5 w-[1.45rem] h-px bg-gradient-to-l from-accent/70 to-border pointer-events-none"
                   />
                 )}
                 {!isEven && (
                   <div
                     aria-hidden="true"
-                    className="hidden md:block absolute left-[calc(50%+1.1rem)] top-8.5 w-6 h-px bg-accent/60 pointer-events-none"
+                    className="hidden md:block absolute left-[calc(50%+1.15rem)] top-8.5 w-[1.45rem] h-px bg-gradient-to-r from-accent/70 to-border pointer-events-none"
                   />
                 )}
                 <div
                   aria-hidden="true"
-                  className="block md:hidden absolute left-5 top-8.5 w-5 h-px bg-accent/60 pointer-events-none"
+                  className="block md:hidden absolute left-[2.3rem] top-8.5 w-5 h-px bg-gradient-to-r from-accent/70 to-border pointer-events-none"
                 />
 
                 {/* ─── Senior Compact Milestone Card ─── */}
