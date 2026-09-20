@@ -33,6 +33,7 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/Shubham-997800/FlowSyncAi',
     imageUrl: '/projects/flowsync.jpg',
     featured: true,
+    impact: 'Built for Vibe2Ship (Coding Ninjas × Google) · Multi-Provider AI Architecture',
   },
   {
     id: 'workos',
@@ -64,6 +65,7 @@ export const projects: Project[] = [
     layout: 'media-left',
     imageUrl: '/projects/workos.jpg',
     featured: true,
+    impact: 'Offline-First PWA · Global Client State Cache · Zero-Latency Workflow',
   },
   {
     id: 'assetrix',
@@ -94,6 +96,7 @@ export const projects: Project[] = [
     liveUrl: 'https://assetrix30.vercel.app/',
     githubUrl: 'https://github.com/Shubham-997800/assetrix',
     imageUrl: '/projects/assetrix.jpg',
+    impact: 'Enterprise RBAC · Multi-Step Approval Workflows · Type-Safe ORM',
   },
   {
     id: 'campus360',
@@ -117,6 +120,7 @@ export const projects: Project[] = [
     liveUrl: 'https://campus30.vercel.app/',
     githubUrl: 'https://github.com/Shubham-997800/CAMPUS360',
     imageUrl: '/projects/campus360.jpg',
+    impact: 'Centralized Portal · 20+ Reusable UI Primitives · Mobile-First Layout',
   },
   {
     id: 'startuplaunchai',
@@ -140,6 +144,7 @@ export const projects: Project[] = [
     liveUrl: 'https://startuplaunch30.vercel.app/',
     githubUrl: 'https://github.com/Shubham-997800/startuplaunchai',
     imageUrl: '/projects/startuplaunch.jpg',
+    impact: 'Generative AI Tools · Automated Launch Roadmap · Responsive UI',
   },
   {
     id: 'sofawala',
@@ -163,5 +168,6 @@ export const projects: Project[] = [
     liveUrl: 'https://sofawala.vercel.app/',
     githubUrl: 'https://github.com/Shubham-997800/SofaWala',
     imageUrl: '/projects/sofawala.jpg',
+    impact: 'E-Commerce Catalog · Smooth Micro-Interactions · Semantic Layout',
   },
 ];

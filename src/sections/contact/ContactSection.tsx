@@ -11,6 +11,8 @@ import { contactContent } from '@/data/contact';
 import { personalInfo } from '@/data/site';
 import { submitContact } from '@/services/contact';
 import { contactSchema } from '@/schemas/contact';
+import { CopyEmailButton } from '@/components/shared/CopyEmailButton';
+import { toast } from 'sonner';
 
 const inputClass = "w-full rounded-lg border border-input bg-muted/30 px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-accent focus:ring-2 focus:ring-accent/20 focus:shadow-[0_0_16px_oklch(from_var(--accent)_l_c_h_/_0.12)] outline-none";
 
@@ -44,9 +46,11 @@ export function ContactSection() {
     try {
       await submitContact(result.data);
       setFormState('success');
+      toast.success('Message sent! I will get back to you soon.');
       (e.target as HTMLFormElement).reset();
     } catch {
       setFormState('error');
+      toast.error('Could not send directly. Please copy email directly.');
     }
   };
 
@@ -67,6 +71,11 @@ export function ContactSection() {
             <p className="mt-6 text-body-lg text-muted-foreground max-w-lg mx-auto">
               {contactContent.message}
             </p>
+          </Reveal>
+
+          {/* Direct Email Copy Option */}
+          <Reveal direction="up" delay={0.2} className="mt-6 flex items-center justify-center">
+            <CopyEmailButton variant="chip" />
           </Reveal>
 
           {/* Form */}

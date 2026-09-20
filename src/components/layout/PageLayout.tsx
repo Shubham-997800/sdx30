@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/navigation/Navbar";
+import { Toaster } from "sonner";
 import type { ReactNode } from "react";
 
 interface PageLayoutProps {
@@ -16,6 +17,7 @@ export function PageLayout({ children }: PageLayoutProps) {
       </a>
       <Navbar />
       <main id="main-content">{children}</main>
+      <Toaster position="bottom-right" richColors closeButton />
     </div>
   );
 }

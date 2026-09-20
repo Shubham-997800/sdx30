@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { Container } from '@/components/layout/Container';
 import { Reveal } from '@/components/motion/RevealSystem';
 import { personalInfo, socialLinks } from '@/data/site';
+import { CopyEmailButton } from '@/components/shared/CopyEmailButton';
 
 
 
@@ -29,6 +30,9 @@ export function FooterSection() {
               <span className="text-label text-muted-foreground">{personalInfo.shortRole}</span>
               <span className="text-muted-foreground/30">·</span>
               <span className="text-label text-muted-foreground/60">Product Builder</span>
+            </div>
+            <div className="pt-1">
+              <CopyEmailButton variant="chip" />
             </div>
           </Reveal>
 

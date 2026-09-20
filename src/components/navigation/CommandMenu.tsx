@@ -7,7 +7,8 @@ import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "motion/react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { navigation } from "@/data/navigation";
-import { socialLinks } from "@/data/site";
+import { socialLinks, personalInfo } from "@/data/site";
+import { toast } from "sonner";
 
 interface CommandMenuProps {
   isOpen: boolean;
@@ -137,6 +138,27 @@ export function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
                   >
                     <span className="text-muted-foreground">○</span>
                     Light Mode
+                  </Command.Item>
+                </Command.Group>
+
+                <Command.Separator className="my-2 h-px bg-border" />
+
+                {/* Actions */}
+                <Command.Group heading="Actions" className="text-label text-muted-foreground">
+                  <Command.Item
+                    value="copy email address"
+                    onSelect={() =>
+                      handleSelect(() => {
+                        navigator.clipboard.writeText(personalInfo.email);
+                        toast.success("Email copied to clipboard!", {
+                          description: personalInfo.email,
+                        });
+                      })
+                    }
+                    className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-body-sm text-foreground transition-colors hover:bg-accent/10 data-[selected=true]:bg-accent/10"
+                  >
+                    <span className="text-muted-foreground">✉</span>
+                    Copy Email Address ({personalInfo.email})
                   </Command.Item>
                 </Command.Group>
 

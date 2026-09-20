@@ -13,6 +13,7 @@ import { ScrambleText } from '@/components/motion/ScrambleText';
 import { BackgroundGlitch } from '@/components/motion/BackgroundGlitch';
 import { heroContent, personalInfo, socialLinks } from '@/data/site';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { CopyEmailButton } from '@/components/shared/CopyEmailButton';
 import { HeroVisual } from './HeroVisual';
 
 
@@ -173,8 +174,10 @@ export function HeroSection() {
               </Magnetic>
             </div>
 
-            {/* Social Links — visible immediately */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-6 sm:mt-8 md:mt-10">
+            {/* Social Links & One-Click Copy Email */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-5 mt-6 sm:mt-8 md:mt-10">
+              <CopyEmailButton variant="chip" />
+              <div className="hidden sm:block h-3.5 w-px bg-border/60" />
               {socialLinks.map((link) => (
                 <a
                   key={link.label}

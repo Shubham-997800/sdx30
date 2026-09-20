@@ -123,6 +123,14 @@ export function ProjectFeature({ project, index }: { project: Project; index: nu
           {/* Tagline */}
           <p className="text-body text-muted-foreground">{project.tagline}</p>
 
+          {/* Impact / Engineering highlight */}
+          {project.impact && (
+            <div className="inline-flex items-center gap-2 rounded-md bg-accent/10 border border-accent/20 px-3 py-1 text-[0.75rem] font-mono text-accent">
+              <span className="size-1.5 rounded-full bg-accent animate-pulse shrink-0" />
+              <span>{project.impact}</span>
+            </div>
+          )}
+
           {/* Description */}
           <p className="text-body-sm text-muted-foreground max-w-lg leading-relaxed">
             {project.description}

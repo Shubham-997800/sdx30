@@ -20,4 +20,5 @@ export interface Project {
   caseStudyUrl?: string;
   imageUrl?: string;
   featured?: boolean;
+  impact?: string;
 }
