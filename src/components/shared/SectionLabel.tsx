@@ -18,17 +18,14 @@ export function SectionLabel({ children, className, number }: SectionLabelProps)
   const prefersReducedMotion = useReducedMotion();
   const [displayNum, setDisplayNum] = useState('00');
 
+  const isNonNumeric = !number || isNaN(parseInt(number, 10));
+  const renderedNum = (prefersReducedMotion || isNonNumeric) ? (number ?? '00') : displayNum;
+
   useEffect(() => {
-    if (!number || prefersReducedMotion || !isInView) {
-      if (number) setDisplayNum(number);
-      return;
-    }
+    if (!number || prefersReducedMotion || !isInView) return;
 
     const target = parseInt(number, 10);
-    if (isNaN(target)) {
-      setDisplayNum(number);
-      return;
-    }
+    if (isNaN(target)) return;
 
     let current = 0;
     const step = Math.max(1, Math.floor(target / 10));
@@ -47,7 +44,7 @@ export function SectionLabel({ children, className, number }: SectionLabelProps)
   return (
     <span ref={ref} className={cn('inline-flex items-center gap-3 text-overline', className)}>
       {number && (
-        <span className="text-accent font-mono tabular-nums">{displayNum}</span>
+        <span className="text-accent font-mono tabular-nums">{renderedNum}</span>
       )}
       <span>{children}</span>
       <motion.span

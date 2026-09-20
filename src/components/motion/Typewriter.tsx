@@ -25,12 +25,10 @@ export function Typewriter({
   const [isDeleting, setIsDeleting] = useState(false);
 
   const currentWord = words[currentWordIndex];
+  const renderedText = prefersReducedMotion ? currentWord : currentText;
 
   const tick = useCallback(() => {
-    if (prefersReducedMotion) {
-      setCurrentText(currentWord);
-      return;
-    }
+    if (prefersReducedMotion) return;
 
     if (!isDeleting) {
       if (currentText.length < currentWord.length) {
@@ -51,27 +49,24 @@ export function Typewriter({
   }, [currentText, isDeleting, currentWord, words.length, pauseDuration, prefersReducedMotion]);
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setCurrentText(currentWord);
-      return;
-    }
+    if (prefersReducedMotion) return;
 
     const speed = isDeleting ? deletingSpeed : typingSpeed;
     const timer = setTimeout(tick, speed);
     return () => clearTimeout(timer);
-  }, [tick, isDeleting, typingSpeed, deletingSpeed, prefersReducedMotion, currentWord]);
+  }, [tick, isDeleting, typingSpeed, deletingSpeed, prefersReducedMotion]);
 
   return (
     <span className={className}>
       <AnimatePresence mode="wait">
         <motion.span
-          key={currentText}
+          key={renderedText}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.1 }}
         >
-          {currentText}
+          {renderedText}
         </motion.span>
       </AnimatePresence>
       <motion.span

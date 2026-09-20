@@ -27,14 +27,13 @@ export function ScrambleText({
   const [display, setDisplay] = useState('');
   const [phase, setPhase] = useState<'idle' | 'scrambling' | 'paused'>('idle');
 
+  const renderedText = prefersReducedMotion ? text : display;
+
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setDisplay(text);
-      return;
-    }
+    if (prefersReducedMotion) return;
     const t = setTimeout(() => setPhase('scrambling'), delay);
     return () => clearTimeout(t);
-  }, [delay, prefersReducedMotion, text]);
+  }, [delay, prefersReducedMotion]);
 
   // Scrambling phase
   useEffect(() => {
@@ -74,7 +73,7 @@ export function ScrambleText({
 
   return (
     <Tag className={className}>
-      {display}
+      {renderedText}
       {!prefersReducedMotion && phase === 'scrambling' && (
         <motion.span
           className="inline-block w-[3px] h-[0.85em] bg-accent ml-0.5 align-middle"

@@ -48,8 +48,12 @@ export function PageLoader({ isLoading }: PageLoaderProps) {
   // Burst on exit
   useEffect(() => {
     if (!isLoading && !prefersReducedMotion) {
-      setShowBurst(true);
-      setTimeout(() => setShowBurst(false), 600);
+      const showTimer = setTimeout(() => setShowBurst(true), 0);
+      const hideTimer = setTimeout(() => setShowBurst(false), 600);
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
     }
   }, [isLoading, prefersReducedMotion]);
 

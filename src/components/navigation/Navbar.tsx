@@ -9,10 +9,12 @@ import { MobileMenuTrigger, MobileMenu } from './MobileMenu';
 import { CommandMenu } from './CommandMenu';
 import { navigation } from '@/data/navigation';
 import { useCommandMenu } from '@/hooks/useCommandMenu';
+import { useActiveSection } from '@/hooks/useActiveSection';
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useActiveSection('#hero');
   const { isOpen: isCommandOpen, open: openCommand, close: closeCommand } = useCommandMenu();
   const { scrollY } = useScroll();
 
@@ -67,7 +69,11 @@ export function Navbar() {
           </a>
 
           {/* ── Desktop Nav ── */}
-          <NavLinks links={navigation} />
+          <NavLinks
+            links={navigation}
+            activeSection={activeSection}
+            onSelectSection={setActiveSection}
+          />
 
           {/* ── Right Actions ── */}
           <div className="flex items-center gap-0.5">
@@ -141,6 +147,8 @@ export function Navbar() {
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         links={navigation}
+        activeSection={activeSection}
+        onSelectSection={setActiveSection}
       />
 
       <CommandMenu isOpen={isCommandOpen} onClose={closeCommand} />

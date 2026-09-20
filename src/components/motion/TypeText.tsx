@@ -28,14 +28,13 @@ export function TypeText({
   const [isDeleting, setIsDeleting] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
+  const renderedText = prefersReducedMotion ? text : currentText;
+
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setCurrentText(text);
-      return;
-    }
+    if (prefersReducedMotion) return;
     const timer = setTimeout(() => setHasStarted(true), delay);
     return () => clearTimeout(timer);
-  }, [delay, prefersReducedMotion, text]);
+  }, [delay, prefersReducedMotion]);
 
   const tick = useCallback(() => {
     if (!isDeleting) {
@@ -63,7 +62,7 @@ export function TypeText({
 
   return (
     <Tag className={className}>
-      {currentText}
+      {renderedText}
       {!prefersReducedMotion && (
         <motion.span
           className="inline-block w-[3px] h-[0.9em] bg-accent ml-0.5 align-middle"

@@ -2,14 +2,18 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { EASE } from '@/lib/animations';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-
+const emptySubscribe = () => () => {};
 
 export function AnimatedDeveloperCharacter() {
   const prefersReducedMotion = useReducedMotion();
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
   const containerRef = useRef<HTMLDivElement>(null);
 
   const mouseX = useMotionValue(0);
@@ -23,12 +27,13 @@ export function AnimatedDeveloperCharacter() {
   const translateY = useTransform(springY, [-25, 25], [-4, 4]);
 
   useEffect(() => {
-    setIsMounted(true);
     if (prefersReducedMotion) return;
 
+    const container = containerRef.current;
+    if (!container) return;
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
+      const rect = container.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       const deltaX = (e.clientX - centerX) / (rect.width / 2);
@@ -44,12 +49,12 @@ export function AnimatedDeveloperCharacter() {
       mouseY.set(0);
     };
 
-    containerRef.current?.addEventListener('mousemove', handleMouseMove);
-    containerRef.current?.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('mousemove', handleMouseMove);
+    container.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
-      containerRef.current?.removeEventListener('mousemove', handleMouseMove);
-      containerRef.current?.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('mousemove', handleMouseMove);
+      container.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, [mouseX, mouseY, prefersReducedMotion]);
 

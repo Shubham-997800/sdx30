@@ -51,9 +51,11 @@ interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   links: { label: string; href: string }[];
+  activeSection?: string;
+  onSelectSection?: (href: string) => void;
 }
 
-export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
+export function MobileMenu({ isOpen, onClose, links, activeSection, onSelectSection }: MobileMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Scroll lock
@@ -103,6 +105,7 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
 
   const handleClick = useCallback(
     (href: string) => {
+      onSelectSection?.(href);
       onClose();
       setTimeout(() => {
         const el = document.querySelector(href);
@@ -111,7 +114,7 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
         }
       }, 100);
     },
-    [onClose]
+    [onClose, onSelectSection]
   );
 
   return (
@@ -143,24 +146,29 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
         )}
       >
         <nav className="flex flex-col items-start gap-1 p-5" aria-label="Mobile navigation links">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
-                handleClick(link.href);
-              }}
-              className={cn(
-                "w-full text-left text-[0.9rem] font-medium tracking-wide py-2.5 px-3 rounded-md",
-                "text-muted-foreground transition-colors duration-150",
-                "hover:text-foreground hover:bg-foreground/[0.04]",
-                "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/50",
-              )}
-            >
-              {link.label}
-            </a>
-          ))}
+          {links.map((link) => {
+            const isActive = activeSection === link.href;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  e.preventDefault();
+                  handleClick(link.href);
+                }}
+                className={cn(
+                  "w-full text-left text-[0.9rem] font-medium tracking-wide py-2.5 px-3 rounded-md transition-all duration-150",
+                  isActive
+                    ? "text-accent font-semibold bg-accent/10 border-l-2 border-accent pl-3"
+                    : "text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04]",
+                  "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/50",
+                )}
+              >
+                {link.label}
+              </a>
+            );
+          })}
 
           {/* Divider */}
           <div className="my-2 h-px w-full bg-border/50" />
