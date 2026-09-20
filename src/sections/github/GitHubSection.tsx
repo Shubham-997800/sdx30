@@ -36,12 +36,23 @@ export function GitHubSection() {
 
         <div className="mt-8 sm:mt-12 md:mt-16 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 md:gap-5">
           {/* ─── Contribution Stats ─── */}
-          <Reveal direction="up" delay={0.1} className="col-span-4 lg:col-span-3 rounded-xl border border-border bg-card p-6">
-            <div className="space-y-1 mb-4">
-              <span className="text-label text-muted-foreground">CONTRIBUTIONS</span>
-              <p className="text-stat text-foreground">{profile.stats.contributions}</p>
+          <Reveal direction="up" delay={0.1} className="col-span-4 lg:col-span-3 rounded-xl border border-border bg-card p-6 flex flex-col justify-between">
+            <div>
+              <div className="space-y-1 mb-4">
+                <span className="text-label text-muted-foreground">CONTRIBUTIONS</span>
+                <p className="text-stat text-foreground">{profile.stats.contributions}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-2 pt-3 border-t border-border mb-4">
+                <div>
+                  <span className="text-caption text-muted-foreground block text-[11px] uppercase tracking-wider">Streak</span>
+                  <span className="text-body-sm font-semibold text-foreground">{profile.stats.streak || '5 Days'}</span>
+                </div>
+                <div>
+                  <span className="text-caption text-muted-foreground block text-[11px] uppercase tracking-wider">Public Repos</span>
+                  <span className="text-body-sm font-semibold text-foreground">{profile.stats.repos || '10'}</span>
+                </div>
+              </div>
             </div>
-            <div className="h-px bg-border mb-4" />
             <a
               href={profile.url}
               target="_blank"

@@ -3,10 +3,11 @@ export interface GitHubProfile {
   url: string;
   stats: {
     contributions: string;
-    streak: string;
-    commits: string;
-    prs: string;
-    stars: string;
+    streak?: string;
+    commits?: string;
+    prs?: string;
+    stars?: string;
+    repos?: string;
   };
   topLanguages: LanguageStat[];
   pinnedRepos: PinnedRepo[];

@@ -30,7 +30,7 @@ export const projects: Project[] = [
     ],
     layout: 'media-right',
     liveUrl: 'https://flowsyncai30.vercel.app/',
-    githubUrl: 'https://github.com/Shubham-997800/FlowSync-Ai',
+    githubUrl: 'https://github.com/Shubham-997800/FlowSyncAi',
     imageUrl: '/projects/flowsync.jpg',
     featured: true,
   },
